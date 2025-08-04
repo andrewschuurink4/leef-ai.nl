@@ -47,75 +47,6 @@
     </div>
 </section>
 
-<section class="py-20 md:py-24">
-    <div class="container mx-auto px-4">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold">Eén app voor elk aspect van je leven.</h2>
-            <p class="text-md md:text-lg mt-2 max-w-2xl mx-auto secondary-color">Leef combineert al je planning in één slim overzicht.</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <div class="primary-color text-3xl mb-4"><i class="fas fa-clock"></i></div>
-                <h3 class="font-bold text-xl mb-2">Tijdgebonden Herinneringen</h3>
-                <p class="secondary-color text-sm">Van de jaarlijkse APK tot de wekelijkse sportavond. Mis nooit meer een afspraak of deadline.</p>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <div class="primary-color text-3xl mb-4"><i class="fas fa-map-marker-alt"></i></div>
-                <h3 class="font-bold text-xl mb-2">Locatiegebonden Notificaties</h3>
-                <p class="secondary-color text-sm">Krijg een seintje voor je boodschappenlijst als je bij de supermarkt aankomt, of een herinnering om de lichten uit te doen als je van huis vertrekt.</p>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <div class="primary-color text-3xl mb-4"><i class="fas fa-cogs"></i></div>
-                <h3 class="font-bold text-xl mb-2">Actiegebonden Triggers</h3>
-                <p class="secondary-color text-sm">Start automatisch je parkeersessie, krijg een seintje bij een bijna lege batterij of een waarschuwing voor regen.</p>
-            </div>
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <div class="primary-color text-3xl mb-4"><i class="fas fa-brain"></i></div>
-                <h3 class="font-bold text-xl mb-2">AI-Assistent Functies</h3>
-                <p class="secondary-color text-sm">Laat de AI je maaltijden plannen, aanbiedingen zoeken en je helpen voorbereiden op een sollicitatiegesprek.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="hero-bg py-20 md:py-24">
-    <div class="container mx-auto px-4 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold mb-12">Zo eenvoudig werkt het.</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
-            <div class="flex flex-col items-center">
-                <div class="w-20 h-20 primary-bg text-white flex items-center justify-center rounded-full text-3xl font-bold mb-4">1</div>
-                <h3 class="font-bold text-xl mb-2">Voeg je taken toe</h3>
-                <p class="secondary-color">Vertel Leef wat belangrijk is in je leven, van afspraken tot spaardoelen.</p>
-            </div>
-            <div class="flex flex-col items-center">
-                <div class="w-20 h-20 primary-bg text-white flex items-center justify-center rounded-full text-3xl font-bold mb-4">2</div>
-                <h3 class="font-bold text-xl mb-2">Laat de AI het werk doen</h3>
-                <p class="secondary-color">Leef plant, zoekt en bereidt voor, zodat jij dat niet hoeft te doen.</p>
-            </div>
-            <div class="flex flex-col items-center">
-                <div class="w-20 h-20 primary-bg text-white flex items-center justify-center rounded-full text-3xl font-bold mb-4">3</div>
-                <h3 class="font-bold text-xl mb-2">Leef met overzicht</h3>
-                <p class="secondary-color">Ontvang slimme seintjes op het perfecte moment en geniet van een stressvrije dag.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="py-20 md:py-24">
-    <div class="container mx-auto px-4">
-        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 md:flex items-center overflow-hidden">
-            <div class="p-8 md:p-12 md:w-1/2">
-                <h2 class="text-3xl font-bold mb-4">Aangeboden door Verbouw AI</h2>
-                <p class="secondary-color mb-6">Leef wordt je aangeboden door de makers van Verbouw AI. Plan je volgende verbouwing? Laat onze AI je helpen met kosten, materialen en planning en bespaar duizenden euro's.</p>
-                <a href="#" class="primary-bg text-white font-bold py-3 px-6 rounded-full hover:opacity-90 transition-opacity">Ontdek Verbouw AI</a>
-            </div>
-            <div class="md:w-1/2">
-                <img src="https://images.unsplash.com/photo-1581125923644-d6a785a5a415?q=80&w=1974&auto=format&fit=crop" alt="Een modern huis in aanbouw, symbool voor verbouwen met AI-hulp." class="w-full h-full object-cover">
-            </div>
-        </div>
-    </div>
-</section>
-
 <section id="cta" class="hero-bg py-20 md:py-24">
     <div class="container mx-auto text-center px-4">
         <h2 class="text-3xl md:text-4xl font-bold">Klaar om de controle terug te pakken?</h2>
@@ -139,30 +70,23 @@
 
 
 <script>
+    // --- PWA Logic ---
     let deferredPrompt;
     const installButton = document.getElementById('install-button');
     const installButtonAndroid = document.getElementById('install-button-android');
 
-    // Verberg de knoppen in eerste instantie. We tonen ze alleen als installatie mogelijk is.
-    installButton.style.display = 'none';
-    installButtonAndroid.style.display = 'none';
-
+    // Luister naar het installatie-event dat door Chrome/Edge wordt gegeven
     window.addEventListener('beforeinstallprompt', (e) => {
-        // Voorkom dat de mini-infobar verschijnt op mobiel
         e.preventDefault();
-        // Bewaar het event zodat het later kan worden geactiveerd.
         deferredPrompt = e;
-        // Toon de installatieknoppen
-        installButton.style.display = 'inline-block';
-        installButtonAndroid.style.display = 'inline-block';
-        console.log(`'beforeinstallprompt' event werd geactiveerd.`);
+        console.log('`beforeinstallprompt` event opgeslagen.');
     });
 
+    // Definieer wat er moet gebeuren als op een van de knoppen wordt geklikt
     const installAction = () => {
+        // Check of we het speciale event van Chrome/Edge hebben
         if (deferredPrompt) {
-            // Toon de installatieprompt
             deferredPrompt.prompt();
-            // Wacht op de keuze van de gebruiker
             deferredPrompt.userChoice.then((choiceResult) => {
                 if (choiceResult.outcome === 'accepted') {
                     console.log('Gebruiker heeft de installatie geaccepteerd');
@@ -172,23 +96,23 @@
                 deferredPrompt = null;
             });
         } else {
-            // Fallback voor browsers die 'beforeinstallprompt' niet ondersteunen (zoals Safari op iOS)
-            alert('Voor iOS: open deze pagina in Safari, tik op de Deel-knop en selecteer "Zet op beginscherm" om de app te installeren.');
+            // Zo nee, toon een algemene instructie voor Safari, Firefox, etc.
+            alert('INSTALLATIE-INSTRUCTIES:\n\n- Op mobiel (iOS): Gebruik de "Deel"-knop en kies "Zet op beginscherm".\n- Op desktop (Firefox/Edge): Zoek naar een installatie-icoon rechts in de adresbalk.');
         }
     };
     
+    // Koppel de actie aan beide knoppen
     installButton.addEventListener('click', installAction);
     installButtonAndroid.addEventListener('click', installAction);
-</script>
 
-<script>
-    // --- PWA Service Worker Registratie ---
+
+    // --- Service Worker Registratie ---
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js').then(registration => {
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            navigator.serviceWorker.register('/sw.js').then(registration => { // Let op de hoofdletter 'W'
+                console.log('ServiceWorker registratie succesvol:', registration.scope);
             }, err => {
-                console.log('ServiceWorker registration failed: ', err);
+                console.log('ServiceWorker registratie mislukt:', err);
             });
         });
     }
