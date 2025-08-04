@@ -121,8 +121,8 @@
         <h2 class="text-3xl md:text-4xl font-bold">Klaar om de controle terug te pakken?</h2>
         <p class="text-lg md:text-xl max-w-3xl mx-auto secondary-color mt-4 mb-8">Stop met vergeten, start met leven. Probeer Leef vandaag nog en ervaar de rust van een perfect georganiseerd leven.</p>
         <div>
-            <a href="/ios-app" class="primary-bg text-white font-bold py-4 px-8 rounded-full text-lg hover:opacity-90 transition-opacity inline-block mr-4">Download voor iOS</a>
-            <a href="/android-app" class="bg-white text-gray-800 font-bold py-4 px-8 rounded-full text-lg hover:bg-gray-100 transition-colors inline-block border border-gray-200">Download voor Android</a>
+            <a href="javascript:void(0)" id="install-button" class="primary-bg text-white font-bold py-4 px-8 rounded-full text-lg hover:opacity-90 transition-opacity inline-block mr-4">Download voor iOS</a>
+            <a href="javascript:void(0)" id="install-button-android" class="bg-white text-gray-800 font-bold py-4 px-8 rounded-full text-lg hover:bg-gray-100 transition-colors inline-block border border-gray-200">Download voor Android</a>
         </div>
     </div>
 </section>
@@ -136,6 +136,63 @@
         </div>
     </div>
 </footer>
+
+
+<script>
+    let deferredPrompt;
+    const installButton = document.getElementById('install-button');
+    const installButtonAndroid = document.getElementById('install-button-android');
+
+    // Verberg de knoppen in eerste instantie. We tonen ze alleen als installatie mogelijk is.
+    installButton.style.display = 'none';
+    installButtonAndroid.style.display = 'none';
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // Voorkom dat de mini-infobar verschijnt op mobiel
+        e.preventDefault();
+        // Bewaar het event zodat het later kan worden geactiveerd.
+        deferredPrompt = e;
+        // Toon de installatieknoppen
+        installButton.style.display = 'inline-block';
+        installButtonAndroid.style.display = 'inline-block';
+        console.log(`'beforeinstallprompt' event werd geactiveerd.`);
+    });
+
+    const installAction = () => {
+        if (deferredPrompt) {
+            // Toon de installatieprompt
+            deferredPrompt.prompt();
+            // Wacht op de keuze van de gebruiker
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('Gebruiker heeft de installatie geaccepteerd');
+                } else {
+                    console.log('Gebruiker heeft de installatie geweigerd');
+                }
+                deferredPrompt = null;
+            });
+        } else {
+            // Fallback voor browsers die 'beforeinstallprompt' niet ondersteunen (zoals Safari op iOS)
+            alert('Voor iOS: open deze pagina in Safari, tik op de Deel-knop en selecteer "Zet op beginscherm" om de app te installeren.');
+        }
+    };
+    
+    installButton.addEventListener('click', installAction);
+    installButtonAndroid.addEventListener('click', installAction);
+</script>
+
+<script>
+    // --- PWA Service Worker Registratie ---
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').then(registration => {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }, err => {
+                console.log('ServiceWorker registration failed: ', err);
+            });
+        });
+    }
+</script>
 
 </body>
 </html>
