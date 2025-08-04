@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="nl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leef - Jouw AI Levenscoach</title>
+    
+    <!-- PWA Manifest & Theme Color -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#5D8B71">
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4; /* Warm off-white */
+            color: #4a4a4a;
+        }
+        .main-accent-color { color: #5D8B71; }
+        .main-accent-bg { background-color: #5D8B71; }
+        .secondary-accent-bg { background-color: #EAE7DC; }
+        
+        .progress-ring-circle, #voice-control-btn {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .task-item.completed label span.task-text {
+            text-decoration: line-through;
+            color: #a0aec0;
+        }
+        .task-item .fa-check {
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        #modal-container, #modal-box {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .ai-checklist {
+            border-left: 3px solid #B0D4B8;
+            background-color: #fafffa;
+        }
+
+        #voice-control-btn.listening {
+            background-color: #ef4444; /* red-500 */
+            transform: scale(1.1);
+        }
+        #voice-control-btn.processing {
+            background-color: #f59e0b; /* amber-500 */
+        }
+        
+        #parking-assist-toggle-btn.active {
+            background-color: #ef4444; /* red-500 */
+            color: white;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Main Layout Container -->
+    <div class="flex">
+        <!-- Desktop Sidebar Navigation -->
+        <nav class="hidden md:flex flex-col items-center w-20 bg-white shadow-md min-h-screen fixed top-0 left-0 z-40">
+            <div class="py-5 main-accent-color"><i class="fa-solid fa-leaf fa-2x"></i></div>
+            <ul class="flex flex-col space-y-2 mt-8">
+                <li><a href="#vandaag" title="Vandaag" class="nav-link flex items-center justify-center h-12 w-12 rounded-xl secondary-accent-bg main-accent-color"><i class="fa-solid fa-house fa-lg"></i></a></li>
+                <li><a href="#agenda" title="Agenda" class="nav-link flex items-center justify-center h-12 w-12 rounded-xl hover:secondary-accent-bg"><i class="fa-solid fa-calendar-days fa-lg"></i></a></li>
+                <li><a href="#gezondheid" title="Gezondheid" class="nav-link flex items-center justify-center h-12 w-12 rounded-xl hover:secondary-accent-bg"><i class="fa-solid fa-heart-pulse fa-lg"></i></a></li>
+                <li><a href="#herinneringen" title="Herinneringen" class="nav-link flex items-center justify-center h-12 w-12 rounded-xl hover:secondary-accent-bg"><i class="fa-solid fa-bell fa-lg"></i></a></li>
+                <li><a href="#maaltijdplanner" title="Maaltijdplanner" class="nav-link flex items-center justify-center h-12 w-12 rounded-xl hover:secondary-accent-bg"><i class="fa-solid fa-utensils fa-lg"></i></a></li>
+                <li><a href="#financien" title="Financiën" class="nav-link flex items-center justify-center h-12 w-12 rounded-xl hover:secondary-accent-bg"><i class="fa-solid fa-wallet fa-lg"></i></a></li>
+                 <li><a href="#werk" title="Werk" class="nav-link flex items-center justify-center h-12 w-12 rounded-xl hover:secondary-accent-bg"><i class="fa-solid fa-briefcase fa-lg"></i></a></li>
+                <li><a href="#reizen" title="Reizen" class="nav-link flex items-center justify-center h-12 w-12 rounded-xl hover:secondary-accent-bg"><i class="fa-solid fa-plane-departure fa-lg"></i></a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="w-full md:pl-20 pb-24 md:pb-0">
+            <div class="p-4 md:p-8 max-w-7xl mx-auto">
+                
+                <section id="vandaag" class="mb-16">
+                    <header class="mb-6"><h1 class="text-4xl font-bold text-gray-800">Leef</h1><p class="text-lg text-gray-500">Jouw persoonlijke AI levenscoach. Welkom terug!</p></header>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm">
+                        <h3 class="font-bold text-xl mb-4">Mijn Taken Voor Vandaag</h3>
+                        <div id="task-list" class="space-y-3 mb-4"></div>
+                        <div class="flex gap-2"><input type="text" id="new-task-input" placeholder="Nieuwe taak toevoegen..." class="flex-grow p-3 border border-gray-300 rounded-lg"><button id="add-task-btn" class="main-accent-bg text-white font-bold p-3 rounded-lg hover:opacity-90">Voeg toe</button></div>
+                    </div>
+                </section>
+
+                <section id="agenda" class="mb-16">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-calendar-days main-accent-color mr-3"></i>Agenda & Planning</h2>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm">
+                        <h3 class="font-bold text-xl mb-4">Nieuwe Afspraak Toevoegen</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4"><input id="new-appointment-title" type="text" placeholder="Titel van afspraak" class="p-3 border border-gray-300 rounded-lg"><input id="new-appointment-datetime" type="datetime-local" class="p-3 border border-gray-300 rounded-lg text-gray-500"></div>
+                        <textarea id="new-appointment-desc" placeholder="Beschrijving (optioneel, helpt de AI)" class="w-full p-3 border border-gray-300 rounded-lg mb-4" rows="2"></textarea>
+                        <div class="flex flex-col sm:flex-row gap-2"><button id="add-appointment-btn" class="w-full sm:w-auto main-accent-bg text-white font-bold p-3 rounded-lg hover:opacity-90 flex-grow">Voeg toe aan agenda</button><button id="ai-prepare-btn" class="w-full sm:w-auto secondary-accent-bg font-bold p-3 rounded-lg hover:opacity-90 flex items-center justify-center gap-2"><i class="fa-solid fa-wand-magic-sparkles"></i> AI, help voorbereiden!</button></div>
+                        <div id="ai-checklist-container" class="hidden mt-4 p-4 rounded-lg ai-checklist"><h4 class="font-bold text-md mb-2">AI Voorbereidings-Checklist:</h4><ul id="ai-checklist-output" class="list-disc list-inside text-sm text-gray-700"></ul></div>
+                    </div>
+                    <div class="mt-8"><h3 class="font-bold text-xl mb-4">Geplande Afspraken</h3><div id="appointments-list" class="space-y-4"><p class="text-gray-500">Je hebt nog geen afspraken toegevoegd.</p></div></div>
+                </section>
+
+                <section id="gezondheid" class="mb-16">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-heart-pulse main-accent-color mr-3"></i>Gezondheid & Welzijn</h2>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm space-y-8">
+                        <!-- Health AI Modules Toggles -->
+                        <div>
+                            <h3 class="font-bold text-xl mb-4">Gezondheid AI Modules</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-center">
+                                <div class="p-4 rounded-lg" id="medication-module-toggle-bg"><label class="flex flex-col items-center cursor-pointer"><i class="fa-solid fa-pills fa-2x mb-2"></i><span>Medicatie</span><input type="checkbox" id="medication-module-toggle" class="sr-only peer"></label></div>
+                                <div class="p-4 rounded-lg" id="calories-module-toggle-bg"><label class="flex flex-col items-center cursor-pointer"><i class="fa-solid fa-calculator fa-2x mb-2"></i><span>Calorieën</span><input type="checkbox" id="calories-module-toggle" class="sr-only peer"></label></div>
+                                <div class="p-4 rounded-lg" id="sports-module-toggle-bg"><label class="flex flex-col items-center cursor-pointer"><i class="fa-solid fa-dumbbell fa-2x mb-2"></i><span>Sportcoach</span><input type="checkbox" id="sports-module-toggle" class="sr-only peer"></label></div>
+                                <div class="p-4 rounded-lg" id="alarm-module-toggle-bg"><label class="flex flex-col items-center cursor-pointer"><i class="fa-solid fa-clock fa-2x mb-2"></i><span>Wekker</span><input type="checkbox" id="alarm-module-toggle" class="sr-only peer"></label></div>
+                            </div>
+                        </div>
+
+                        <!-- Medication Module -->
+                        <div id="medication-module" class="hidden"><hr><h4 class="font-bold text-lg mt-6 mb-2">Medicatie Herinneringen</h4><div id="medication-list" class="space-y-2 mb-4"></div><div class="flex gap-2"><input type="text" id="medication-name" placeholder="Naam medicijn" class="flex-grow p-2 border rounded-lg"><input type="time" id="medication-time" class="p-2 border rounded-lg"><button id="add-medication-btn" class="main-accent-bg text-white font-bold p-2 rounded-lg">Voeg toe</button></div></div>
+                        
+                        <!-- Calories Module -->
+                        <div id="calories-module" class="hidden"><hr><h4 class="font-bold text-lg mt-6 mb-2">Calorieën & Voeding Vandaag</h4><p>Totaal: <span id="calories-total" class="font-bold">0</span> / 2000 kcal</p><div class="flex gap-2 mt-2"><input type="text" id="food-item" placeholder="Voedingsitem" class="flex-grow p-2 border rounded-lg"><input type="number" id="food-calories" placeholder="kcal" class="w-24 p-2 border rounded-lg"><button id="add-calories-btn" class="main-accent-bg text-white font-bold p-2 rounded-lg">Voeg toe</button></div></div>
+
+                        <!-- Sports Coach Module -->
+                        <div id="sports-module" class="hidden"><hr><h4 class="font-bold text-lg mt-6 mb-2">AI Sportcoach</h4><p class="text-sm text-gray-600 mb-2">Krijg een workout op maat.</p><button id="ai-workout-btn" class="secondary-accent-bg font-bold py-2 px-4 rounded-lg">Geef me een workout suggestie</button></div>
+                        
+                        <!-- Alarm Clock Module -->
+                        <div id="alarm-module" class="hidden"><hr><h4 class="font-bold text-lg mt-6 mb-2">Verrassingswekker</h4><p class="text-sm text-gray-600">Word elke dag wakker met een nieuw, vrolijk liedje. De wekker staat ingesteld op <strong id="alarm-time-display">07:00</strong>.</p></div>
+                    </div>
+                </section>
+
+                <section id="herinneringen" class="mb-16">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-bell main-accent-color mr-3"></i>Contextuele Herinneringen</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-6 rounded-2xl shadow-sm"><h4 class="font-bold text-lg mb-2">Huis Verlaten</h4><p class="text-sm text-gray-600 mb-4">Ontvang een 'vergeet-niet' lijst.</p><div class="flex items-center justify-between mt-6"><span class="font-bold">Herinnering Actief</span><label class="relative inline-flex items-center cursor-pointer"><input type="checkbox" id="leaving-home-toggle" class="sr-only peer"><div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:main-accent-bg"></div></label></div></div>
+                        <div class="bg-white p-6 rounded-2xl shadow-sm"><h4 class="font-bold text-lg mb-2">Automatische Parkeerassistent</h4><p class="text-sm text-gray-600 mb-4">Detecteert parkeren en wegrijden.</p><button id="parking-assist-toggle-btn" class="w-full secondary-accent-bg font-bold py-2 px-4 rounded-lg hover:opacity-90 mt-6">Start Parkeerassistent</button></div>
+                    </div>
+                </section>
+
+                <section id="maaltijdplanner" class="mb-16">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-utensils main-accent-color mr-3"></i>AI Maaltijdplanner</h2>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm"><p class="text-gray-600 mb-4">Waar heb je zin in vandaag?</p><div class="flex flex-col sm:flex-row gap-2"><input id="ai-prompt-input" type="text" placeholder="bv. 'kip' of 'vegetarisch'" class="flex-grow p-3 border border-gray-300 rounded-lg"><button id="get-suggestion-btn" class="main-accent-bg text-white font-bold p-3 rounded-lg hover:opacity-90 flex items-center justify-center gap-2"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Krijg Suggestie</span></button></div><div id="ai-response-wrapper" class="hidden mt-4 p-4 bg-green-50 rounded-lg"><p class="text-gray-600">Mijn suggestie voor jou:</p><h3 id="meal-suggestion" class="text-xl font-bold main-accent-color mt-1"></h3><div id="feedback-buttons" class="hidden mt-3"><button id="view-recipe-btn" class="text-sm main-accent-bg text-white px-4 py-2 rounded-full">Bekijk Recept & Sla op</button></div></div></div>
+                </section>
+
+                <section id="financien" class="mb-16">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-wallet main-accent-color mr-3"></i>Financiën & Administratie</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6"><div class="lg:col-span-1 bg-white p-6 rounded-2xl shadow-sm"><h4 class="font-bold text-lg mb-2">Maandbudget</h4><div class="mx-auto" style="position: relative; height:200px; width:200px"><canvas id="budgetChart"></canvas></div></div><div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm"><h4 class="font-bold text-lg mb-2">Subsidie Assistent</h4><p class="text-sm text-gray-600 mb-4">Check of je in aanmerking komt voor subsidies.</p><button id="subsidy-check-btn" class="font-bold py-2 px-4 rounded-lg secondary-accent-bg hover:opacity-90">Check mijn mogelijkheden</button></div></div>
+                </section>
+                
+                <section id="werk" class="mb-16">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-briefcase main-accent-color mr-3"></i>Werk & Productiviteit</h2>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm text-center">
+                        <p class="text-gray-500 mb-2">Nog geen werk gerelateerde taken. Voeg ze toe aan je takenlijst hierboven!</p>
+                        <button class="font-bold py-2 px-4 rounded-lg secondary-accent-bg hover:opacity-90" onclick="document.getElementById('new-task-input').focus()">Taak toevoegen</button>
+                    </div>
+                </section>
+
+                <section id="reizen" class="mb-16">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-plane-departure main-accent-color mr-3"></i>Reizen & Vrije Tijd</h2>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm text-center">
+                        <p class="text-gray-500 mb-2">Nog geen reisplannen? Krijg AI-suggesties voor je volgende avontuur!</p>
+                        <button class="font-bold py-2 px-4 rounded-lg secondary-accent-bg hover:opacity-90" onclick="showModal('Reisplanner', 'Deze functie is binnenkort beschikbaar!')">Reissuggestie</button>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Mobile Bottom Navigation, Modal, Voice Control Button... -->
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // --- STATE & CONFIG ---
+    const GEMINI_API_KEY = "";
+    const state = {
+        tasks: [],
+        appointments: [],
+        medications: [],
+        calories: [],
+        isListening: false,
+        isParkingAssistantActive: false,
+        isParked: false,
+        parkingTimer: null,
+        gpsWatchId: null,
+        medicationCheckInterval: null,
+    };
+
+    const ui = {
+        // Health Module Toggles & Containers
+        medicationModuleToggle: document.getElementById('medication-module-toggle'),
+        medicationModule: document.getElementById('medication-module'),
+        medicationModuleToggleBg: document.getElementById('medication-module-toggle-bg'),
+        caloriesModuleToggle: document.getElementById('calories-module-toggle'),
+        caloriesModule: document.getElementById('calories-module'),
+        caloriesModuleToggleBg: document.getElementById('calories-module-toggle-bg'),
+        sportsModuleToggle: document.getElementById('sports-module-toggle'),
+        sportsModule: document.getElementById('sports-module'),
+        sportsModuleToggleBg: document.getElementById('sports-module-toggle-bg'),
+        alarmModuleToggle: document.getElementById('alarm-module-toggle'),
+        alarmModule: document.getElementById('alarm-module'),
+        alarmModuleToggleBg: document.getElementById('alarm-module-toggle-bg'),
+        // ... (all other ui selectors)
+    };
+
+    // --- UTILITY & CORE FUNCTIONS ---
+    function showModal(title, content, shouldSpeak = false) { /* ... same as before ... */ }
+    function hideModal() { /* ... same as before ... */ }
+    function speak(text) { /* ... same as before ... */ }
+    
+    // --- RENDER FUNCTIONS ---
+    function renderTasks() { /* ... same as before ... */ }
+    function renderAppointments() { /* ... same as before ... */ }
+    function renderMedications() { /* ... same as before ... */ }
+    function renderCalories() { /* ... same as before ... */ }
+
+    // --- HEALTH MODULE LOGIC ---
+    function addMedication() { /* ... same as before ... */ }
+    window.deleteMedication = function(id) { /* ... same as before ... */ }
+    function checkMedicationReminders() { /* ... same as before ... */ }
+    function addCalories() { /* ... same as before ... */ }
+    async function getAiWorkoutSuggestion() { /* ... same as before ... */ }
+    
+    // --- LOCALSTORAGE & STATE MANAGEMENT ---
+    function saveState() {
+        localStorage.setItem('leef_app_state', JSON.stringify({
+            tasks: state.tasks,
+            appointments: state.appointments,
+            medications: state.medications,
+            calories: state.calories
+        }));
+    }
+
+    function loadState() {
+        const savedState = JSON.parse(localStorage.getItem('leef_app_state'));
+        if (savedState) {
+            state.tasks = savedState.tasks || [];
+            state.appointments = savedState.appointments || [];
+            state.medications = savedState.medications || [];
+            state.calories = savedState.calories || [];
+        }
+    }
+
+    // --- MODULE TOGGLE LOGIC ---
+    function setupModuleToggle(toggle, module, bg, storageKey) {
+        const isActive = localStorage.getItem(storageKey) === 'true';
+        toggle.checked = isActive;
+        if (isActive) {
+            module.classList.remove('hidden');
+            bg.classList.add('secondary-accent-bg');
+        } else {
+            module.classList.add('hidden');
+            bg.classList.remove('secondary-accent-bg');
+        }
+
+        toggle.addEventListener('change', (e) => {
+            const checked = e.target.checked;
+            localStorage.setItem(storageKey, checked);
+            if (checked) {
+                module.classList.remove('hidden');
+                bg.classList.add('secondary-accent-bg');
+                if (storageKey === 'leef_medicationModuleActive') {
+                    state.medicationCheckInterval = setInterval(checkMedicationReminders, 60000);
+                }
+            } else {
+                module.classList.add('hidden');
+                bg.classList.remove('secondary-accent-bg');
+                if (storageKey === 'leef_medicationModuleActive' && state.medicationCheckInterval) {
+                    clearInterval(state.medicationCheckInterval);
+                }
+            }
+        });
+    }
+
+
+    // --- INITIALIZATION ---
+    function initialize() {
+        loadState();
+        
+        // Render initial data
+        renderTasks();
+        renderAppointments();
+        renderMedications();
+        renderCalories();
+        
+        // Setup event listeners
+        // ... (all previous event listeners)
+
+        // Setup module toggles
+        setupModuleToggle(ui.medicationModuleToggle, ui.medicationModule, ui.medicationModuleToggleBg, 'leef_medicationModuleActive');
+        setupModuleToggle(ui.caloriesModuleToggle, ui.caloriesModule, ui.caloriesModuleToggleBg, 'leef_caloriesModuleActive');
+        setupModuleToggle(ui.sportsModuleToggle, ui.sportsModule, ui.sportsModuleToggleBg, 'leef_sportsModuleActive');
+        setupModuleToggle(ui.alarmModuleToggle, ui.alarmModule, ui.alarmModuleToggleBg, 'leef_alarmModuleActive');
+
+        // Start medication checker if active on load
+        if (localStorage.getItem('leef_medicationModuleActive') === 'true') {
+            state.medicationCheckInterval = setInterval(checkMedicationReminders, 60000);
+        }
+        
+        // --- PWA Service Worker Registration ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+
+        // ... all other initializations from previous versions
+    }
+
+    initialize();
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+Dat is een uitstekend idee. Door de map leeg te maken en alles opnieuw op te zetten, creëren we een schone en overzichtelijke start.
+
+Hier is een stappenplan om je `leef`-map opnieuw in te richten:
+
+**Stap 1: Maak de map leeg**
+Verwijder alle bestanden in je `leef`-map. Dit omvat ook de verborgen `.git`-map (als je die ziet).
+
+**Stap 2: Maak het landingspagina-bestand**
+Maak een nieuw bestand aan in de map en noem het **`index.html`**. Plak hierin de complete code voor de landingspagina. Dit is de pagina die bezoekers als eerste zien.
+
+```html
+<!DOCTYPE html>
+<html lang="nl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leef AI - Breng overzicht in je leven</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #4a4a4a;
+            background-color: #F8F7F4;
+        }
+        .primary-color { color: #5D8B71; }
+        .primary-bg { background-color: #5D8B71; }
+        .secondary-color { color: #8a8a8a; }
+        .hero-bg { background-color: #EAE7DC; }
+    </style>
+</head>
+<body>
+
+<header class="p-4 md:px-8">
+    <nav class="container mx-auto flex justify-between items-center">
+        <div class="text-2xl font-bold primary-color">
+            <i class="fas fa-leaf mr-2"></i>Leef AI
+        </div>
+        <div>
+            <a href="#cta" class="primary-bg text-white font-bold py-2 px-5 rounded-full hover:opacity-90 transition-opacity">Probeer Nu</a>
+        </div>
+    </nav>
+</header>
+
+<section class="hero-bg py-20 md:py-32">
+    <div class="container mx-auto text-center px-4">
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4">Breng rust en overzicht in je dagelijks leven.</h1>
+        <p class="text-lg md:text-xl max-w-3xl mx-auto secondary-color mb-8">Leef AI is meer dan een agenda; het is je slimme assistent die proactief meedenkt met je planning, gezondheid, financiën en meer.</p>
+        <a href="#cta" class="primary-bg text-white font-bold py-4 px-8 rounded-full text-lg hover:opacity-90 transition-opacity">Start met Leef</a>
+    </div>
+</section>
+
+<section class="py-20 md:py-24">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold">Eén app voor elk aspect van je leven.</h2>
+            <p class="text-md md:text-lg mt-2 max-w-2xl mx-auto secondary-color">Leef combineert al je planning in één slim overzicht.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <div class="primary-color text-3xl mb-4"><i class="fas fa-clock"></i></div>
+                <h3 class="font-bold text-xl mb-2">Tijdgebonden Herinneringen</h3>
+                <p class="secondary-color text-sm">Van de jaarlijkse APK tot de wekelijkse sportavond. Mis nooit meer een afspraak of deadline.</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <div class="primary-color text-3xl mb-4"><i class="fas fa-map-marker-alt"></i></div>
+                <h3 class="font-bold text-xl mb-2">Locatiegebonden Notificaties</h3>
+                <p class="secondary-color text-sm">Krijg een seintje voor je boodschappenlijst als je bij de supermarkt aankomt, of een herinnering om de lichten uit te doen als je van huis vertrekt.</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <div class="primary-color text-3xl mb-4"><i class="fas fa-cogs"></i></div>
+                <h3 class="font-bold text-xl mb-2">Actiegebonden Triggers</h3>
+                <p class="secondary-color text-sm">Start automatisch je parkeersessie, krijg een seintje bij een bijna lege batterij of een waarschuwing voor regen.</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <div class="primary-color text-3xl mb-4"><i class="fas fa-brain"></i></div>
+                <h3 class="font-bold text-xl mb-2">AI-Assistent Functies</h3>
+                <p class="secondary-color text-sm">Laat de AI je maaltijden plannen, aanbiedingen zoeken en je helpen voorbereiden op een sollicitatiegesprek.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="hero-bg py-20 md:py-24">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12">Zo eenvoudig werkt het.</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+            <div class="flex flex-col items-center">
+                <div class="w-20 h-20 primary-bg text-white flex items-center justify-center rounded-full text-3xl font-bold mb-4">1</div>
+                <h3 class="font-bold text-xl mb-2">Voeg je taken toe</h3>
+                <p class="secondary-color">Vertel Leef wat belangrijk is in je leven, van afspraken tot spaardoelen.</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <div class="w-20 h-20 primary-bg text-white flex items-center justify-center rounded-full text-3xl font-bold mb-4">2</div>
+                <h3 class="font-bold text-xl mb-2">Laat de AI het werk doen</h3>
+                <p class="secondary-color">Leef plant, zoekt en bereidt voor, zodat jij dat niet hoeft te doen.</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <div class="w-20 h-20 primary-bg text-white flex items-center justify-center rounded-full text-3xl font-bold mb-4">3</div>
+                <h3 class="font-bold text-xl mb-2">Leef met overzicht</h3>
+                <p class="secondary-color">Ontvang slimme seintjes op het perfecte moment en geniet van een stressvrije dag.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-20 md:py-24">
+    <div class="container mx-auto px-4">
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 md:flex items-center overflow-hidden">
+            <div class="p-8 md:p-12 md:w-1/2">
+                <h2 class="text-3xl font-bold mb-4">Aangeboden door Verbouw AI</h2>
+                <p class="secondary-color mb-6">Leef wordt je aangeboden door de makers van Verbouw AI. Plan je volgende verbouwing? Laat onze AI je helpen met kosten, materialen en planning en bespaar duizenden euro's.</p>
+                <a href="#" class="primary-bg text-white font-bold py-3 px-6 rounded-full hover:opacity-90 transition-opacity">Ontdek Verbouw AI</a>
+            </div>
+            <div class="md:w-1/2">
+                <img src="https://images.unsplash.com/photo-1581125923644-d6a785a5a415?q=80&w=1974&auto=format&fit=crop" alt="Een modern huis in aanbouw, symbool voor verbouwen met AI-hulp." class="w-full h-full object-cover">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="cta" class="hero-bg py-20 md:py-24">
+    <div class="container mx-auto text-center px-4">
+        <h2 class="text-3xl md:text-4xl font-bold">Klaar om de controle terug te pakken?</h2>
+        <p class="text-lg md:text-xl max-w-3xl mx-auto secondary-color mt-4 mb-8">Stop met vergeten, start met leven. Probeer Leef vandaag nog en ervaar de rust van een perfect georganiseerd leven.</p>
+        <div>
+            <a href="/ios-app" class="primary-bg text-white font-bold py-4 px-8 rounded-full text-lg hover:opacity-90 transition-opacity inline-block mr-4">Download voor iOS</a>
+            <a href="/android-app" class="bg-white text-gray-800 font-bold py-4 px-8 rounded-full text-lg hover:bg-gray-100 transition-colors inline-block border border-gray-200">Download voor Android</a>
+        </div>
+    </div>
+</section>
+
+<footer class="py-8">
+    <div class="container mx-auto text-center text-sm secondary-color">
+        <p>&copy; 2025 Leef AI. Alle rechten voorbehouden.</p>
+        <div class="mt-2">
+            <a href="/privacy" class="hover:underline mx-2">Privacybeleid</a>
+            <a href="/contact" class="hover:underline mx-2">Contact</a>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
+```
