@@ -30,6 +30,7 @@
         #voice-control-btn { box-shadow: 0 4px 14px 0 rgba(0,0,0,0.1); transition: all 0.3s ease-in-out; }
         #voice-control-btn.listening { background-color: #ef4444; transform: scale(1.1); }
         #parking-assist-toggle-btn.active { background-color: #ef4444; color: white; }
+        .modal-ai-content { white-space: pre-wrap; }
     </style>
 </head>
 <body class="min-h-screen">
@@ -452,6 +453,30 @@
                 });
             }
 
+            // --- AI & CORE MODAL FUNCTIONS ---
+            async function getAiResponse(promptText, title = "AI Suggestie") {
+                showModal("AI denkt na...", '<div class="flex justify-center p-4"><i class="fa-solid fa-spinner fa-spin fa-2x"></i></div>');
+                
+                try {
+                    const response = await fetch('/.netlify/functions/ask_ai', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ prompt: promptText })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        hideModal();
+                        setTimeout(() => showModal(title, `<p class="modal-ai-content">${data.response}</p>`), 350);
+                    } else {
+                        showModal('Fout', `Er is een probleem opgetreden: ${data.error}`);
+                    }
+                } catch (error) {
+                    showModal('Fout', 'Kon geen verbinding maken met de AI-service.');
+                    console.error('Error:', error);
+                }
+            }
             function showModal(title, content) {
                 ui.modalTitle.textContent = title;
                 ui.modalContent.innerHTML = content;
@@ -461,6 +486,12 @@
             function hideModal() {
                 ui.modalBox.classList.add('scale-95', 'opacity-0');
                 setTimeout(() => ui.modalContainer.classList.add('hidden'), 300);
+            }
+            function showLoading() {
+                showModal("AI denkt na...", '<div class="flex justify-center p-4"><i class="fa-solid fa-spinner fa-spin fa-2x"></i></div>');
+            }
+            function hideLoading() {
+                hideModal();
             }
             function playSound() {
                 try {
@@ -540,15 +571,6 @@
                         state.parkingStartTime = new Date(state.parkingStartTime);
                     }
                 }
-            }
-
-            // --- AI PLACEHOLDER ---
-            async function getAiResponse(prompt, placeholder, title = "AI Suggestie") {
-                console.log("AI Prompt:", prompt);
-                showModal("AI denkt na...", '<div class="flex justify-center p-4"><i class="fa-solid fa-spinner fa-spin fa-2x"></i></div>');
-                await new Promise(resolve => setTimeout(resolve, 1500));
-                hideModal();
-                setTimeout(() => showModal(title, placeholder), 350);
             }
 
             // --- RENDER FUNCTIONS ---
@@ -831,7 +853,6 @@
                 clearInterval(state.parkingTimerInterval);
                 state.parkingTimerInterval = null;
                 state.parkingStartTime = null;
-                state.parkingLocation = null;
                 renderParkingStatus();
             }
             
@@ -866,7 +887,6 @@
                 
                 // Medicatie
                 state.medications.forEach(med => {
-                    // This check inherently works for daily reminders
                     if (med.isDaily && med.time === currentTime) {
                         showModal('Medicatie Tijd!', `Tijd voor je medicijn: ${med.name}`);
                         if (med.sound) playSound();
@@ -888,8 +908,8 @@
                     if (now >= reminderTime && now < appTime) {
                         showModal('Herinnering', `Over ${app.reminder} minuten: ${app.title}`);
                         if (app.sound) playSound();
-                        app.reminded = true; // Zorg dat de melding maar 1x getoond wordt
-                        saveState(); // Save state after setting reminded flag
+                        app.reminded = true;
+                        saveState();
                     }
                 });
 
@@ -901,7 +921,7 @@
                             showModal('Taak Deadline!', `De deadline voor de taak "${task.text}" is nu.`);
                             playSound();
                             task.reminded = true;
-                            saveState(); // Save state after setting reminded flag
+                            saveState();
                         }
                     }
                 });
@@ -916,7 +936,6 @@
                 renderModuleToggles();
                 renderAll();
                 
-                // If app was closed while parked, restart the timer
                 if (state.isParked && state.parkingStartTime) {
                     state.parkingTimerInterval = setInterval(renderParkingStatus, 1000);
                 }
@@ -934,75 +953,50 @@
                 ui.addCaloriesBtn.addEventListener('click', addCalories);
                 ui.setWorkoutReminderBtn.addEventListener('click', setWorkoutReminder);
                 
-                // AI Knop Event Listeners
+                // --- Nieuwe AI Knop Event Listeners die de Netlify Function aanroepen ---
                 document.getElementById('ai-subtask-btn').addEventListener('click', () => {
                     const query = ui.newTaskInput.value;
                     if (!query) return showModal('Info', 'Voer een taak in.');
-                    const placeholder = `<h4 class="font-bold mb-2">Subtaken voor: ${query}</h4><ul class="list-disc list-inside text-left"><li>Subtaak 1</li><li>Subtaak 2</li><li>Subtaak 3</li></ul>`;
-                    getAiResponse(`Maak subtaken voor ${query}`, placeholder);
+                    getAiResponse(`Maak subtaken voor de taak: ${query}`);
                 });
                 document.getElementById('ai-prepare-btn').addEventListener('click', () => {
                     const title = ui.newAppointmentTitle.value;
                     if (!title) return showModal('Info', 'Voer eerst een titel voor de afspraak in.');
-                    const placeholder = `<h4 class="font-bold mb-2">Voorbereiding voor: ${title}</h4><ul class="list-disc list-inside text-left"><li>Check de locatie en reistijd.</li><li>Neem de benodigde documenten mee.</li><li>Bereid eventuele vragen voor.</li></ul>`;
-                    getAiResponse(`Help me met voorbereiden voor ${title}`, placeholder, 'AI Voorbereiding');
+                    getAiResponse(`Help me voorbereiden voor de afspraak: ${title}`);
                 });
                 document.getElementById('get-maintenance-tips-btn').addEventListener('click', () => {
                     const query = document.getElementById('maintenance-prompt-input').value;
                     if (!query) return showModal('Info', 'Voer een klus in.');
-                    const placeholder = `<h4 class="font-bold mb-2">Checklist voor: ${query}</h4><ul class="list-disc list-inside text-left"><li>Stap 1: Benodigdheden verzamelen.</li><li>Stap 2: Werkplek voorbereiden.</li><li>Stap 3: Klus uitvoeren.</li><li>Stap 4: Opruimen.</li></ul>`;
-                    getAiResponse(`Maak een onderhoudsplan voor ${query}`, placeholder);
+                    getAiResponse(`Maak een onderhouds- of schoonmaakchecklist voor: ${query}`);
                 });
                 document.getElementById('get-career-tips-btn').addEventListener('click', () => {
                     const query = document.getElementById('career-prompt-input').value;
                     if (!query) return showModal('Info', 'Voer een carrièredoel in.');
-                    const placeholder = `<h4 class="font-bold mb-2">Voorbereiding voor: ${query}</h4><ul class="list-disc list-inside text-left"><li>Tip 1: Onderzoek het bedrijf grondig.</li><li>Tip 2: Bereid de STAR-methode voor.</li><li>Tip 3: Stel zelf ook 3 slimme vragen.</li></ul>`;
-                    getAiResponse(`Geef carrièreadvies voor ${query}`, placeholder);
+                    getAiResponse(`Geef carrière coaching tips voor: ${query}`);
                 });
                 document.getElementById('get-leisure-tips-btn').addEventListener('click', () => {
                     const query = document.getElementById('leisure-prompt-input').value;
                     if (!query) return showModal('Info', 'Voer een wens in.');
-                    const placeholder = `<h4 class="font-bold mb-2">Ideeën voor: ${query}</h4><ul class="list-disc list-inside text-left"><li>Optie 1: Bezoek een lokaal park.</li><li>Optie 2: Probeer een nieuw recept.</li><li>Optie 3: Organiseer een spelletjesavond.</li></ul>`;
-                    getAiResponse(`Geef vrijetijdsideeën voor ${query}`, placeholder);
+                    getAiResponse(`Geef ideeën voor vrije tijd activiteiten of een weekendje weg, gebaseerd op: ${query}`);
                 });
                 document.getElementById('get-learning-plan-btn').addEventListener('click', () => {
                     const query = document.getElementById('learning-prompt-input').value;
                     if (!query) return showModal('Info', 'Voer een leerdoel in.');
-                    const placeholder = `<h4 class="font-bold mb-2">Leerplan voor: ${query}</h4><ol class="list-decimal list-inside text-left"><li>Week 1: Focus op de basisprincipes.</li><li>Week 2: Oefen 30 minuten per dag.</li><li>Week 3: Zoek een online community.</li><li>Week 4: Pas je kennis toe in een klein project.</li></ol>`;
-                    getAiResponse(`Maak een leerplan voor ${query}`, placeholder);
+                    getAiResponse(`Maak een stapsgewijs leerplan voor: ${query}`);
                 });
                 document.getElementById('get-sport-tips-btn').addEventListener('click', () => {
                     const query = document.getElementById('sport-prompt-input').value;
                     if (!query) return showModal('Info', 'Voer een sportdoel in.');
-                    const placeholder = `<h4 class="font-bold mb-2">Workout voor: ${query}</h4><ol class="list-decimal list-inside text-left"><li>Warming-up: 5 minuten joggen.</li><li>Oefening 1: 3x10 Push-ups.</li><li>Oefening 2: 3x15 Squats.</li><li>Cooling-down: 5 minuten stretchen.</li></ol>`;
-                    getAiResponse(`Maak een workout voor ${query}`, placeholder);
+                    getAiResponse(`Creëer een workout routine voor: ${query}`);
                 });
                 document.getElementById('ai-diet-coach-btn').addEventListener('click', () => {
-                    const placeholder = `<h4 class="font-bold mb-2">Dieet Suggestie</h4><p>Probeer vanavond een salade met gegrilde kip. Het is licht, voedzaam en past goed binnen je calorie-doel.</p>`;
-                    getAiResponse(`Geef een dieettip.`, placeholder);
+                    getAiResponse(`Geef een gezonde dieet suggestie of tip voor vandaag.`);
                 });
                 document.getElementById('get-meal-plan-btn').addEventListener('click', () => {
                     const query = document.getElementById('meal-prompt-input').value;
                     if (!query) return showModal('Info', 'Voer een gerecht of ingrediënt in.');
-
-                    // Placeholder for AI-generated ingredients
-                    const ingredients = [
-                        { text: `2 kipfilets (voor ${query})`, completed: false },
-                        { text: '4 el sojasaus', completed: false },
-                        { text: '2 el mirin', completed: false },
-                        { text: '1 el suiker', completed: false },
-                        { text: 'Rijst', completed: false }
-                    ];
-
-                    // Add ingredients to shopping list
-                    ingredients.forEach(item => {
-                        state.shoppingList.push({ id: Date.now() + Math.random(), ...item });
-                    });
-                    
-                    saveState();
-                    renderShoppingList();
-                    
-                    showModal('Succes!', `De ingrediënten voor een recept met '${query}' zijn toegevoegd aan je boodschappenlijst.`);
+                    const promptText = `Genereer een gedetailleerd recept voor een maaltijd met als voorkeur: ${query}. Geef een lijst van ingrediënten, stapsgewijze instructies, en geef ook een paar suggesties voor extra's of variaties. Gebruik duidelijke lijsten en headings.`;
+                    getAiResponse(promptText, `Recept voor: ${query}`);
                 });
                 ui.getSavingsPlanBtn.addEventListener('click', () => {
                     const desc = ui.savingsGoalDesc.value.trim();
@@ -1010,17 +1004,8 @@
                     if (!desc || isNaN(amount) || amount <= 0) {
                         return showModal('Info', 'Vul een geldig spaardoel en bedrag in.');
                     }
-                    state.savingsGoal = { desc, amount };
-                    saveState();
-                    const placeholder = `
-                        <h4 class="font-bold mb-2">Spaarplan voor: ${desc} (€${amount})</h4>
-                        <ol class="list-decimal list-inside text-left">
-                            <li>Analyseer je uitgaven: kijk waar je €5 per week kunt besparen.</li>
-                            <li>Stel een automatische overboeking in van €20 per maand.</li>
-                            <li>Verkoop ongebruikte spullen online.</li>
-                            <li>Binnen 6 maanden heb je je doel bereikt!</li>
-                        </ol>`;
-                    getAiResponse(`Maak een spaarplan voor ${desc} van €${amount}`, placeholder, "AI Spaarcoach");
+                    const promptText = `Maak een praktisch spaarplan om het doel "${desc}" te bereiken, met een doelbedrag van €${amount}. Deel de tips op in stappen en geef realistische termijnen.`;
+                    getAiResponse(promptText, "AI Spaarcoach");
                 });
                 document.getElementById('connect-outlook-btn').addEventListener('click', () => {
                     showModal('Binnenkort Beschikbaar', 'De automatische synchronisatie met Outlook is een geavanceerde functie die in een toekomstige versie beschikbaar zal zijn.');
@@ -1036,4 +1021,3 @@
     </script>
 </body>
 </html>
-```
