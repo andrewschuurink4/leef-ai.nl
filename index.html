@@ -1,122 +1,13 @@
 <!DOCTYPE html>
-<html lang="nl" class="scroll-smooth">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-s`cale=1.0">
-    <title>Leef AI - Breng rust in je leven</title>
-    
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#5D8B71">
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            color: #4a4a4a;
-            background-color: #F8F7F4;
-        }
-        .primary-color { color: #5D8B71; }
-        .primary-bg { background-color: #5D8B71; }
-        .secondary-color { color: #8a8a8a; }
-        .hero-bg { background-color: #EAE7DC; }
-    </style>
+    <title>Leef AI wordt geladen...</title>
+    <script>
+        window.location.href = '/dashboard.html';
+    </script>
 </head>
 <body>
-
-<header class="p-4 md:px-8">
-    <nav class="container mx-auto flex justify-between items-center">
-        <div class="text-2xl font-bold primary-color">
-            <i class="fas fa-leaf mr-2"></i>Leef AI
-        </div>
-        <div>
-            <a href="#cta" class="primary-bg text-white font-bold py-2 px-5 rounded-full hover:opacity-90 transition-opacity">Probeer Nu</a>
-        </div>
-    </nav>
-</header>
-
-<section class="hero-bg py-20 md:py-32">
-    <div class="container mx-auto text-center px-4">
-        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4">Breng rust en overzicht in je dagelijks leven.</h1>
-        <p class="text-lg md:text-xl max-w-3xl mx-auto secondary-color mb-8">Leef AI is meer dan een agenda; het is je slimme assistent die proactief meedenkt met je planning, gezondheid, financiën en meer.</p>
-        <a href="#cta" class="primary-bg text-white font-bold py-4 px-8 rounded-full text-lg hover:opacity-90 transition-opacity">Start met Leef</a>
-    </div>
-</section>
-
-<section id="cta" class="hero-bg py-20 md:py-24">
-    <div class="container mx-auto text-center px-4">
-        <h2 class="text-3xl md:text-4xl font-bold">Klaar om de controle terug te pakken?</h2>
-        <p class="text-lg md:text-xl max-w-3xl mx-auto secondary-color mt-4 mb-8">Stop met vergeten, start met leven. Probeer Leef vandaag nog en ervaar de rust van een perfect georganiseerd leven.</p>
-        <div>
-            <a href="javascript:void(0)" id="install-button" class="primary-bg text-white font-bold py-4 px-8 rounded-full text-lg hover:opacity-90 transition-opacity inline-block mr-4">Download voor iOS</a>
-            <a href="javascript:void(0)" id="install-button-android" class="bg-white text-gray-800 font-bold py-4 px-8 rounded-full text-lg hover:bg-gray-100 transition-colors inline-block border border-gray-200">Download voor Android</a>
-        </div>
-    </div>
-</section>
-
-<footer class="py-8">
-    <div class="container mx-auto text-center text-sm secondary-color">
-        <p>&copy; 2025 Leef AI. Alle rechten voorbehouden.</p>
-        <div class="mt-2">
-            <a href="/privacy" class="hover:underline mx-2">Privacybeleid</a>
-            <a href="/contact" class="hover:underline mx-2">Contact</a>
-        </div>
-    </div>
-</footer>
-
-
-<script>
-    // --- PWA Logic ---
-    let deferredPrompt;
-    const installButton = document.getElementById('install-button');
-    const installButtonAndroid = document.getElementById('install-button-android');
-
-    // Luister naar het installatie-event dat door Chrome/Edge wordt gegeven
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        console.log('`beforeinstallprompt` event opgeslagen.');
-    });
-
-    // Definieer wat er moet gebeuren als op een van de knoppen wordt geklikt
-    const installAction = () => {
-        // Check of we het speciale event van Chrome/Edge hebben
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === 'accepted') {
-                    console.log('Gebruiker heeft de installatie geaccepteerd');
-                } else {
-                    console.log('Gebruiker heeft de installatie geweigerd');
-                }
-                deferredPrompt = null;
-            });
-        } else {
-            // Zo nee, toon een algemene instructie voor Safari, Firefox, etc.
-            alert('INSTALLATIE-INSTRUCTIES:\n\n- Op mobiel (iOS): Gebruik de "Deel"-knop en kies "Zet op beginscherm".\n- Op desktop (Firefox/Edge): Zoek naar een installatie-icoon rechts in de adresbalk.');
-        }
-    };
-    
-    // Koppel de actie aan beide knoppen
-    installButton.addEventListener('click', installAction);
-    installButtonAndroid.addEventListener('click', installAction);
-
-
-    // --- Service Worker Registratie ---
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js').then(registration => { // Let op de hoofdletter 'W'
-                console.log('ServiceWorker registratie succesvol:', registration.scope);
-            }, err => {
-                console.log('ServiceWorker registratie mislukt:', err);
-            });
-        });
-    }
-</script>
-
+    <p>Als u niet automatisch wordt doorgestuurd, <a href="/dashboard.html">klik dan hier</a>.</p>
 </body>
 </html>
