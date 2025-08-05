@@ -1,0 +1,3 @@
+[build]
+  # Deze regel vertelt Netlify welke map de serverless functies bevat
+  functions = "netlify/function"
