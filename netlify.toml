@@ -1,0 +1,3 @@
+[build]
+  base = "leef"
+  functions = "netlify/functions"
