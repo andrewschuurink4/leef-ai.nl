@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leef - Jouw AI Levenscoach</title>
+    <title>Leef - Jouw AI Levenscoach (Compleet)</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -49,6 +49,32 @@
                     <p class="text-lg text-gray-500">Jouw persoonlijke AI levenscoach. Welkom terug!</p>
                 </header>
                 
+                <section id="module-contacten" class="mb-16">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-address-book main-accent-color mr-3"></i>Mijn Contacten</h2>
+                        <button id="add-contact-btn" class="main-accent-bg text-white font-bold py-2 px-4 rounded-lg hover:opacity-90"><i class="fa-solid fa-plus mr-2"></i>Nieuw Contact</button>
+                    </div>
+                    <div id="contact-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    </div>
+                </section>
+                
+                <section id="module-momenten" class="mb-16">
+                     <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-images main-accent-color mr-3"></i>Recente Momenten</h2>
+                        <button id="add-moment-btn" class="main-accent-bg text-white font-bold py-2 px-4 rounded-lg hover:opacity-90"><i class="fa-solid fa-plus mr-2"></i>Nieuw Moment</button>
+                    </div>
+                    <div id="moment-gallery" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    </div>
+                </section>
+
+                <section id="module-verjaardagen" class="mb-16">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-birthday-cake main-accent-color mr-3"></i>Verjaardagen</h2>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm">
+                        <h3 class="font-bold text-xl mb-4">Aankomende Verjaardagen</h3>
+                        <div id="birthdays-list" class="space-y-3 mb-4"></div>
+                    </div>
+                </section>
+
                 <section id="module-dagelijks" class="mb-16">
                     <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-house main-accent-color mr-3"></i>Dagelijks Leven</h2>
                     <div class="space-y-6">
@@ -182,30 +208,30 @@
                     <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-bell main-accent-color mr-3"></i>Contextuele Herinneringen</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="bg-white p-6 rounded-2xl shadow-sm">
-                            <h4 class="font-bold text-lg mb-2">Huis Verlaten</h4>
-                            <p class="text-sm text-gray-600 mb-4">Ontvang een 'vergeet-niet' lijst.</p>
+                            <h4 class="font-bold text-lg mb-2">Slimme Parkeerassistent</h4>
+                            <p class="text-sm text-gray-600 mb-4">Geeft een seintje als je waarschijnlijk parkeert.</p>
                             <div class="flex items-center justify-between mt-6">
-                                <span class="font-bold">Actief</span>
+                                <span class="font-bold">Automatische Detectie</span>
                                 <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" class="sr-only peer">
+                                    <input type="checkbox" id="smart-parking-toggle" class="sr-only peer">
                                     <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:main-accent-bg"></div>
                                 </label>
                             </div>
                         </div>
                         <div class="bg-white p-6 rounded-2xl shadow-sm">
-                            <h4 class="font-bold text-lg mb-2">Bij Supermarkt</h4>
-                            <p class="text-sm text-gray-600 mb-4">Toon boodschappenlijst bij aankomst.</p>
+                            <h4 class="font-bold text-lg mb-2">Slimme Boodschappenlijst</h4>
+                            <p class="text-sm text-gray-600 mb-4">Toont lijst automatisch bij de supermarkt.</p>
                             <div class="flex items-center justify-between mt-6">
-                                <span class="font-bold">Actief</span>
+                                <span class="font-bold">Automatische Detectie</span>
                                 <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" class="sr-only peer">
+                                    <input type="checkbox" id="smart-shopping-toggle" class="sr-only peer">
                                     <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:main-accent-bg"></div>
                                 </label>
                             </div>
                         </div>
                         <div class="bg-white p-6 rounded-2xl shadow-sm">
-                            <h4 class="font-bold text-lg mb-2">Automatische Parkeerassistent</h4>
-                            <p class="text-sm text-gray-600 mb-4">Detecteert parkeren en wegrijden.</p>
+                            <h4 class="font-bold text-lg mb-2">Handmatige Parkeerassistent</h4>
+                            <p class="text-sm text-gray-600 mb-4">Sla je locatie op met één klik.</p>
                             <button id="parking-assist-toggle-btn" class="w-full secondary-accent-bg font-bold py-2 px-4 rounded-lg hover:opacity-90 mt-6">Start Parkeerassistent</button>
                             <div id="parking-status-container" class="hidden mt-4 text-center">
                                 <p class="font-bold text-lg main-accent-color">Geparkeerd</p>
@@ -255,12 +281,11 @@
                                 <button id="add-expense-btn" class="main-accent-bg text-white font-bold p-2 rounded-lg">Voeg toe</button>
                             </div>
                             <hr class="my-4">
-                            <h4 class="font-bold text-lg mb-2">AI Spaarcoach</h4>
-                            <div class="flex flex-col sm:flex-row gap-2 mb-2">
-                                <input type="text" id="savings-goal-desc" placeholder="Spaardoel (bv. Nieuwe laptop)" class="flex-grow p-2 border rounded-lg">
-                                <input type="number" id="savings-goal-amount" placeholder="Doelbedrag €" class="w-full sm:w-32 p-2 border rounded-lg">
+                            <h4 class="font-bold text-lg mb-2">Slimme Administratie</h4>
+                            <div class="flex gap-2">
+                               <button id="upload-bon-knop" class="w-1/2 main-accent-bg text-white font-bold py-2 px-4 rounded-lg hover:opacity-90"><i class="fa-solid fa-receipt mr-2"></i>Verwerk Bon</button>
+                               <button id="check-deadlines-knop" class="w-1/2 secondary-accent-bg font-bold py-2 px-4 rounded-lg hover:opacity-90">Check Deadlines</button>
                             </div>
-                            <button id="get-savings-plan-btn" class="font-bold py-2 px-4 rounded-lg secondary-accent-bg hover:opacity-90 w-full">Maak Spaarplan</button>
                         </div>
                     </div>
                 </section>
@@ -342,7 +367,7 @@
         </nav>
 
         <div id="modal-container" class="hidden fixed inset-0 bg-black bg-opacity-50 z-[100] flex items-center justify-center p-4">
-            <div id="modal-box" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md transform scale-95 opacity-0">
+            <div id="modal-box" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg transform scale-95 opacity-0">
                 <h3 id="modal-title" class="text-2xl font-bold mb-4"></h3>
                 <div id="modal-content" class="text-gray-600 max-h-[60vh] overflow-y-auto"></div>
                 <button id="modal-close-btn" class="mt-6 w-full main-accent-bg text-white font-bold py-2 px-4 rounded-lg">Sluiten</button>
@@ -350,674 +375,159 @@
         </div>
     </div>
     
+    <!-- ================================================================================= -->
+    <!-- --- JAVASCRIPT MODULES ('DE BIBLIOTHEEK') --- -->
+    <!-- ================================================================================= -->
     <script>
-        // This entire script is wrapped in a DOMContentLoaded listener to prevent errors.
-        document.addEventListener('DOMContentLoaded', function() {
+        const adresboekManager = { _contacts: [{ id: "uuid-123-abc", basicInfo: { name: "Jan de Vries", birthday: "1985-11-20", contact: { email: "jan.devries@email.com", phone: "+31612345678", address: "Voorbeeldstraat 1, 1234 AB Amsterdam" } }, context: { work: { jobTitle: "Project Manager", company: "Tech Solutions B.V." }}, momentIds: ["moment-001", "moment-002"] }, { id: "uuid-456-def", basicInfo: { name: "Sara Visser", birthday: "1990-03-15", contact: { email: "sara.visser@email.com", address: "Innovatielaan 2, 5652 LA Eindhoven" }}, context: { work: { jobTitle: "Designer", company: "Creative Minds" }}, momentIds: [] }], 
+        getAllContacts: function() { return this._contacts; }, 
+        getContact: function(contactId) { return this._contacts.find(c => c.id === contactId); }, 
+        addContact: function(contactData) { const newContact = { id: `uuid-${Date.now()}`, ...contactData, momentIds: [] }; this._contacts.push(newContact); window.leefApp.saveState(); window.leefApp.renderAll(); return newContact;},
+        shareContact: async function(contactId) { const vCardData = this.exportAsVCard(contactId); if (!vCardData) return; const contact = this.getContact(contactId); const vcfFile = new File([vCardData], `${contact.basicInfo.name}.vcf`, { type: "text/vcard" }); if (navigator.share) { await navigator.share({ files: [vcfFile], title: `Contact: ${contact.basicInfo.name}` }); } else { alert("Deel-API niet ondersteund op dit apparaat."); } }, 
+        getMomentsForContact: function(contactId) { const contact = this.getContact(contactId); if (!contact || !contact.momentIds) return []; const allMoments = momentenManager.getAllMoments(); return allMoments.filter(moment => contact.momentIds.includes(moment.momentId)); } };
+
+        const momentenManager = { _moments: [{ momentId: "moment-001", photoUrl: "https://via.placeholder.com/150/5D8B71/FFFFFF?text=Strand", title: "Stranddag Italië", tags: ["Vakantie", "Jan de Vries"] }, { momentId: "moment-002", photoUrl: "https://via.placeholder.com/150/EAE7DC/4a4a4a?text=Taart", title: "Verjaardag Jan", tags: ["feest", "Jan de Vries"] }], 
+        getAllMoments: function() { return this._moments; },
+        addMoment: function(momentData) { const newMoment = { momentId: `moment-${Date.now()}`, ...momentData }; this._moments.push(newMoment); window.leefApp.saveState(); window.leefApp.renderAll(); return newMoment; }
+        };
+
+        const administratieModule = { verwerkBon: async function(file) { console.log("Workflow gestart: verwerken van bon...", file); const aiResultaat = await this._roepAiAnalyseAan(file); const geverifieerdeData = await this._vraagGebruikerOmVerificatie(aiResultaat); if (geverifieerdeData) { this._verwerkGoedgekeurdeUitgave(geverifieerdeData); } }, _roepAiAnalyseAan: function(file) { console.log("AI analyseert het document..."); return new Promise(resolve => setTimeout(() => resolve({ leverancier: "Coolblue", totaalBedrag: 129.99, voorgesteldeCategorie: "Elektronica" }), 1000)); }, _vraagGebruikerOmVerificatie: function(data) { const bevestiging = confirm(`AI vond: ${data.leverancier}, €${data.totaalBedrag}. Categorie: ${data.voorgesteldeCategorie}. Klopt dit?`); return Promise.resolve(bevestiging ? data : null); }, _verwerkGoedgekeurdeUitgave: function(uitgaveData) { if(window.leefApp && window.leefApp.addExpense) { window.leefApp.addExpense({ desc: uitgaveData.leverancier, amount: uitgaveData.totaalBedrag }); } else { console.error("Kon uitgave niet toevoegen: window.leefApp.addExpense is niet gevonden.")} }, checkBelastingDeadlines: function() { alert("Herinnering: De deadline voor je BTW-aangifte is over 14 dagen!"); } };
+    </script>
     
-            // --- CONFIGURATION ---
-            const modules = [
-                { id: 'dagelijks', name: 'Dagelijks', icon: 'fa-house' },
-                { id: 'maaltijden', name: 'Maaltijden', icon: 'fa-utensils' },
-                { id: 'gezondheid', name: 'Gezondheid', icon: 'fa-heart-pulse' },
-                { id: 'herinneringen', name: 'Herinneringen', icon: 'fa-bell' },
-                { id: 'financien', name: 'Financiën', icon: 'fa-wallet' },
-                { id: 'onderhoud', name: 'Onderhoud', icon: 'fa-car-side' },
-                { id: 'werk', name: 'Werk', icon: 'fa-briefcase' },
-                { id: 'vrijetijd', name: 'Vrije Tijd', icon: 'fa-martini-glass-citrus' },
-                { id: 'ontwikkeling', name: 'Ontwikkeling', icon: 'fa-lightbulb' },
-                { id: 'instellingen', name: 'Instellingen', icon: 'fa-sliders' }
-            ];
+    <!-- ================================================================================= -->
+    <!-- --- HOOFD DASHBOARD SCRIPT (SAMENGEVOEGD) --- -->
+    <!-- ================================================================================= -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    
+        const modules = [
+            { id: 'contacten', name: 'Contacten', icon: 'fa-address-book' },
+            { id: 'momenten', name: 'Momenten', icon: 'fa-images' },
+            { id: 'verjaardagen', name: 'Verjaardagen', icon: 'fa-birthday-cake' },
+            { id: 'dagelijks', name: 'Dagelijks', icon: 'fa-house' },
+            { id: 'maaltijden', name: 'Maaltijden', icon: 'fa-utensils' },
+            { id: 'gezondheid', name: 'Gezondheid', icon: 'fa-heart-pulse' },
+            { id: 'herinneringen', name: 'Herinneringen', icon: 'fa-bell' },
+            { id: 'financien', name: 'Financiën', icon: 'fa-wallet' },
+            { id: 'onderhoud', name: 'Onderhoud', icon: 'fa-car-side' },
+            { id: 'werk', name: 'Werk', icon: 'fa-briefcase' },
+            { id: 'vrijetijd', name: 'Vrije Tijd', icon: 'fa-martini-glass-citrus' },
+            { id: 'ontwikkeling', name: 'Ontwikkeling', icon: 'fa-lightbulb' },
+            { id: 'instellingen', name: 'Instellingen', icon: 'fa-sliders' }
+        ];
 
-            const state = {
-                moduleSettings: {},
-                tasks: [],
-                shoppingList: [],
-                appointments: [],
-                medications: [],
-                calories: [],
-                fixedExpenses: [],
-                expenses: [],
-                budget: 0,
-                savingsGoal: { desc: '', amount: 0 },
-                workoutReminder: { day: -1, time: null },
-                isParked: false,
-                parkingLocation: null,
-                parkingStartTime: null,
-                parkingTimerInterval: null,
-            };
+        const state = {
+            moduleSettings: {}, tasks: [], shoppingList: [], appointments: [], medications: [], calories: [], 
+            fixedExpenses: [], expenses: [], budget: 2000, 
+            savingsGoal: { desc: '', amount: 0 }, workoutReminder: { day: -1, time: null },
+            isParked: false, parkingLocation: null, parkingStartTime: null, parkingTimerInterval: null,
+            smartParking: { enabled: false, lastSpeed: 0, lastCheck: 0 },
+            smartShopping: { enabled: false, notifiedFor: [] },
+            supermarkets: [ { name: "Albert Heijn", lat: 52.37403, lon: 4.88969 } ]
+        };
 
-            let budgetChartInstance = null;
-            const ui = {}; // UI elements will be populated in initialize()
-            let audioCtx;
+        let budgetChartInstance = null;
+        const ui = {};
 
-            // --- UTILITY & CORE FUNCTIONS ---
-            function populateUiElements() {
-                Object.assign(ui, {
-                    desktopNavList: document.getElementById('desktop-nav-list'),
-                    mobileNavList: document.getElementById('mobile-nav-list'),
-                    moduleToggleContainer: document.getElementById('module-toggle-container'),
-                    modalContainer: document.getElementById('modal-container'),
-                    modalBox: document.getElementById('modal-box'),
-                    modalTitle: document.getElementById('modal-title'),
-                    modalContent: document.getElementById('modal-content'),
-                    modalCloseBtn: document.getElementById('modal-close-btn'),
-                    taskList: document.getElementById('task-list'),
-                    newTaskInput: document.getElementById('new-task-input'),
-                    newTaskDatetime: document.getElementById('new-task-datetime'),
-                    addTaskBtn: document.getElementById('add-task-btn'),
-                    shoppingList: document.getElementById('shopping-list'),
-                    newShoppingItemInput: document.getElementById('new-shopping-item-input'),
-                    addShoppingItemBtn: document.getElementById('add-shopping-item-btn'),
-                    appointmentsList: document.getElementById('appointments-list'),
-                    newAppointmentTitle: document.getElementById('new-appointment-title'),
-                    newAppointmentDatetime: document.getElementById('new-appointment-datetime'),
-                    newAppointmentLocation: document.getElementById('new-appointment-location'),
-                    newAppointmentDesc: document.getElementById('new-appointment-desc'),
-                    newAppointmentReminder: document.getElementById('new-appointment-reminder'),
-                    newAppointmentSound: document.getElementById('new-appointment-sound'),
-                    addAppointmentBtn: document.getElementById('add-appointment-btn'),
-                    budgetChart: document.getElementById('budgetChart'),
-                    spentAmount: document.getElementById('spent-amount'),
-                    totalBudget: document.getElementById('total-budget'),
-                    budgetInput: document.getElementById('budget-input'),
-                    updateBudgetBtn: document.getElementById('update-budget-btn'),
-                    expenseList: document.getElementById('expense-list'),
-                    expenseDescInput: document.getElementById('expense-desc-input'),
-                    expenseAmountInput: document.getElementById('expense-amount-input'),
-                    addExpenseBtn: document.getElementById('add-expense-btn'),
-                    fixedExpenseList: document.getElementById('fixed-expense-list'),
-                    fixedExpenseDescInput: document.getElementById('fixed-expense-desc-input'),
-                    fixedExpenseAmountInput: document.getElementById('fixed-expense-amount-input'),
-                    addFixedExpenseBtn: document.getElementById('add-fixed-expense-btn'),
-                    savingsGoalDesc: document.getElementById('savings-goal-desc'),
-                    savingsGoalAmount: document.getElementById('savings-goal-amount'),
-                    getSavingsPlanBtn: document.getElementById('get-savings-plan-btn'),
-                    parkingAssistToggleBtn: document.getElementById('parking-assist-toggle-btn'),
-                    parkingStatusContainer: document.getElementById('parking-status-container'),
-                    parkingTimerDisplay: document.getElementById('parking-timer-display'),
-                    parkingLocationLink: document.getElementById('parking-location-link'),
-                    medicationList: document.getElementById('medication-list'),
-                    medicationName: document.getElementById('medication-name'),
-                    medicationTime: document.getElementById('medication-time'),
-                    medicationDaily: document.getElementById('medication-daily'),
-                    addMedicationBtn: document.getElementById('add-medication-btn'),
-                    caloriesTotal: document.getElementById('calories-total'),
-                    foodItem: document.getElementById('food-item'),
-                    foodCalories: document.getElementById('food-calories'),
-                    addCaloriesBtn: document.getElementById('add-calories-btn'),
-                    workoutDay: document.getElementById('workout-day'),
-                    workoutTimeInput: document.getElementById('workout-time-input'),
-                    setWorkoutReminderBtn: document.getElementById('set-workout-reminder-btn'),
-                    workoutReminderDisplay: document.getElementById('workout-reminder-display'),
-                    voiceControlBtn: document.getElementById('voice-control-btn'),
-                });
-            }
+        function populateUiElements() {
+            Object.assign(ui, {
+                contactList: document.getElementById('contact-list'), addContactBtn: document.getElementById('add-contact-btn'), momentGallery: document.getElementById('moment-gallery'), addMomentBtn: document.getElementById('add-moment-btn'), birthdaysList: document.getElementById('birthdays-list'), uploadBonKnop: document.getElementById('upload-bon-knop'), checkDeadlinesKnop: document.getElementById('check-deadlines-knop'),
+                desktopNavList: document.getElementById('desktop-nav-list'), mobileNavList: document.getElementById('mobile-nav-list'), moduleToggleContainer: document.getElementById('module-toggle-container'), modalContainer: document.getElementById('modal-container'), modalBox: document.getElementById('modal-box'), modalTitle: document.getElementById('modal-title'), modalContent: document.getElementById('modal-content'), modalCloseBtn: document.getElementById('modal-close-btn'), taskList: document.getElementById('task-list'), newTaskInput: document.getElementById('new-task-input'), newTaskDatetime: document.getElementById('new-task-datetime'), addTaskBtn: document.getElementById('add-task-btn'), shoppingList: document.getElementById('shopping-list'), newShoppingItemInput: document.getElementById('new-shopping-item-input'), addShoppingItemBtn: document.getElementById('add-shopping-item-btn'), appointmentsList: document.getElementById('appointments-list'), newAppointmentTitle: document.getElementById('new-appointment-title'), newAppointmentDatetime: document.getElementById('new-appointment-datetime'), newAppointmentLocation: document.getElementById('new-appointment-location'), newAppointmentDesc: document.getElementById('new-appointment-desc'), newAppointmentReminder: document.getElementById('new-appointment-reminder'), newAppointmentSound: document.getElementById('new-appointment-sound'), addAppointmentBtn: document.getElementById('add-appointment-btn'), budgetChart: document.getElementById('budgetChart'), spentAmount: document.getElementById('spent-amount'), totalBudget: document.getElementById('total-budget'), budgetInput: document.getElementById('budget-input'), updateBudgetBtn: document.getElementById('update-budget-btn'), expenseList: document.getElementById('expense-list'), expenseDescInput: document.getElementById('expense-desc-input'), expenseAmountInput: document.getElementById('expense-amount-input'), addExpenseBtn: document.getElementById('add-expense-btn'), fixedExpenseList: document.getElementById('fixed-expense-list'), fixedExpenseDescInput: document.getElementById('fixed-expense-desc-input'), fixedExpenseAmountInput: document.getElementById('fixed-expense-amount-input'), addFixedExpenseBtn: document.getElementById('add-fixed-expense-btn'), savingsGoalDesc: document.getElementById('savings-goal-desc'), savingsGoalAmount: document.getElementById('savings-goal-amount'), getSavingsPlanBtn: document.getElementById('get-savings-plan-btn'), parkingAssistToggleBtn: document.getElementById('parking-assist-toggle-btn'), parkingStatusContainer: document.getElementById('parking-status-container'), parkingTimerDisplay: document.getElementById('parking-timer-display'), parkingLocationLink: document.getElementById('parking-location-link'), medicationList: document.getElementById('medication-list'), medicationName: document.getElementById('medication-name'), medicationTime: document.getElementById('medication-time'), medicationDaily: document.getElementById('medication-daily'), addMedicationBtn: document.getElementById('add-medication-btn'), caloriesTotal: document.getElementById('calories-total'), foodItem: document.getElementById('food-item'), foodCalories: document.getElementById('food-calories'), addCaloriesBtn: document.getElementById('add-calories-btn'), workoutDay: document.getElementById('workout-day'), workoutTimeInput: document.getElementById('workout-time-input'), setWorkoutReminderBtn: document.getElementById('set-workout-reminder-btn'), workoutReminderDisplay: document.getElementById('workout-reminder-display'), voiceControlBtn: document.getElementById('voice-control-btn'),
+                smartParkingToggle: document.getElementById('smart-parking-toggle'), smartShoppingToggle: document.getElementById('smart-shopping-toggle'),
+            });
+        }
+        
+        function showModal(title, content) { ui.modalTitle.textContent = title; ui.modalContent.innerHTML = content; ui.modalContainer.classList.remove('hidden'); setTimeout(() => ui.modalBox.classList.remove('scale-95', 'opacity-0'), 10); }
+        function hideModal() { ui.modalBox.classList.add('scale-95', 'opacity-0'); setTimeout(() => ui.modalContainer.classList.add('hidden'), 300); }
+        
+        window.leefApp = {
+            saveState: () => { localStorage.setItem('leef_app_state_v5', JSON.stringify(state)); },
+            loadState: () => { const savedState = JSON.parse(localStorage.getItem('leef_app_state_v5')); if (savedState) { Object.assign(state, savedState); if (state.parkingStartTime) { state.parkingStartTime = new Date(state.parkingStartTime); } } },
+            renderAll: () => {
+                renderNavigation(); applyModuleSettings(); renderContacten(); renderMomenten(); renderVerjaardagen();
+                renderTasks(); renderShoppingList(); renderAppointments(); renderMedications(); renderCalories(); renderBudgetChart(); renderFixedExpenses(); renderExpenses(); renderParkingStatus(); renderSavingsGoal(); renderWorkoutReminder(); renderModuleToggles();
+                if(ui.smartParkingToggle) ui.smartParkingToggle.checked = state.smartParking.enabled;
+                if(ui.smartShoppingToggle) ui.smartShoppingToggle.checked = state.smartShopping.enabled;
+            },
+            shareContact: (id) => adresboekManager.shareContact(id),
+            viewMoments: (id) => { const c = adresboekManager.getContact(id); const moments = adresboekManager.getMomentsForContact(id); let content = '<p>Geen momenten gevonden.</p>'; if(moments.length > 0) { content = '<div class="grid grid-cols-3 gap-2">'; moments.forEach(m => { content += `<div><img src="${m.photoUrl}" class="rounded-lg"><p class="text-xs text-center">${m.title}</p></div>`; }); content += '</div>'; } showModal(`Momenten van ${c.basicInfo.name}`, content); },
+            addExpense: (expenseData) => { state.expenses.push(expenseData); window.leefApp.saveState(); window.leefApp.renderAll(); },
+            addTask: () => { const text = ui.newTaskInput.value.trim(); if(text) { state.tasks.push({ id: Date.now(), text, completed: false }); window.leefApp.saveState(); window.leefApp.renderAll(); ui.newTaskInput.value = ''; } },
+            toggleTask: (id) => { const task = state.tasks.find(t=>t.id===id); if(task){task.completed = !task.completed;} window.leefApp.saveState(); window.leefApp.renderAll(); },
+            deleteTask: (id) => { state.tasks = state.tasks.filter(t=>t.id!==id); window.leefApp.saveState(); window.leefApp.renderAll(); },
+            addShoppingItem: () => { const text = ui.newShoppingItemInput.value.trim(); if(text) { state.shoppingList.push({ id: Date.now(), text, completed: false }); window.leefApp.saveState(); window.leefApp.renderAll(); ui.newShoppingItemInput.value = ''; } },
+            toggleShoppingItem: (id) => { const item = state.shoppingList.find(i=>i.id===id); if(item){item.completed = !item.completed;} window.leefApp.saveState(); window.leefApp.renderAll(); },
+            deleteShoppingItem: (id) => { state.shoppingList = state.shoppingList.filter(i=>i.id!==id); window.leefApp.saveState(); window.leefApp.renderAll(); },
+            addAppointment: () => { const title = ui.newAppointmentTitle.value.trim(); const datetime = ui.newAppointmentDatetime.value; const location = ui.newAppointmentLocation.value.trim(); if(title && datetime){ state.appointments.push({id: Date.now(), title, datetime, location}); window.leefApp.saveState(); window.leefApp.renderAll(); ui.newAppointmentTitle.value = ''; ui.newAppointmentDatetime.value = ''; ui.newAppointmentLocation.value = '';} },
+            addMedication: () => { const name = ui.medicationName.value.trim(); const time = ui.medicationTime.value; if(name && time){ state.medications.push({id: Date.now(), name, time, isDaily: ui.medicationDaily.checked}); window.leefApp.saveState(); window.leefApp.renderAll(); ui.medicationName.value = ''; ui.medicationTime.value = '';} },
+            deleteMedication: (id) => { state.medications = state.medications.filter(m=>m.id!==id); window.leefApp.saveState(); window.leefApp.renderAll(); },
+            addCalories: () => { const name = ui.foodItem.value.trim(); const calories = parseInt(ui.foodCalories.value); if(name && !isNaN(calories)){ state.calories.push({id: Date.now(), name, calories}); window.leefApp.saveState(); window.leefApp.renderAll(); ui.foodItem.value = ''; ui.foodCalories.value = '';} },
+            setWorkoutReminder: () => { const day = parseInt(ui.workoutDay.value); const time = ui.workoutTimeInput.value; if(time){ state.workoutReminder = {day, time}; window.leefApp.saveState(); window.leefApp.renderAll(); showModal('Succes', 'Workout herinnering ingesteld.'); } },
+            updateBudget: () => { const newBudget = parseFloat(ui.budgetInput.value); if(!isNaN(newBudget)){ state.budget = newBudget; window.leefApp.saveState(); window.leefApp.renderAll(); } },
+            addFixedExpense: () => { const desc = ui.fixedExpenseDescInput.value.trim(); const amount = parseFloat(ui.fixedExpenseAmountInput.value); if(desc && !isNaN(amount)){ state.fixedExpenses.push({id: Date.now(), desc, amount}); window.leefApp.saveState(); window.leefApp.renderAll(); ui.fixedExpenseDescInput.value = ''; ui.fixedExpenseAmountInput.value = ''; } },
+            toggleParkingAssistant: () => { if (state.isParked) { markAsDriving(); } else { markAsParked(); } window.leefApp.saveState(); },
+            showContactForm: () => { const formHTML = `<div class="space-y-4"><input id="contact-name" type="text" placeholder="Volledige naam" class="w-full p-2 border rounded-lg"><input id="contact-birthday" type="date" class="w-full p-2 border rounded-lg"><input id="contact-email" type="email" placeholder="E-mailadres" class="w-full p-2 border rounded-lg"><input id="contact-phone" type="tel" placeholder="Telefoonnummer" class="w-full p-2 border rounded-lg"><input id="contact-address" type="text" placeholder="Adres" class="w-full p-2 border rounded-lg"><input id="contact-job" type="text" placeholder="Functie" class="w-full p-2 border rounded-lg"><input id="contact-company" type="text" placeholder="Bedrijf" class="w-full p-2 border rounded-lg"><button id="save-contact-btn" class="w-full main-accent-bg text-white font-bold p-3 rounded-lg">Opslaan</button></div>`; showModal("Nieuw Contact Toevoegen", formHTML); document.getElementById('save-contact-btn').onclick = () => { const contactData = { basicInfo: { name: document.getElementById('contact-name').value, birthday: document.getElementById('contact-birthday').value, contact: { email: document.getElementById('contact-email').value, phone: document.getElementById('contact-phone').value, address: document.getElementById('contact-address').value, } }, context: { work: { jobTitle: document.getElementById('contact-job').value, company: document.getElementById('contact-company').value, } } }; adresboekManager.addContact(contactData); hideModal(); }; },
+            showMomentForm: () => { const formHTML = `<div class="space-y-4"><input id="moment-title" type="text" placeholder="Titel van het moment" class="w-full p-2 border rounded-lg"><input id="moment-date" type="date" class="w-full p-2 border rounded-lg"><input type="file" id="moment-photo" class="w-full p-2 border rounded-lg"><textarea id="moment-story" placeholder="Jouw verhaal..." class="w-full p-2 border rounded-lg" rows="3"></textarea><input id="moment-tags" type="text" placeholder="Tags (gescheiden door komma's)" class="w-full p-2 border rounded-lg"><button id="save-moment-btn" class="w-full main-accent-bg text-white font-bold p-3 rounded-lg">Opslaan</button></div>`; showModal("Nieuw Moment Toevoegen", formHTML); document.getElementById('save-moment-btn').onclick = () => { const momentData = { title: document.getElementById('moment-title').value, date: document.getElementById('moment-date').value, photoUrl: 'https://via.placeholder.com/150/808080/FFFFFF?text=Nieuw', story: document.getElementById('moment-story').value, tags: document.getElementById('moment-tags').value.split(',').map(t => t.trim()), }; momentenManager.addMoment(momentData); hideModal(); }; }
+        };
 
-            // --- AI & CORE MODAL FUNCTIONS ---
-            async function getAiResponse(promptText, title = "AI Suggestie") {
-                showModal("AI denkt na...", '<div class="flex justify-center p-4"><i class="fa-solid fa-spinner fa-spin fa-2x"></i></div>');
-                
-                try {
-                    const response = await fetch('/.netlify/functions/ask_ai', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ prompt: promptText })
-                    });
+        function renderNavigation() { const navTargets = [ui.desktopNavList, ui.mobileNavList]; navTargets.forEach(nav => { if(!nav) return; nav.innerHTML = ''; modules.filter(m => state.moduleSettings[m.id] !== false).forEach(m => { const navItemHTML = `<li><a href="#module-${m.id}" title="${m.name}" class="nav-link flex flex-col items-center justify-center h-16 w-16 rounded-xl hover:secondary-accent-bg text-gray-500 hover:text-gray-800"><i class="fa-solid ${m.icon} fa-lg"></i><span class="text-xs mt-1">${m.name}</span></a></li>`; nav.innerHTML += navItemHTML; }); }); }
+        function applyModuleSettings() { modules.forEach(m => { const section = document.getElementById(`module-${m.id}`); if (section) { section.style.display = state.moduleSettings[m.id] !== false ? '' : 'none'; } }); }
+        function renderModuleToggles() { if (!ui.moduleToggleContainer) return; ui.moduleToggleContainer.innerHTML = ''; modules.forEach(m => { if (m.id === 'instellingen') return; const isChecked = state.moduleSettings[m.id] !== false; const toggleHTML = `<label class="flex items-center space-x-3 cursor-pointer"><input type="checkbox" data-module-id="${m.id}" class="module-toggle h-5 w-5 rounded text-green-600" ${isChecked ? 'checked' : ''}><span>${m.name}</span></label>`; ui.moduleToggleContainer.innerHTML += toggleHTML; }); document.querySelectorAll('.module-toggle').forEach(toggle => { toggle.addEventListener('change', (e) => { state.moduleSettings[e.target.dataset.moduleId] = e.target.checked; window.leefApp.saveState(); window.leefApp.renderAll(); }); }); }
+        function renderContacten() { if (!ui.contactList) return; ui.contactList.innerHTML = ''; adresboekManager.getAllContacts().forEach(c => { const div = document.createElement('div'); div.className = 'bg-white p-4 rounded-xl shadow-sm'; const address = c.basicInfo.contact.address; const addressLink = address ? `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}" target="_blank" class="text-blue-600 hover:underline"><i class="fa-solid fa-map-marker-alt mr-1"></i>${address}</a>` : ''; div.innerHTML = `<div><p class="font-bold text-lg">${c.basicInfo.name}</p><p class="text-sm text-gray-600">${c.context.work.jobTitle}</p><p class="text-sm text-gray-500 mt-1">${addressLink}</p></div><div class="mt-2 pt-2 border-t flex justify-end"><button onclick="window.leefApp.viewMoments('${c.id}')" class="secondary-accent-bg font-bold py-1 px-3 rounded-lg text-sm mr-2" title="Bekijk Momenten"><i class="fa-solid fa-images"></i></button><button onclick="window.leefApp.shareContact('${c.id}')" class="secondary-accent-bg font-bold py-1 px-3 rounded-lg text-sm" title="Deel Visitekaartje"><i class="fa-solid fa-share-alt"></i></button></div>`; ui.contactList.appendChild(div); }); }
+        function renderMomenten() { if (!ui.momentGallery) return; ui.momentGallery.innerHTML = ''; momentenManager.getAllMoments().forEach(m => { const img = document.createElement('img'); img.src = m.photoUrl; img.alt = m.title; img.title = m.title; img.className = 'rounded-lg object-cover h-32 w-full shadow-sm cursor-pointer transition-transform hover:scale-105'; img.onclick = () => showModal(m.title, `<img src='${m.photoUrl}' class='rounded-lg w-full'><p class='mt-2'>Tags: ${m.tags.join(', ')}</p>`); ui.momentGallery.appendChild(img); }); }
+        function renderVerjaardagen() { if (!ui.birthdaysList) return; const contactsWithBirthday = adresboekManager.getAllContacts().filter(c => c.basicInfo.birthday); ui.birthdaysList.innerHTML = ''; contactsWithBirthday.forEach(c => { const el = document.createElement('div'); el.className = 'flex items-center justify-between p-3 bg-gray-50 rounded-lg'; el.innerHTML = `<div><p class="font-bold">${c.basicInfo.name}</p><p class="text-sm text-gray-600">${new Date(c.basicInfo.birthday).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })}</p></div>`; ui.birthdaysList.appendChild(el); }); }
+        function renderTasks() { if(ui.taskList) ui.taskList.innerHTML = state.tasks.map(task => `<div class="task-item ${task.completed ? 'completed' : ''} flex items-center justify-between p-2 rounded-lg"><label class="flex items-center cursor-pointer"><input type="checkbox" ${task.completed ? 'checked' : ''} onchange="window.leefApp.toggleTask(${task.id})" class="mr-3 h-5 w-5 rounded"><span class="task-text">${task.text}</span></label><button onclick="window.leefApp.deleteTask(${task.id})" class="text-gray-400 hover:text-red-500"><i class="fa-solid fa-trash"></i></button></div>`).join(''); }
+        function renderShoppingList() { if(ui.shoppingList) ui.shoppingList.innerHTML = state.shoppingList.map(item => `<div class="shopping-item ${item.completed ? 'completed' : ''} flex items-center justify-between p-2 rounded-lg"><label class="flex items-center cursor-pointer"><input type="checkbox" ${item.completed ? 'checked' : ''} onchange="window.leefApp.toggleShoppingItem(${item.id})" class="mr-3 h-5 w-5 rounded"><span>${item.text}</span></label><button onclick="window.leefApp.deleteShoppingItem(${item.id})" class="text-gray-400 hover:text-red-500"><i class="fa-solid fa-trash"></i></button></div>`).join(''); }
+        function renderAppointments() { if(ui.appointmentsList) ui.appointmentsList.innerHTML = state.appointments.map(app => { const locationLink = app.location ? `<p class="text-sm text-gray-600 mt-1"><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(app.location)}" target="_blank" class="text-blue-600 hover:underline"><i class="fa-solid fa-map-marker-alt mr-1"></i>${app.location}</a></p>` : ''; return `<div class="p-3 bg-gray-50 rounded-lg"><p class="font-bold">${app.title}</p><p class="text-sm text-gray-600">${new Date(app.datetime).toLocaleString('nl-NL')}</p>${locationLink}</div>`}).join(''); }
+        function renderMedications() { if(ui.medicationList) ui.medicationList.innerHTML = state.medications.length ? state.medications.map(med => `<div class="flex justify-between items-center text-sm p-1"><span>${med.name} om ${med.time} ${med.isDaily ? '<span class="text-xs text-gray-500">(Dagelijks)</span>' : ''}</span><button onclick="window.leefApp.deleteMedication(${med.id})" class="text-gray-400 hover:text-red-500"><i class="fa-solid fa-trash"></i></button></div>`).join('') : '<p class="text-gray-500 text-sm">Geen medicatie ingesteld.</p>';}
+        function renderCalories() { if(ui.caloriesTotal) ui.caloriesTotal.textContent = state.calories.reduce((sum, item) => sum + item.calories, 0); }
+        function renderFixedExpenses() { if(ui.fixedExpenseList) ui.fixedExpenseList.innerHTML = state.fixedExpenses.map(exp => `<div class="flex justify-between"><span>${exp.desc}</span><span>€${exp.amount.toFixed(2)}</span></div>`).join(''); }
+        function renderExpenses() { if(ui.expenseList) ui.expenseList.innerHTML = state.expenses.length === 0 ? '<p class="text-gray-500">Nog geen uitgaven toegevoegd.</p>' : state.expenses.slice().reverse().map(exp => `<div class="flex justify-between items-center text-sm"><span>${exp.desc}</span><span class="font-bold">€${exp.amount.toFixed(2)}</span></div>`).join(''); }
+        function renderBudgetChart() { if (!ui.budgetChart) return; const spent = state.fixedExpenses.reduce((s, e) => s + e.amount, 0) + state.expenses.reduce((s, e) => s + e.amount, 0); const remaining = state.budget - spent; if (budgetChartInstance) budgetChartInstance.destroy(); const ctx = ui.budgetChart.getContext('2d'); budgetChartInstance = new Chart(ctx, { type: 'doughnut', data: { datasets: [{ data: [spent, remaining > 0 ? remaining : 0], backgroundColor: ['#ef4444', '#5D8B71'], borderWidth: 0 }] }, options: { cutout: '70%', plugins: { legend: { display: false } } } }); if(ui.spentAmount) ui.spentAmount.textContent = `€${spent.toFixed(2)}`; if(ui.totalBudget) ui.totalBudget.textContent = `€${state.budget.toFixed(2)}`; }
+        function renderWorkoutReminder() { if(ui.workoutReminderDisplay && state.workoutReminder.time){ const dayName = state.workoutReminder.day === -1 ? 'Elke dag' : ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'][state.workoutReminder.day]; ui.workoutReminderDisplay.textContent = `${dayName} om ${state.workoutReminder.time}`; } else if(ui.workoutReminderDisplay) { ui.workoutReminderDisplay.textContent = 'niet ingesteld'; } }
+        function renderSavingsGoal() { if(ui.savingsGoalDesc) ui.savingsGoalDesc.value = state.savingsGoal.desc || ''; if(ui.savingsGoalAmount) ui.savingsGoalAmount.value = state.savingsGoal.amount > 0 ? state.savingsGoal.amount : ''; }
+        function renderParkingStatus() { if (!ui.parkingAssistToggleBtn) return; if (state.isParked) { ui.parkingAssistToggleBtn.textContent = 'Stop Parkeerassistent'; ui.parkingAssistToggleBtn.classList.add('active'); ui.parkingStatusContainer.classList.remove('hidden'); const now = new Date(); const elapsed = Math.floor((now - (state.parkingStartTime || now)) / 1000); const hours = String(Math.floor(elapsed / 3600)).padStart(2, '0'); const minutes = String(Math.floor((elapsed % 3600) / 60)).padStart(2, '0'); const seconds = String(elapsed % 60).padStart(2, '0'); ui.parkingTimerDisplay.textContent = `${hours}:${minutes}:${seconds}`; if (state.parkingLocation) { ui.parkingLocationLink.href = `https://www.google.com/maps?q=${state.parkingLocation.lat},${state.parkingLocation.lon}`; } } else { ui.parkingAssistToggleBtn.textContent = 'Start Parkeerassistent'; ui.parkingAssistToggleBtn.classList.remove('active'); ui.parkingStatusContainer.classList.add('hidden'); } }
+        
+        function markAsParked() { if (!navigator.geolocation) { return alert("Geolocation wordt niet ondersteund."); } navigator.geolocation.getCurrentPosition(position => { state.isParked = true; state.parkingStartTime = new Date(); state.parkingLocation = { lat: position.coords.latitude, lon: position.coords.longitude }; if (state.parkingTimerInterval) clearInterval(state.parkingTimerInterval); state.parkingTimerInterval = setInterval(renderParkingStatus, 1000); renderParkingStatus(); window.leefApp.saveState(); }, () => { alert("Kon je locatie niet ophalen."); }); }
+        function markAsDriving() { state.isParked = false; clearInterval(state.parkingTimerInterval); state.parkingTimerInterval = null; state.parkingStartTime = null; renderParkingStatus(); window.leefApp.saveState(); }
+        
+        function checkContextualReminders() { if (!navigator.geolocation) return; navigator.geolocation.getCurrentPosition(position => { const { latitude, longitude, speed } = position.coords; const now = Date.now(); if (state.smartParking.enabled && (now - state.smartParking.lastCheck > 30000)) { const currentSpeed = speed || 0; if (state.smartParking.lastSpeed > 5 && currentSpeed < 1) { if (confirm("Het lijkt erop dat je geparkeerd hebt. Wil je de parkeerlocatie opslaan?")) { markAsParked(); } } state.smartParking.lastSpeed = currentSpeed; state.smartParking.lastCheck = now; } if (state.smartShopping.enabled && state.shoppingList.length > 0) { state.supermarkets.forEach(supermarket => { const distance = getDistance(latitude, longitude, supermarket.lat, supermarket.lon); if (distance < 0.1 && !state.smartShopping.notifiedFor.includes(supermarket.name)) { let shoppingListHTML = state.shoppingList.map(item => `<li>${item.text}</li>`).join(''); showModal(`Je bent bij ${supermarket.name}!`, `Hier is je boodschappenlijst:<ul>${shoppingListHTML}</ul>`); state.smartShopping.notifiedFor.push(supermarket.name); } }); } window.leefApp.saveState(); }); }
+        function getDistance(lat1, lon1, lat2, lon2) { const R = 6371; const dLat = (lat2 - lat1) * (Math.PI / 180); const dLon = (lon2 - lon1) * (Math.PI / 180); const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2); const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)); return R * c; }
 
-                    const data = await response.json();
+        function initialize() {
+            populateUiElements();
+            window.leefApp.loadState();
+            if(Object.keys(state.moduleSettings).length === 0) { modules.forEach(m => state.moduleSettings[m.id] = true); }
+            window.leefApp.renderAll();
 
-                    if (response.ok) {
-                        hideModal();
-                        setTimeout(() => showModal(title, `<p class="modal-ai-content">${data.response}</p>`), 350);
-                    } else {
-                        showModal('Fout', `Er is een probleem opgetreden: ${data.error}`);
-                    }
-                } catch (error) {
-                    showModal('Fout', 'Kon geen verbinding maken met de AI-service.');
-                    console.error('Error:', error);
-                }
-            }
-            function showModal(title, content) {
-                ui.modalTitle.textContent = title;
-                ui.modalContent.innerHTML = content;
-                ui.modalContainer.classList.remove('hidden');
-                setTimeout(() => ui.modalBox.classList.remove('scale-95', 'opacity-0'), 10);
-            }
-            function hideModal() {
-                ui.modalBox.classList.add('scale-95', 'opacity-0');
-                setTimeout(() => ui.modalContainer.classList.add('hidden'), 300);
-            }
-            function showLoading() {
-                showModal("AI denkt na...", '<div class="flex justify-center p-4"><i class="fa-solid fa-spinner fa-spin fa-2x"></i></div>');
-            }
-            function hideLoading() {
-                hideModal();
-            }
-            function playSound() {
-                try {
-                    if (!audioCtx) {
-                        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    }
-                    const oscillator = audioCtx.createOscillator();
-                    const gainNode = audioCtx.createGain();
-                    oscillator.connect(gainNode);
-                    gainNode.connect(audioCtx.destination);
-                    oscillator.type = 'sine';
-                    oscillator.frequency.setValueAtTime(440, audioCtx.currentTime);
-                    gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
-                    oscillator.start(audioCtx.currentTime);
-                    oscillator.stop(audioCtx.currentTime + 0.5);
-                } catch (e) {
-                    console.error("Could not play sound:", e);
-                }
-            }
+            ui.modalCloseBtn.addEventListener('click', hideModal);
+            if(ui.addTaskBtn) ui.addTaskBtn.addEventListener('click', window.leefApp.addTask);
+            if(ui.addShoppingItemBtn) ui.addShoppingItemBtn.addEventListener('click', window.leefApp.addShoppingItem);
+            if(ui.addAppointmentBtn) ui.addAppointmentBtn.addEventListener('click', window.leefApp.addAppointment);
+            if(ui.addExpenseBtn) ui.addExpenseBtn.addEventListener('click', () => { const desc = ui.expenseDescInput.value.trim(); const amount = parseFloat(ui.expenseAmountInput.value); if (desc && !isNaN(amount) && amount > 0) { window.leefApp.addExpense({ desc, amount }); ui.expenseDescInput.value = ''; ui.expenseAmountInput.value = ''; } });
+            if(ui.updateBudgetBtn) ui.updateBudgetBtn.addEventListener('click', window.leefApp.updateBudget);
+            if(ui.addFixedExpenseBtn) ui.addFixedExpenseBtn.addEventListener('click', window.leefApp.addFixedExpense);
+            if(ui.addMedicationBtn) ui.addMedicationBtn.addEventListener('click', window.leefApp.addMedication);
+            if(ui.addCaloriesBtn) ui.addCaloriesBtn.addEventListener('click', window.leefApp.addCalories);
+            if(ui.setWorkoutReminderBtn) ui.setWorkoutReminderBtn.addEventListener('click', window.leefApp.setWorkoutReminder);
+            if(ui.parkingAssistToggleBtn) ui.parkingAssistToggleBtn.addEventListener('click', window.leefApp.toggleParkingAssistant);
+            if(ui.uploadBonKnop) ui.uploadBonKnop.addEventListener('click', () => administratieModule.verwerkBon({ name: "gesimuleerde_bon.pdf" }));
+            if(ui.checkDeadlinesKnop) ui.checkDeadlinesKnop.addEventListener('click', () => administratieModule.checkBelastingDeadlines());
+            if(ui.addContactBtn) ui.addContactBtn.addEventListener('click', () => window.leefApp.showContactForm());
+            if(ui.addMomentBtn) ui.addMomentBtn.addEventListener('click', () => window.leefApp.showMomentForm());
+            if(ui.smartParkingToggle) ui.smartParkingToggle.addEventListener('change', (e) => { state.smartParking.enabled = e.target.checked; window.leefApp.saveState(); });
+            if(ui.smartShoppingToggle) ui.smartShoppingToggle.addEventListener('change', (e) => { state.smartShopping.enabled = e.target.checked; if(!e.target.checked) state.smartShopping.notifiedFor = []; window.leefApp.saveState(); });
             
-            // --- MODULE MANAGEMENT ---
-            function saveModuleSettings() { localStorage.setItem('leef_module_settings', JSON.stringify(state.moduleSettings)); }
-            function loadModuleSettings() {
-                const savedSettings = JSON.parse(localStorage.getItem('leef_module_settings'));
-                if (savedSettings) { state.moduleSettings = savedSettings; } 
-                else { modules.forEach(m => state.moduleSettings[m.id] = true); }
-            }
-            function applyModuleSettings() {
-                modules.forEach(m => {
-                    const section = document.getElementById(`module-${m.id}`);
-                    if (section) {
-                        section.style.display = state.moduleSettings[m.id] ? '' : 'none';
-                    }
-                });
-                renderNavigation();
-            }
-            function renderNavigation() {
-                ui.desktopNavList.innerHTML = '';
-                ui.mobileNavList.innerHTML = '';
-                modules.filter(m => state.moduleSettings[m.id]).forEach(m => {
-                    const navItemHTML = `<li><a href="#module-${m.id}" title="${m.name}" class="nav-link flex flex-col items-center justify-center h-16 w-16 rounded-xl hover:secondary-accent-bg"><i class="fa-solid ${m.icon} fa-lg"></i><span class="text-xs mt-1">${m.name}</span></a></li>`;
-                    ui.desktopNavList.innerHTML += navItemHTML;
-                    ui.mobileNavList.innerHTML += navItemHTML;
-                });
-            }
-            function renderModuleToggles() {
-                ui.moduleToggleContainer.innerHTML = '';
-                modules.forEach(m => {
-                    if (m.id === 'instellingen') return;
-                    const isChecked = state.moduleSettings[m.id];
-                    const toggleHTML = `<label class="flex items-center space-x-3 cursor-pointer"><input type="checkbox" data-module-id="${m.id}" class="module-toggle h-5 w-5 rounded text-green-600 focus:ring-green-500 border-gray-300" ${isChecked ? 'checked' : ''}><span>${m.name}</span></label>`;
-                    ui.moduleToggleContainer.innerHTML += toggleHTML;
-                });
-                document.querySelectorAll('.module-toggle').forEach(toggle => {
-                    toggle.addEventListener('change', (e) => {
-                        state.moduleSettings[e.target.dataset.moduleId] = e.target.checked;
-                        saveModuleSettings();
-                        applyModuleSettings();
-                    });
-                });
-            }
+            const aiButtons = ['ai-subtask-btn', 'ai-prepare-btn', 'get-maintenance-tips-btn', 'get-career-tips-btn', 'get-leisure-tips-btn', 'get-learning-plan-btn', 'get-sport-tips-btn', 'ai-diet-coach-btn', 'get-meal-plan-btn', 'get-savings-plan-btn', 'connect-outlook-btn'];
+            aiButtons.forEach(id => { const btn = document.getElementById(id); if(btn) btn.addEventListener('click', () => alert(`AI functie '${id}' wordt aangeroepen.`)); });
             
-            // --- STATE MANAGEMENT ---
-            function saveState() {
-                const stateToSave = { ...state };
-                // Remove active intervals before saving, as they cannot be serialized
-                ['parkingTimerInterval'].forEach(key => delete stateToSave[key]);
-                localStorage.setItem('leef_app_state', JSON.stringify(stateToSave));
-            }
-            function loadState() {
-                const savedState = JSON.parse(localStorage.getItem('leef_app_state'));
-                if (savedState) { 
-                    Object.assign(state, savedState);
-                    // Re-parse date objects from string
-                    if (state.parkingStartTime) {
-                        state.parkingStartTime = new Date(state.parkingStartTime);
-                    }
-                }
-            }
+            if (state.isParked && state.parkingStartTime) { state.parkingTimerInterval = setInterval(renderParkingStatus, 1000); }
+            setInterval(checkContextualReminders, 60000);
+            console.log("Compleet dashboard geïnitialiseerd met slimme herinneringen.");
+        }
 
-            // --- RENDER FUNCTIONS ---
-            function renderAll() {
-                renderTasks();
-                renderShoppingList();
-                renderAppointments();
-                renderMedications();
-                renderCalories();
-                renderBudgetChart();
-                renderFixedExpenses();
-                renderExpenses();
-                renderParkingStatus();
-                renderSavingsGoal();
-                renderWorkoutReminder();
-            }
-            
-            // --- DAGELIJKS LEVEN FUNCTIONS ---
-            function renderTasks() {
-                ui.taskList.innerHTML = state.tasks.length ? '' : '<p class="text-gray-500">Geen taken voor vandaag.</p>';
-                state.tasks.forEach(task => {
-                    const taskEl = document.createElement('div');
-                    taskEl.className = `task-item flex items-center justify-between p-2 rounded-lg ${task.completed ? 'completed' : ''}`;
-                    const deadline = task.datetime ? new Date(task.datetime).toLocaleTimeString('nl-NL', {hour: '2-digit', minute:'2-digit'}) : '';
-                    taskEl.innerHTML = `<label class="flex items-center cursor-pointer"><input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask(${task.id})" class="mr-3 h-5 w-5 rounded text-green-600 focus:ring-green-500 border-gray-300"><span class="task-text">${task.text} ${deadline ? `<span class='text-xs text-gray-400 ml-2'>- ${deadline}</span>` : ''}</span></label><button onclick="deleteTask(${task.id})" class="text-gray-400 hover:text-red-500"><i class="fa-solid fa-trash"></i></button>`;
-                    ui.taskList.appendChild(taskEl);
-                });
-            }
-            function addTask() {
-                const text = ui.newTaskInput.value.trim();
-                const datetime = ui.newTaskDatetime.value;
-                if(text) {
-                    state.tasks.push({ id: Date.now(), text, completed: false, datetime: datetime || null, reminded: false });
-                    saveState();
-                    renderTasks();
-                    ui.newTaskInput.value = '';
-                    ui.newTaskDatetime.value = '';
-                }
-            }
-            window.toggleTask = (id) => {
-                const task = state.tasks.find(t => t.id === id);
-                if(task) { task.completed = !task.completed; saveState(); renderTasks(); }
-            };
-            window.deleteTask = (id) => {
-                state.tasks = state.tasks.filter(t => t.id !== id);
-                saveState();
-                renderTasks();
-            };
-
-            function renderShoppingList() {
-                ui.shoppingList.innerHTML = state.shoppingList.length ? '' : '<p class="text-gray-500">Boodschappenlijst is leeg.</p>';
-                state.shoppingList.forEach(item => {
-                    const itemEl = document.createElement('div');
-                    itemEl.className = `shopping-item flex items-center justify-between p-2 rounded-lg ${item.completed ? 'completed' : ''}`;
-                    itemEl.innerHTML = `<label class="flex items-center cursor-pointer"><input type="checkbox" ${item.completed ? 'checked' : ''} onchange="toggleShoppingItem(${item.id})" class="mr-3 h-5 w-5 rounded text-green-600 focus:ring-green-500 border-gray-300"><span>${item.text}</span></label><button onclick="deleteShoppingItem(${item.id})" class="text-gray-400 hover:text-red-500"><i class="fa-solid fa-trash"></i></button>`;
-                    ui.shoppingList.appendChild(itemEl);
-                });
-            }
-            function addShoppingItem() {
-                const text = ui.newShoppingItemInput.value.trim();
-                if(text) {
-                    state.shoppingList.push({ id: Date.now(), text, completed: false });
-                    saveState();
-                    renderShoppingList();
-                    ui.newShoppingItemInput.value = '';
-                }
-            }
-            window.toggleShoppingItem = (id) => {
-                const item = state.shoppingList.find(i => i.id === id);
-                if(item) { item.completed = !item.completed; saveState(); renderShoppingList(); }
-            };
-            window.deleteShoppingItem = (id) => {
-                state.shoppingList = state.shoppingList.filter(i => i.id !== id);
-                saveState();
-                renderShoppingList();
-            };
-
-            function renderAppointments() {
-                ui.appointmentsList.innerHTML = state.appointments.length ? '' : '<p class="text-gray-500">Geen afspraken gepland.</p>';
-                state.appointments.sort((a, b) => new Date(a.datetime) - new Date(b.datetime)).forEach(app => {
-                    const appEl = document.createElement('div');
-                    appEl.className = 'p-3 bg-gray-50 rounded-lg';
-                    const date = new Date(app.datetime);
-                    
-                    const locationLink = app.location ? 
-                        `<p class="text-sm text-gray-600 mt-1"><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(app.location)}" target="_blank" class="text-blue-600 hover:underline"><i class="fa-solid fa-map-marker-alt mr-1"></i>${app.location}</a></p>` : '';
-                    
-                    appEl.innerHTML = `<p class="font-bold">${app.title}</p><p class="text-sm text-gray-600">${date.toLocaleString('nl-NL')}</p>${locationLink}<p class="text-sm mt-1">${app.desc}</p>`;
-                    ui.appointmentsList.appendChild(appEl);
-                });
-            }
-            function addAppointment() {
-                const title = ui.newAppointmentTitle.value.trim();
-                const datetime = ui.newAppointmentDatetime.value;
-                const location = ui.newAppointmentLocation.value.trim();
-                const desc = ui.newAppointmentDesc.value.trim();
-                const reminder = ui.newAppointmentReminder.value;
-                const sound = ui.newAppointmentSound.checked;
-                if (title && datetime) {
-                    state.appointments.push({ id: Date.now(), title, datetime, location, desc, reminder, sound, reminded: false });
-                    saveState();
-                    renderAppointments();
-                    ui.newAppointmentTitle.value = '';
-                    ui.newAppointmentDatetime.value = '';
-                    ui.newAppointmentLocation.value = '';
-                    ui.newAppointmentDesc.value = '';
-                } else {
-                    showModal('Fout', 'Vul een titel en datum/tijd in.');
-                }
-            }
-
-            // --- GEZONDHEID FUNCTIONS ---
-            function renderMedications() {
-                ui.medicationList.innerHTML = state.medications.length ? '' : '<p class="text-gray-500 text-sm">Geen medicatie ingesteld.</p>';
-                state.medications.sort((a,b) => a.time.localeCompare(b.time)).forEach(med => {
-                    const medEl = document.createElement('div');
-                    medEl.className = 'flex justify-between items-center text-sm p-1';
-                    medEl.innerHTML = `
-                        <span>${med.name} om ${med.time} ${med.isDaily ? '<span class="text-xs text-gray-500">(Dagelijks)</span>' : ''}</span>
-                        <button onclick="deleteMedication(${med.id})" class="text-gray-400 hover:text-red-500"><i class="fa-solid fa-trash"></i></button>
-                    `;
-                    ui.medicationList.appendChild(medEl);
-                });
-            }
-            function addMedication() {
-                const name = ui.medicationName.value.trim();
-                const time = ui.medicationTime.value;
-                const isDaily = ui.medicationDaily.checked;
-                if (name && time) {
-                    state.medications.push({ id: Date.now(), name, time, isDaily, sound: true });
-                    saveState();
-                    renderMedications();
-                    ui.medicationName.value = '';
-                    ui.medicationTime.value = '';
-                }
-            }
-            window.deleteMedication = (id) => {
-                state.medications = state.medications.filter(m => m.id !== id);
-                saveState();
-                renderMedications();
-            };
-            function renderCalories() {
-                const total = state.calories.reduce((sum, item) => sum + item.calories, 0);
-                ui.caloriesTotal.textContent = total;
-            }
-            function addCalories() {
-                const name = ui.foodItem.value.trim();
-                const calories = parseInt(ui.foodCalories.value);
-                if (name && !isNaN(calories) && calories > 0) {
-                    state.calories.push({ id: Date.now(), name, calories });
-                    saveState();
-                    renderCalories();
-                    ui.foodItem.value = '';
-                    ui.foodCalories.value = '';
-                }
-            }
-            function setWorkoutReminder() {
-                const day = parseInt(ui.workoutDay.value);
-                const time = ui.workoutTimeInput.value;
-                if (time) {
-                    state.workoutReminder = { day, time };
-                    saveState();
-                    renderWorkoutReminder();
-                    showModal('Succes', 'Workout herinnering ingesteld.');
-                }
-            }
-            function renderWorkoutReminder() {
-                const { day, time } = state.workoutReminder;
-                if (time) {
-                    const dayName = day === -1 ? 'Elke dag' : ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'][day];
-                    ui.workoutReminderDisplay.textContent = `${dayName} om ${time}`;
-                } else {
-                    ui.workoutReminderDisplay.textContent = 'niet ingesteld';
-                }
-            }
-
-            // --- FINANCIËN FUNCTIONS ---
-            function renderBudgetChart() {
-                const fixedTotal = state.fixedExpenses.reduce((sum, e) => sum + e.amount, 0);
-                const variableTotal = state.expenses.reduce((sum, e) => sum + e.amount, 0);
-                const spent = fixedTotal + variableTotal;
-                const remaining = state.budget - spent;
-                if (budgetChartInstance) { budgetChartInstance.destroy(); }
-                const budgetCanvas = ui.budgetChart.getContext('2d');
-                budgetChartInstance = new Chart(budgetCanvas, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Vast', 'Variabel', 'Resterend'],
-                        datasets: [{
-                            data: [fixedTotal, variableTotal, remaining > 0 ? remaining : 0],
-                            backgroundColor: ['#f59e0b', '#ef4444', '#5D8B71'],
-                            borderColor: '#F8F7F4',
-                            borderWidth: 4
-                        }]
-                    },
-                    options: { responsive: true, cutout: '70%', plugins: { legend: { display: false }, tooltip: { enabled: true } } }
-                });
-                ui.spentAmount.textContent = `€${spent.toFixed(2)}`;
-                ui.totalBudget.textContent = `€${state.budget.toFixed(2)}`;
-            }
-            function updateBudget() {
-                const newBudget = parseFloat(ui.budgetInput.value);
-                if (!isNaN(newBudget) && newBudget >= 0) {
-                    state.budget = newBudget;
-                    saveState();
-                    renderBudgetChart();
-                }
-            }
-            function renderExpenses() {
-                ui.expenseList.innerHTML = state.expenses.length ? '' : '<p class="text-gray-500">Nog geen uitgaven toegevoegd.</p>';
-                state.expenses.slice().reverse().forEach(expense => {
-                    const expenseEl = document.createElement('div');
-                    expenseEl.className = 'flex justify-between items-center text-sm';
-                    expenseEl.innerHTML = `<span>${expense.desc}</span><span class="font-bold">€${expense.amount.toFixed(2)}</span>`;
-                    ui.expenseList.appendChild(expenseEl);
-                });
-            }
-            function addExpense() {
-                const desc = ui.expenseDescInput.value.trim();
-                const amount = parseFloat(ui.expenseAmountInput.value);
-                if (desc && !isNaN(amount) && amount > 0) {
-                    state.expenses.push({ id: Date.now(), desc, amount });
-                    saveState();
-                    renderExpenses();
-                    renderBudgetChart();
-                    ui.expenseDescInput.value = '';
-                    ui.expenseAmountInput.value = '';
-                } else {
-                    showModal('Fout', 'Vul een geldige omschrijving en bedrag in.');
-                }
-            }
-            function renderFixedExpenses() {
-                ui.fixedExpenseList.innerHTML = state.fixedExpenses.length ? '' : '<p class="text-gray-500">Geen vaste uitgaven.</p>';
-                state.fixedExpenses.forEach(exp => {
-                    const expEl = document.createElement('div');
-                    expEl.className = 'flex justify-between items-center';
-                    expEl.innerHTML = `<span>${exp.desc}</span><span>€${exp.amount.toFixed(2)}</span>`;
-                    ui.fixedExpenseList.appendChild(expEl);
-                });
-            }
-            function addFixedExpense() {
-                const desc = ui.fixedExpenseDescInput.value.trim();
-                const amount = parseFloat(ui.fixedExpenseAmountInput.value);
-                if (desc && !isNaN(amount) && amount > 0) {
-                    state.fixedExpenses.push({ id: Date.now(), desc, amount });
-                    saveState();
-                    renderFixedExpenses();
-                    renderBudgetChart();
-                    ui.fixedExpenseDescInput.value = '';
-                    ui.fixedExpenseAmountInput.value = '';
-                }
-            }
-            function renderSavingsGoal() {
-                ui.savingsGoalDesc.value = state.savingsGoal.desc || '';
-                ui.savingsGoalAmount.value = state.savingsGoal.amount > 0 ? state.savingsGoal.amount : '';
-            }
-
-            // --- PARKEER FUNCTIES (DEMO) ---
-            function toggleParkingAssistant() {
-                if (state.isParked) {
-                    markAsDriving();
-                } else {
-                    markAsParked();
-                }
-                saveState();
-            }
-            
-            function markAsParked() {
-                state.isParked = true;
-                state.parkingStartTime = new Date();
-                // Demo location - link to Amsterdam Centraal
-                state.parkingLocation = { lat: 52.379189, lon: 4.899431 }; 
-                if (state.parkingTimerInterval) clearInterval(state.parkingTimerInterval);
-                state.parkingTimerInterval = setInterval(renderParkingStatus, 1000);
-                renderParkingStatus();
-            }
-
-            function markAsDriving() {
-                state.isParked = false;
-                clearInterval(state.parkingTimerInterval);
-                state.parkingTimerInterval = null;
-                state.parkingStartTime = null;
-                renderParkingStatus();
-            }
-            
-            function renderParkingStatus() {
-                if (state.isParked) {
-                    ui.parkingAssistToggleBtn.textContent = 'Stop Parkeerassistent';
-                    ui.parkingAssistToggleBtn.classList.add('active');
-                    ui.parkingStatusContainer.classList.remove('hidden');
-
-                    const now = new Date();
-                    const elapsed = Math.floor((now - state.parkingStartTime) / 1000);
-                    const hours = String(Math.floor(elapsed / 3600)).padStart(2, '0');
-                    const minutes = String(Math.floor((elapsed % 3600) / 60)).padStart(2, '0');
-                    const seconds = String(elapsed % 60).padStart(2, '0');
-                    ui.parkingTimerDisplay.textContent = `${hours}:${minutes}:${seconds}`;
-                    
-                    if (state.parkingLocation) {
-                        ui.parkingLocationLink.href = `https://www.google.com/maps/search/?api=1&query=${state.parkingLocation.lat},${state.parkingLocation.lon}`;
-                    }
-
-                } else {
-                    ui.parkingAssistToggleBtn.textContent = 'Start Parkeerassistent';
-                    ui.parkingAssistToggleBtn.classList.remove('active');
-                    ui.parkingStatusContainer.classList.add('hidden');
-                }
-            }
-
-            // --- CENTRALE HERINNERING CHECKER ---
-            function checkReminders() {
-                const now = new Date();
-                const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-                
-                // Medicatie
-                state.medications.forEach(med => {
-                    if (med.isDaily && med.time === currentTime) {
-                        showModal('Medicatie Tijd!', `Tijd voor je medicijn: ${med.name}`);
-                        if (med.sound) playSound();
-                    }
-                });
-                
-                // Workout
-                const { day, time } = state.workoutReminder;
-                if (time === currentTime && (day === -1 || day === now.getDay())) {
-                    showModal('Tijd om te Sporten!', 'Het is tijd voor je workout. Zet hem op!');
-                    playSound();
-                }
-                
-                // Afspraken
-                state.appointments.forEach(app => {
-                    if (app.reminded || app.reminder === 'none') return;
-                    const appTime = new Date(app.datetime);
-                    const reminderTime = new Date(appTime.getTime() - parseInt(app.reminder) * 60000);
-                    if (now >= reminderTime && now < appTime) {
-                        showModal('Herinnering', `Over ${app.reminder} minuten: ${app.title}`);
-                        if (app.sound) playSound();
-                        app.reminded = true;
-                        saveState();
-                    }
-                });
-
-                // Taken
-                state.tasks.forEach(task => {
-                    if (task.datetime && !task.completed && !task.reminded) {
-                        const taskTime = new Date(task.datetime);
-                        if (now >= taskTime) {
-                            showModal('Taak Deadline!', `De deadline voor de taak "${task.text}" is nu.`);
-                            playSound();
-                            task.reminded = true;
-                            saveState();
-                        }
-                    }
-                });
-            }
-
-            // --- INITIALIZATION ---
-            function initialize() {
-                populateUiElements();
-                loadModuleSettings();
-                loadState();
-                applyModuleSettings();
-                renderModuleToggles();
-                renderAll();
-                
-                if (state.isParked && state.parkingStartTime) {
-                    state.parkingTimerInterval = setInterval(renderParkingStatus, 1000);
-                }
-                
-                // Event Listeners
-                ui.modalCloseBtn.addEventListener('click', hideModal);
-                ui.addTaskBtn.addEventListener('click', addTask);
-                ui.addShoppingItemBtn.addEventListener('click', addShoppingItem);
-                ui.addAppointmentBtn.addEventListener('click', addAppointment);
-                ui.updateBudgetBtn.addEventListener('click', updateBudget);
-                ui.addExpenseBtn.addEventListener('click', addExpense);
-                ui.addFixedExpenseBtn.addEventListener('click', addFixedExpense);
-                ui.parkingAssistToggleBtn.addEventListener('click', toggleParkingAssistant);
-                ui.addMedicationBtn.addEventListener('click', addMedication);
-                ui.addCaloriesBtn.addEventListener('click', addCalories);
-                ui.setWorkoutReminderBtn.addEventListener('click', setWorkoutReminder);
-                
-                // --- Nieuwe AI Knop Event Listeners die de Netlify Function aanroepen ---
-                document.getElementById('ai-subtask-btn').addEventListener('click', () => {
-                    const query = ui.newTaskInput.value;
-                    if (!query) return showModal('Info', 'Voer een taak in.');
-                    getAiResponse(`Maak subtaken voor de taak: ${query}`);
-                });
-                document.getElementById('ai-prepare-btn').addEventListener('click', () => {
-                    const title = ui.newAppointmentTitle.value;
-                    if (!title) return showModal('Info', 'Voer eerst een titel voor de afspraak in.');
-                    getAiResponse(`Help me voorbereiden voor de afspraak: ${title}`);
-                });
-                document.getElementById('get-maintenance-tips-btn').addEventListener('click', () => {
-                    const query = document.getElementById('maintenance-prompt-input').value;
-                    if (!query) return showModal('Info', 'Voer een klus in.');
-                    getAiResponse(`Maak een onderhouds- of schoonmaakchecklist voor: ${query}`);
-                });
-                document.getElementById('get-career-tips-btn').addEventListener('click', () => {
-                    const query = document.getElementById('career-prompt-input').value;
-                    if (!query) return showModal('Info', 'Voer een carrièredoel in.');
-                    getAiResponse(`Geef carrière coaching tips voor: ${query}`);
-                });
-                document.getElementById('get-leisure-tips-btn').addEventListener('click', () => {
-                    const query = document.getElementById('leisure-prompt-input').value;
-                    if (!query) return showModal('Info', 'Voer een wens in.');
-                    getAiResponse(`Geef ideeën voor vrije tijd activiteiten of een weekendje weg, gebaseerd op: ${query}`);
-                });
-                document.getElementById('get-learning-plan-btn').addEventListener('click', () => {
-                    const query = document.getElementById('learning-prompt-input').value;
-                    if (!query) return showModal('Info', 'Voer een leerdoel in.');
-                    getAiResponse(`Maak een stapsgewijs leerplan voor: ${query}`);
-                });
-                document.getElementById('get-sport-tips-btn').addEventListener('click', () => {
-                    const query = document.getElementById('sport-prompt-input').value;
-                    if (!query) return showModal('Info', 'Voer een sportdoel in.');
-                    getAiResponse(`Creëer een workout routine voor: ${query}`);
-                });
-                document.getElementById('ai-diet-coach-btn').addEventListener('click', () => {
-                    getAiResponse(`Geef een gezonde dieet suggestie of tip voor vandaag.`);
-                });
-                document.getElementById('get-meal-plan-btn').addEventListener('click', () => {
-                    const query = document.getElementById('meal-prompt-input').value;
-                    if (!query) return showModal('Info', 'Voer een gerecht of ingrediënt in.');
-                    const promptText = `Genereer een gedetailleerd recept voor een maaltijd met als voorkeur: ${query}. Geef een lijst van ingrediënten, stapsgewijze instructies, en geef ook een paar suggesties voor extra's of variaties. Gebruik duidelijke lijsten en headings.`;
-                    getAiResponse(promptText, `Recept voor: ${query}`);
-                });
-                ui.getSavingsPlanBtn.addEventListener('click', () => {
-                    const desc = ui.savingsGoalDesc.value.trim();
-                    const amount = parseFloat(ui.savingsGoalAmount.value);
-                    if (!desc || isNaN(amount) || amount <= 0) {
-                        return showModal('Info', 'Vul een geldig spaardoel en bedrag in.');
-                    }
-                    const promptText = `Maak een praktisch spaarplan om het doel "${desc}" te bereiken, met een doelbedrag van €${amount}. Deel de tips op in stappen en geef realistische termijnen.`;
-                    getAiResponse(promptText, "AI Spaarcoach");
-                });
-                document.getElementById('connect-outlook-btn').addEventListener('click', () => {
-                    showModal('Binnenkort Beschikbaar', 'De automatische synchronisatie met Outlook is een geavanceerde functie die in een toekomstige versie beschikbaar zal zijn.');
-                });
-
-                // Start de centrale checker (eens per minuut)
-                setInterval(checkReminders, 60000);
-                checkReminders(); // Run once on startup to catch any immediate reminders
-            }
-
-            initialize();
-        });
+        initialize();
+    });
     </script>
 </body>
 </html>
