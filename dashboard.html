@@ -440,6 +440,25 @@
         function showModal(title, content) { ui.modalTitle.textContent = title; ui.modalContent.innerHTML = content; ui.modalContainer.classList.remove('hidden'); setTimeout(() => ui.modalBox.classList.remove('scale-95', 'opacity-0'), 10); }
         function hideModal() { ui.modalBox.classList.add('scale-95', 'opacity-0'); setTimeout(() => ui.modalContainer.classList.add('hidden'), 300); }
         
+        async function callAiFunction(prompt, modalTitle) {
+            showModal(modalTitle, '<p class="text-center">AI is aan het denken...</p>');
+            try {
+                const response = await fetch('/.netlify/functions/ask_ai', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: prompt })
+                });
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.error || 'Er is een onbekende fout opgetreden.');
+                }
+                showModal(modalTitle, `<div class="modal-ai-content ai-checklist">${data.response}</div>`);
+            } catch (error) {
+                console.error('Fout bij het aanroepen van de AI:', error);
+                showModal('Fout', `<p>Er is iets misgegaan: ${error.message}</p>`);
+            }
+        }
+
         window.leefApp = {
             saveState: () => { localStorage.setItem('leef_app_state_v5', JSON.stringify(state)); },
             loadState: () => { const savedState = JSON.parse(localStorage.getItem('leef_app_state_v5')); if (savedState) { Object.assign(state, savedState); if (state.parkingStartTime) { state.parkingStartTime = new Date(state.parkingStartTime); } } },
@@ -518,9 +537,50 @@
             if(ui.smartParkingToggle) ui.smartParkingToggle.addEventListener('change', (e) => { state.smartParking.enabled = e.target.checked; window.leefApp.saveState(); });
             if(ui.smartShoppingToggle) ui.smartShoppingToggle.addEventListener('change', (e) => { state.smartShopping.enabled = e.target.checked; if(!e.target.checked) state.smartShopping.notifiedFor = []; window.leefApp.saveState(); });
             
-            // DEZE REGELS ZIJN VERVANGEN DOOR HET NIEUWE SCRIPT HIERONDER
-            // const aiButtons = ['ai-subtask-btn', 'ai-prepare-btn', 'get-maintenance-tips-btn', 'get-career-tips-btn', 'get-leisure-tips-btn', 'get-learning-plan-btn', 'get-sport-tips-btn', 'ai-diet-coach-btn', 'get-meal-plan-btn', 'get-savings-plan-btn', 'connect-outlook-btn'];
-            // aiButtons.forEach(id => { const btn = document.getElementById(id); if(btn) btn.addEventListener('click', () => alert(`AI functie '${id}' wordt aangeroepen.`)); });
+            // --- Koppel de "AI Suggesties" knop voor Taken ---
+            const aiSubtaskBtn = document.getElementById('ai-subtask-btn');
+            const newTaskInput = document.getElementById('new-task-input');
+            if (aiSubtaskBtn && newTaskInput) {
+                aiSubtaskBtn.addEventListener('click', () => {
+                    const task = newTaskInput.value.trim();
+                    if (!task) {
+                        alert('Voer eerst een hoofdtaak in.');
+                        return;
+                    }
+                    const prompt = `Maak een checklist met concrete subtaken voor de hoofdtaak: "${task}"`;
+                    callAiFunction(prompt, `AI Suggesties voor "${task}"`);
+                });
+            }
+
+            // --- Koppel de "AI, help voorbereiden!" knop voor Afspraken ---
+            const aiPrepareBtn = document.getElementById('ai-prepare-btn');
+            const newAppointmentTitle = document.getElementById('new-appointment-title');
+            if(aiPrepareBtn && newAppointmentTitle) {
+                aiPrepareBtn.addEventListener('click', () => {
+                    const appointment = newAppointmentTitle.value.trim();
+                    if (!appointment) {
+                        alert('Voer eerst een titel voor de afspraak in.');
+                        return;
+                    }
+                    const prompt = `Ik heb een afspraak met de titel "${appointment}". Geef me een korte checklist met 3 tot 5 punten om me voor te bereiden.`;
+                    callAiFunction(prompt, `Voorbereiding voor "${appointment}"`);
+                });
+            }
+
+            // --- Koppel de "Krijg Checklist" knop voor Onderhoud ---
+            const getMaintenanceTipsBtn = document.getElementById('get-maintenance-tips-btn');
+            const maintenancePromptInput = document.getElementById('maintenance-prompt-input');
+            if(getMaintenanceTipsBtn && maintenancePromptInput) {
+                getMaintenanceTipsBtn.addEventListener('click', () => {
+                    const topic = maintenancePromptInput.value.trim();
+                    if(!topic) {
+                        alert('Voer eerst een onderwerp in.');
+                        return;
+                    }
+                    const prompt = `Maak een onderhouds- of schoonmaakchecklist voor: "${topic}"`;
+                    callAiFunction(prompt, `Checklist voor "${topic}"`);
+                });
+            }
             
             if (state.isParked && state.parkingStartTime) { state.parkingTimerInterval = setInterval(renderParkingStatus, 1000); }
             setInterval(checkContextualReminders, 60000);
@@ -531,90 +591,5 @@
     });
     </script>
 
-    <!-- ================================================================================= -->
-    <!-- --- ECHTE AI FUNCTIE AANROEP --- -->
-    <!-- ================================================================================= -->
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-
-        // Functie om de AI aan te roepen en het antwoord in de modal te tonen
-        async function callAiFunction(prompt, modalTitle) {
-            // Gebruik de bestaande showModal functie om een laadstatus te tonen
-            showModal(modalTitle, '<p class="text-center">AI is aan het denken...</p>');
-
-            try {
-                // Roep de Netlify functie aan
-                const response = await fetch('/.netlify/functions/ask_ai', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt: prompt })
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    // Als er een fout is, toon die dan
-                    throw new Error(data.error || 'Er is een onbekende fout opgetreden.');
-                }
-                
-                // Toon het antwoord van de AI in de modal
-                showModal(modalTitle, `<div class="modal-ai-content ai-checklist">${data.response}</div>`);
-
-            } catch (error) {
-                // Vang eventuele fouten op en toon ze
-                console.error('Fout bij het aanroepen van de AI:', error);
-                showModal('Fout', `<p>Er is iets misgegaan: ${error.message}</p>`);
-            }
-        }
-
-        // --- Koppel de "AI Suggesties" knop voor Taken ---
-        const aiSubtaskBtn = document.getElementById('ai-subtask-btn');
-        const newTaskInput = document.getElementById('new-task-input');
-        if (aiSubtaskBtn && newTaskInput) {
-            aiSubtaskBtn.addEventListener('click', () => {
-                const task = newTaskInput.value.trim();
-                if (!task) {
-                    alert('Voer eerst een hoofdtaak in.');
-                    return;
-                }
-                const prompt = `Maak een checklist met concrete subtaken voor de hoofdtaak: "${task}"`;
-                callAiFunction(prompt, `AI Suggesties voor "${task}"`);
-            });
-        }
-
-        // --- Koppel de "AI, help voorbereiden!" knop voor Afspraken ---
-        const aiPrepareBtn = document.getElementById('ai-prepare-btn');
-        const newAppointmentTitle = document.getElementById('new-appointment-title');
-        if(aiPrepareBtn && newAppointmentTitle) {
-            aiPrepareBtn.addEventListener('click', () => {
-                const appointment = newAppointmentTitle.value.trim();
-                if (!appointment) {
-                    alert('Voer eerst een titel voor de afspraak in.');
-                    return;
-                }
-                const prompt = `Ik heb een afspraak met de titel "${appointment}". Geef me een korte checklist met 3 tot 5 punten om me voor te bereiden.`;
-                callAiFunction(prompt, `Voorbereiding voor "${appointment}"`);
-            });
-        }
-
-        // --- Koppel de "Krijg Checklist" knop voor Onderhoud ---
-        const getMaintenanceTipsBtn = document.getElementById('get-maintenance-tips-btn');
-        const maintenancePromptInput = document.getElementById('maintenance-prompt-input');
-        if(getMaintenanceTipsBtn && maintenancePromptInput) {
-            getMaintenanceTipsBtn.addEventListener('click', () => {
-                const topic = maintenancePromptInput.value.trim();
-                if(!topic) {
-                    alert('Voer eerst een onderwerp in.');
-                    return;
-                }
-                const prompt = `Maak een onderhouds- of schoonmaakchecklist voor: "${topic}"`;
-                callAiFunction(prompt, `Checklist voor "${topic}"`);
-            });
-        }
-        
-        // Je kunt hier meer knoppen toevoegen op dezelfde manier...
-
-    });
-    </script>
 </body>
 </html>
