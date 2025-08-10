@@ -1,23 +1,26 @@
 {
-  "name": "leef",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/andrewschuurink4/leef-ai.nl.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/andrewschuurink4/leef-ai.nl/issues"
-  },
-  "homepage": "https://github.com/andrewschuurink4/leef-ai.nl#readme",
-  "dependencies": {
-    "node-fetch": "^3.3.2"
-  }
+  "name": "leef",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewschuurink4/leef-ai.nl.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewschuurink4/leef-ai.nl/issues"
+  },
+  "homepage": "https://github.com/andrewschuurink4/leef-ai.nl#readme",
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
 }
