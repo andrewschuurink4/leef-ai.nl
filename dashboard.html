@@ -443,7 +443,7 @@
         async function callAiFunction(prompt, modalTitle) {
             showModal(modalTitle, '<p class="text-center">AI is aan het denken...</p>');
             try {
-                const response = await fetch('/.netlify/functions/ask_ai', {
+                const response = await fetch('/.netlify/functions/callApi', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ prompt: prompt })
