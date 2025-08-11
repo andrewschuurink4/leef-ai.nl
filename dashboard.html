@@ -1,24 +1,3 @@
-Je hebt 100% gelijk om kwaad te zijn. Mijn oprechte excuses. Ik heb een fout gemaakt.
-
-In mijn poging om een schone, werkende versie te geven, heb ik het script te veel versimpeld en per ongeluk veel van je modules en code verwijderd. Ik had je volledige, originele bestand moeten nemen en alleen de fouten daarin moeten corrigeren. Dat was niet de bedoeling en ik snap volledig waarom je gefrustreerd bent.
-
-Laten we het goed doen.
-
------
-
-### \#\# De Echte, Complete en Gecorrigeerde `dashboard.html`
-
-Hieronder staat de **volledige versie** van je `dashboard.html`, met **al je originele modules en functies intact**. Ik heb alleen de specifieke bugs gerepareerd die we de afgelopen uren hebben gevonden.
-
-**Wat is gerepareerd:**
-
-  * De link naar je CSS-bestand (`/dist/output.css`) is correct.
-  * De URL's voor de Google Maps-links in de `render` functies zijn gecorrigeerd.
-  * De URL voor de placeholder-afbeeldingen is gecorrigeerd.
-
-Vervang de volledige inhoud van je `dashboard.html` met deze code.
-
-````html
 <!DOCTYPE html>
 <html lang="nl" class="scroll-smooth">
 <head>
@@ -34,23 +13,12 @@ Vervang de volledige inhoud van je `dashboard.html` met deze code.
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #F8F7F4;
-            color: #4a4a4a;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #F8F7F4; color: #4a4a4a; }
         .main-accent-color { color: #5D8B71; }
         .main-accent-bg { background-color: #5D8B71; }
         .secondary-accent-bg { background-color: #EAE7DC; }
-        .task-item.completed label span.task-text, .shopping-item.completed span {
-            text-decoration: line-through;
-            color: #a0aec0;
-        }
+        .task-item.completed label span.task-text, .shopping-item.completed span { text-decoration: line-through; color: #a0aec0; }
         #modal-container, #modal-box { transition: opacity 0.3s ease, transform 0.3s ease; }
-        .ai-checklist { border-left: 3px solid #B0D4B8; background-color: #fafffa; padding: 1rem; border-radius: 0.5rem; }
-        #voice-control-btn { box-shadow: 0 4px 14px 0 rgba(0,0,0,0.1); transition: all 0.3s ease-in-out; }
-        #voice-control-btn.listening { background-color: #ef4444; transform: scale(1.1); }
-        #parking-assist-toggle-btn.active { background-color: #ef4444; color: white; }
         .modal-ai-content { white-space: pre-wrap; }
     </style>
 </head>
@@ -59,327 +27,13 @@ Vervang de volledige inhoud van je `dashboard.html` met deze code.
     <div class="flex">
         <nav class="hidden md:flex flex-col items-center w-20 bg-white shadow-md min-h-screen fixed top-0 left-0 z-40">
             <div class="py-5 main-accent-color"><i class="fa-solid fa-leaf fa-2x"></i></div>
-            <ul id="desktop-nav-list" class="flex flex-col space-y-2 mt-8">
-            </ul>
+            <ul id="desktop-nav-list" class="flex flex-col space-y-2 mt-8"></ul>
         </nav>
 
         <main class="w-full md:pl-20 pb-24 md:pb-0">
-            <div class="p-4 md:p-8 max-w-7xl mx-auto">
-                <header class="mb-6">
-                    <h1 class="text-4xl font-bold text-gray-800">Leef</h1>
-                    <p class="text-lg text-gray-500">Jouw persoonlijke AI levenscoach. Welkom terug!</p>
-                </header>
-                
-                <section id="module-contacten" class="mb-16">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-address-book main-accent-color mr-3"></i>Mijn Contacten</h2>
-                        <button id="add-contact-btn" class="main-accent-bg text-white font-bold py-2 px-4 rounded-lg hover:opacity-90"><i class="fa-solid fa-plus mr-2"></i>Nieuw Contact</button>
-                    </div>
-                    <div id="contact-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    </div>
-                </section>
-                
-                <section id="module-momenten" class="mb-16">
-                     <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-3xl font-bold text-gray-800"><i class="fa-solid fa-images main-accent-color mr-3"></i>Recente Momenten</h2>
-                        <button id="add-moment-btn" class="main-accent-bg text-white font-bold py-2 px-4 rounded-lg hover:opacity-90"><i class="fa-solid fa-plus mr-2"></i>Nieuw Moment</button>
-                    </div>
-                    <div id="moment-gallery" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                    </div>
-                </section>
-
-                <section id="module-verjaardagen" class="mb-16">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-birthday-cake main-accent-color mr-3"></i>Verjaardagen</h2>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm">
-                        <h3 class="font-bold text-xl mb-4">Aankomende Verjaardagen</h3>
-                        <div id="birthdays-list" class="space-y-3 mb-4"></div>
-                    </div>
-                </section>
-
-                <section id="module-dagelijks" class="mb-16">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-house main-accent-color mr-3"></i>Dagelijks Leven</h2>
-                    <div class="space-y-6">
-                        <div class="bg-white p-6 rounded-2xl shadow-sm">
-                            <h3 class="font-bold text-xl mb-4">Mijn Taken</h3>
-                            <div id="task-list" class="space-y-3 mb-4"></div>
-                            <h4 class="font-bold text-lg mb-2 mt-4">Nieuwe Taak Toevoegen</h4>
-                            <div class="flex flex-col sm:flex-row gap-2 items-center">
-                                <input type="text" id="new-task-input" placeholder="Nieuwe taak..." class="flex-grow p-3 border rounded-lg">
-                                <input type="datetime-local" id="new-task-datetime" class="p-3 border rounded-lg text-gray-500" title="Optionele deadline">
-                            </div>
-                             <div class="flex gap-2 mt-2">
-                                <button id="ai-subtask-btn" title="AI, help met subtaken" class="w-1/2 secondary-accent-bg font-bold p-3 rounded-lg hover:opacity-90"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Suggesties</button>
-                                <button id="add-task-btn" class="w-1/2 main-accent-bg text-white font-bold p-3 rounded-lg hover:opacity-90">Voeg toe</button>
-                            </div>
-                        </div>
-                        <div class="bg-white p-6 rounded-2xl shadow-sm">
-                            <h3 class="font-bold text-xl mb-4">Boodschappenlijst</h3>
-                            <div id="shopping-list" class="space-y-3 mb-4"></div>
-                            <div class="flex gap-2">
-                                <input type="text" id="new-shopping-item-input" placeholder="bv. Melk, Brood..." class="flex-grow p-3 border rounded-lg">
-                                <button id="add-shopping-item-btn" class="main-accent-bg text-white font-bold p-3 rounded-lg hover:opacity-90">Voeg toe</button>
-                            </div>
-                        </div>
-                        <div class="bg-white p-6 rounded-2xl shadow-sm">
-                            <h3 class="font-bold text-xl mb-4">Agenda</h3>
-                            <div id="appointments-list" class="space-y-3 mb-4"></div>
-                            <h4 class="font-bold text-lg mb-2 mt-4">Nieuwe Afspraak Toevoegen</h4>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
-                                <input id="new-appointment-title" type="text" placeholder="Titel van afspraak" class="p-3 border rounded-lg">
-                                <input id="new-appointment-datetime" type="datetime-local" class="p-3 border rounded-lg text-gray-500">
-                            </div>
-                            <div class="flex flex-col md:flex-row gap-4 mb-2">
-                                <input id="new-appointment-location" type="text" placeholder="Adres of locatie" class="p-3 border rounded-lg flex-grow">
-                                <select id="new-appointment-reminder" class="p-3 border rounded-lg text-gray-500 w-full md:w-auto">
-                                    <option value="none">Geen herinnering</option>
-                                    <option value="0">Op het moment zelf</option>
-                                    <option value="15">15 minuten van tevoren</option>
-                                    <option value="60">1 uur van tevoren</option>
-                                    <option value="1440">1 dag van tevoren</option>
-                                </select>
-                            </div>
-                            <div class="flex items-center justify-center mb-4">
-                                <label class="flex items-center cursor-pointer">
-                                    <input id="new-appointment-sound" type="checkbox" class="mr-2 h-5 w-5 rounded text-green-600">
-                                    Met geluid
-                                </label>
-                            </div>
-                            <textarea id="new-appointment-desc" placeholder="Beschrijving (optioneel)" class="w-full p-3 border rounded-lg mb-4" rows="2"></textarea>
-                            <div class="flex flex-col sm:flex-row gap-2">
-                                <button id="add-appointment-btn" class="w-full sm:w-auto main-accent-bg text-white font-bold p-3 rounded-lg hover:opacity-90 flex-grow">Voeg toe</button>
-                                <button id="ai-prepare-btn" class="w-full sm:w-auto secondary-accent-bg font-bold p-3 rounded-lg hover:opacity-90 flex items-center justify-center gap-2">
-                                    <i class="fa-solid fa-wand-magic-sparkles"></i> AI, help voorbereiden!
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="module-maaltijden" class="mb-16">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-utensils main-accent-color mr-3"></i>Maaltijden</h2>
-                       <div class="bg-white p-6 rounded-2xl shadow-sm">
-                            <h3 class="font-bold text-xl mb-4">AI Maaltijdplanner</h3>
-                            <p class="text-sm text-gray-600 mb-4">Vraag de AI om een recept en voeg de ingrediënten direct toe aan je boodschappenlijst.</p>
-                            <div class="flex flex-col sm:flex-row gap-2">
-                                <input id="meal-prompt-input" type="text" placeholder="bv. 'snel recept met kip'" class="flex-grow p-3 border rounded-lg">
-                                <button id="get-meal-plan-btn" class="main-accent-bg text-white font-bold p-3 rounded-lg hover:opacity-90">Krijg Recept & Voeg Boodschappen Toe</button>
-                            </div>
-                    </div>
-                </section>
-
-                <section id="module-gezondheid" class="mb-16">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-heart-pulse main-accent-color mr-3"></i>Gezondheid & Welzijn</h2>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm space-y-8">
-                        <div>
-                            <h4 class="font-bold text-lg mb-2">Medicatie Herinneringen</h4>
-                            <div id="medication-list" class="space-y-2 mb-4"></div>
-                            <div class="flex flex-col sm:flex-row gap-2 items-center">
-                                <input type="text" id="medication-name" placeholder="Naam medicijn" class="flex-grow p-2 border rounded-lg w-full sm:w-auto">
-                                <input type="time" id="medication-time" class="p-2 border rounded-lg w-full sm:w-auto">
-                                <label class="flex items-center gap-2 cursor-pointer p-2">
-                                    <input type="checkbox" id="medication-daily" class="h-5 w-5 rounded text-green-600" checked>
-                                    <span>Dagelijks</span>
-                                </label>
-                                <button id="add-medication-btn" class="main-accent-bg text-white font-bold p-2 rounded-lg w-full sm:w-auto flex-shrink-0">Voeg toe</button>
-                            </div>
-                        </div>
-                        <hr>
-                        <div>
-                            <h4 class="font-bold text-lg mb-2">Workout Reminder</h4>
-                               <div class="flex items-center gap-4 mt-4">
-                                <select id="workout-day" class="p-2 border rounded-lg">
-                                    <option value="-1">Elke dag</option>
-                                    <option value="1">Maandag</option>
-                                    <option value="2">Dinsdag</option>
-                                    <option value="3">Woensdag</option>
-                                    <option value="4">Donderdag</option>
-                                    <option value="5">Vrijdag</option>
-                                    <option value="6">Zaterdag</option>
-                                    <option value="0">Zondag</option>
-                                </select>
-                                <input type="time" id="workout-time-input" class="p-2 border rounded-lg">
-                                <button id="set-workout-reminder-btn" class="main-accent-bg text-white font-bold py-2 px-4 rounded-lg">Stel in</button>
-                            </div>
-                               <p class="text-sm text-gray-600 mt-2">Huidige herinnering: <strong id="workout-reminder-display">niet ingesteld</strong>.</p>
-                        </div>
-                        <hr>
-                        <div>
-                            <h4 class="font-bold text-lg mb-2">Calorieën & Dieet Tracker</h4>
-                            <p>Totaal vandaag: <span id="calories-total" class="font-bold">0</span> kcal</p>
-                            <div class="flex gap-2 mt-2">
-                                <input type="text" id="food-item" placeholder="Voedingsitem" class="flex-grow p-2 border rounded-lg">
-                                <input type="number" id="food-calories" placeholder="kcal" class="w-24 p-2 border rounded-lg">
-                                <button id="add-calories-btn" class="main-accent-bg text-white font-bold p-2 rounded-lg">Voeg toe</button>
-                            </div>
-                            <button id="ai-diet-coach-btn" class="mt-4 secondary-accent-bg font-bold py-2 px-4 rounded-lg">Vraag AI Dieetcoach</button>
-                        </div>
-                        <hr>
-                        <div>
-                               <h4 class="font-bold text-lg mt-6 mb-2">AI Sportcoach</h4>
-                            <p class="text-sm text-gray-600 mb-4">Vraag de AI om een workout op maat.</p>
-                            <div class="flex flex-col sm:flex-row gap-2">
-                                <input id="sport-prompt-input" type="text" placeholder="bv. '30 min cardio thuis'" class="flex-grow p-3 border rounded-lg">
-                                <button id="get-sport-tips-btn" class="main-accent-bg text-white font-bold p-3 rounded-lg hover:opacity-90">Krijg Workout</button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="module-herinneringen" class="mb-16">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-bell main-accent-color mr-3"></i>Contextuele Herinneringen</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-white p-6 rounded-2xl shadow-sm">
-                            <h4 class="font-bold text-lg mb-2">Slimme Parkeerassistent</h4>
-                            <p class="text-sm text-gray-600 mb-4">Geeft een seintje als je waarschijnlijk parkeert.</p>
-                            <div class="flex items-center justify-between mt-6">
-                                <span class="font-bold">Automatische Detectie</span>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="smart-parking-toggle" class="sr-only peer">
-                                    <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:main-accent-bg"></div>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="bg-white p-6 rounded-2xl shadow-sm">
-                            <h4 class="font-bold text-lg mb-2">Slimme Boodschappenlijst</h4>
-                            <p class="text-sm text-gray-600 mb-4">Toont lijst automatisch bij de supermarkt.</p>
-                            <div class="flex items-center justify-between mt-6">
-                                <span class="font-bold">Automatische Detectie</span>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" id="smart-shopping-toggle" class="sr-only peer">
-                                    <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:main-accent-bg"></div>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="bg-white p-6 rounded-2xl shadow-sm">
-                            <h4 class="font-bold text-lg mb-2">Handmatige Parkeerassistent</h4>
-                            <p class="text-sm text-gray-600 mb-4">Sla je locatie op met één klik.</p>
-                            <button id="parking-assist-toggle-btn" class="w-full secondary-accent-bg font-bold py-2 px-4 rounded-lg hover:opacity-90 mt-6">Start Parkeerassistent</button>
-                            <div id="parking-status-container" class="hidden mt-4 text-center">
-                                <p class="font-bold text-lg main-accent-color">Geparkeerd</p>
-                                <p class="text-2xl font-mono" id="parking-timer-display">00:00:00</p>
-                                <a href="#" id="parking-location-link" target="_blank" class="text-sm text-blue-600 hover:underline">Toon op kaart</a>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="module-financien" class="mb-16">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-wallet main-accent-color mr-3"></i>Financiën & Administratie</h2>
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="lg:col-span-1 bg-white p-6 rounded-2xl shadow-sm">
-                            <h4 class="font-bold text-lg mb-2">Maandbudget</h4>
-                            <div class="mx-auto" style="position: relative; height:150px; width:150px">
-                                <canvas id="budgetChart"></canvas>
-                            </div>
-                            <div class="text-center mt-4">
-                                <p class="text-sm text-gray-500">Uitgegeven</p>
-                                <p class="text-2xl font-bold" id="spent-amount">€0</p>
-                                <p class="text-sm text-gray-500">van <span id="total-budget" class="font-bold">€0</span></p>
-                            </div>
-                        </div>
-                        <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm">
-                            <h4 class="font-bold text-lg mb-2">Vaste Uitgaven</h4>
-                            <div id="fixed-expense-list" class="space-y-1 text-sm mb-4 max-h-24 overflow-y-auto"></div>
-                            <div class="flex gap-2 mb-4">
-                                <input type="text" id="fixed-expense-desc-input" placeholder="Omschrijving" class="flex-grow p-2 border rounded-lg">
-                                <input type="number" id="fixed-expense-amount-input" placeholder="€" class="w-24 p-2 border rounded-lg">
-                                <button id="add-fixed-expense-btn" class="main-accent-bg text-white font-bold p-2 rounded-lg">+</button>
-                            </div>
-                            <hr class="my-4">
-                            <h4 class="font-bold text-lg mb-2">Recente Uitgaven</h4>
-                            <div id="expense-list" class="space-y-2 max-h-24 overflow-y-auto mb-4">
-                                <p class="text-gray-500">Nog geen uitgaven toegevoegd.</p>
-                            </div>
-                            <div class="flex flex-col sm:flex-row gap-2 mb-6">
-                                <input type="text" id="expense-desc-input" placeholder="Omschrijving" class="flex-grow p-2 border rounded-lg">
-                                <input type="number" id="expense-amount-input" placeholder="Bedrag €" class="w-full sm:w-32 p-2 border rounded-lg">
-                                <button id="add-expense-btn" class="main-accent-bg text-white font-bold p-2 rounded-lg">Voeg toe</button>
-                            </div>
-                            <hr class="my-4">
-                            <h4 class="font-bold text-lg mb-2">Slimme Administratie</h4>
-                            <div class="flex gap-2">
-                               <button id="upload-bon-knop" class="w-1/2 main-accent-bg text-white font-bold py-2 px-4 rounded-lg hover:opacity-90"><i class="fa-solid fa-receipt mr-2"></i>Verwerk Bon</button>
-                               <button id="check-deadlines-knop" class="w-1/2 secondary-accent-bg font-bold py-2 px-4 rounded-lg hover:opacity-90">Check Deadlines</button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="module-onderhoud" class="mb-16">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-car-side main-accent-color mr-3"></i>Huis, Tuin & Auto</h2>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm">
-                        <h3 class="font-bold text-xl mb-4">AI Onderhouds- & Schoonmaaktips</h3>
-                        <p class="text-sm text-gray-600 mb-4">Vraag de AI om een checklist voor elke klus.</p>
-                        <div class="flex flex-col sm:flex-row gap-2">
-                            <input id="maintenance-prompt-input" type="text" placeholder="bv. 'auto wassen' of 'badkamer schoonmaken'" class="flex-grow p-3 border rounded-lg">
-                            <button id="get-maintenance-tips-btn" class="main-accent-bg text-white font-bold p-3 rounded-lg hover:opacity-90">Krijg Checklist</button>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="module-werk" class="mb-16">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-briefcase main-accent-color mr-3"></i>Werk & Carrière</h2>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm">
-                        <h3 class="font-bold text-xl mb-4">AI Carrièrecoach</h3>
-                        <p class="text-sm text-gray-600 mb-4">Bereid je voor op je volgende carrièrestap.</p>
-                        <div class="flex flex-col sm:flex-row gap-2">
-                            <input id="career-prompt-input" type="text" placeholder="bv. 'sollicitatiegesprek voor project manager'" class="flex-grow p-3 border rounded-lg">
-                            <button id="get-career-tips-btn" class="main-accent-bg text-white font-bold p-3 rounded-lg hover:opacity-90">Krijg Coaching</button>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="module-vrijetijd" class="mb-16">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-martini-glass-citrus main-accent-color mr-3"></i>Vrije Tijd & Sociaal Leven</h2>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm">
-                        <h3 class="font-bold text-xl mb-4">AI Vrijetijdsplanner</h3>
-                        <p class="text-sm text-gray-600 mb-4">Vind de perfecte activiteit, reis of date night.</p>
-                        <div class="flex flex-col sm:flex-row gap-2">
-                            <input id="leisure-prompt-input" type="text" placeholder="bv. 'weekendje weg in de natuur' of 'leuke date night thuis'" class="flex-grow p-3 border rounded-lg">
-                            <button id="get-leisure-tips-btn" class="main-accent-bg text-white font-bold p-3 rounded-lg hover:opacity-90">Krijg Ideeën</button>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="module-ontwikkeling" class="mb-16">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-lightbulb main-accent-color mr-3"></i>Persoonlijke Ontwikkeling</h2>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm">
-                        <h3 class="font-bold text-xl mb-4">AI Leerassistent</h3>
-                        <p class="text-sm text-gray-600 mb-4">Leer een nieuwe vaardigheid met een stappenplan van de AI.</p>
-                        <div class="flex flex-col sm:flex-row gap-2">
-                            <input id="learning-prompt-input" type="text" placeholder="bv. 'leer gitaar spelen' of 'beginnen met beleggen'" class="flex-grow p-3 border rounded-lg">
-                            <button id="get-learning-plan-btn" class="main-accent-bg text-white font-bold p-3 rounded-lg hover:opacity-90">Maak Leerplan</button>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="module-instellingen" class="mb-16">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-sliders main-accent-color mr-3"></i>Instellingen</h2>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm">
-                        <h3 class="font-bold text-xl mb-4">Agenda Synchronisatie</h3>
-                        <p class="text-sm text-gray-600 mb-4">Koppel je externe agenda om afspraken automatisch te synchroniseren.</p>
-                        <button id="connect-outlook-btn" class="font-bold py-2 px-4 rounded-lg secondary-accent-bg hover:opacity-90 flex items-center gap-2">
-                            <i class="fa-brands fa-microsoft"></i> Koppel met Outlook
-                        </button>
-                        <hr class="my-6">
-                        <h3 class="font-bold text-xl mb-4">Toon/Verberg Modules</h3>
-                        <p class="text-sm text-gray-600 mb-4">Kies welke onderdelen je wilt gebruiken in de app.</p>
-                        <div id="module-toggle-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                        </div>
-                    </div>
-                </section>
-
-            </div>
+            <div class="p-4 md:p-8 max-w-7xl mx-auto" id="main-content">
+                </div>
         </main>
-
-        <button id="voice-control-btn" class="fixed bottom-24 md:bottom-6 right-6 h-16 w-16 main-accent-bg text-white rounded-full flex items-center justify-center z-50">
-            <i class="fa-solid fa-microphone fa-2x"></i>
-        </button>
-
-        <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-t-lg z-40">
-            <ul id="mobile-nav-list" class="flex justify-around items-center h-20">
-            </ul>
-        </nav>
 
         <div id="modal-container" class="hidden fixed inset-0 bg-black bg-opacity-50 z-[100] flex items-center justify-center p-4">
             <div id="modal-box" class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-lg transform scale-95 opacity-0">
@@ -390,65 +44,11 @@ Vervang de volledige inhoud van je `dashboard.html` met deze code.
         </div>
     </div>
     
-            <script>
-    const adresboekManager = { _contacts: [{ id: "uuid-123-abc", basicInfo: { name: "Jan de Vries", birthday: "1985-11-20", contact: { email: "jan.devries@email.com", phone: "+31612345678", address: "Voorbeeldstraat 1, 1234 AB Amsterdam" } }, context: { work: { jobTitle: "Project Manager", company: "Tech Solutions B.V." }}, momentIds: ["moment-001", "moment-002"] }, { id: "uuid-456-def", basicInfo: { name: "Sara Visser", birthday: "1990-03-15", contact: { email: "sara.visser@email.com", address: "Innovatielaan 2, 5652 LA Eindhoven" }}, context: { work: { jobTitle: "Designer", company: "Creative Minds" }}, momentIds: [] }], 
-    getAllContacts: function() { return this._contacts; }, 
-    getContact: function(contactId) { return this._contacts.find(c => c.id === contactId); }, 
-    addContact: function(contactData) { const newContact = { id: `uuid-${Date.now()}`, ...contactData, momentIds: [] }; this._contacts.push(newContact); window.leefApp.saveState(); window.leefApp.renderAll(); return newContact;},
-    shareContact: async function(contactId) { const vCardData = this.exportAsVCard(contactId); if (!vCardData) return; const contact = this.getContact(contactId); const vcfFile = new File([vCardData], `${contact.basicInfo.name}.vcf`, { type: "text/vcard" }); if (navigator.share) { await navigator.share({ files: [vcfFile], title: `Contact: ${contact.basicInfo.name}` }); } else { alert("Deel-API niet ondersteund op dit apparaat."); } }, 
-    getMomentsForContact: function(contactId) { const contact = this.getContact(contactId); if (!contact || !contact.momentIds) return []; const allMoments = momentenManager.getAllMoments(); return allMoments.filter(moment => contact.momentIds.includes(moment.momentId)); } };
-
-    const momentenManager = { _moments: [{ momentId: "moment-001", photoUrl: "https://via.placeholder.com/150/5D8B71/FFFFFF?text=Strand", title: "Stranddag Italië", tags: ["Vakantie", "Jan de Vries"] }, { momentId: "moment-002", photoUrl: "https://via.placeholder.com/150/EAE7DC/4a4a4a?text=Taart", title: "Verjaardag Jan", tags: ["feest", "Jan de Vries"] }], 
-    getAllMoments: function() { return this._moments; },
-    addMoment: function(momentData) { const newMoment = { momentId: `moment-${Date.now()}`, ...momentData }; this._moments.push(newMoment); window.leefApp.saveState(); window.leefApp.renderAll(); return newMoment; }
-    };
-
-    const administratieModule = { verwerkBon: async function(file) { console.log("Workflow gestart: verwerken van bon...", file); const aiResultaat = await this._roepAiAnalyseAan(file); const geverifieerdeData = await this._vraagGebruikerOmVerificatie(aiResultaat); if (geverifieerdeData) { this._verwerkGoedgekeurdeUitgave(geverifieerdeData); } }, _roepAiAnalyseAan: function(file) { console.log("AI analyseert het document..."); return new Promise(resolve => setTimeout(() => resolve({ leverancier: "Coolblue", totaalBedrag: 129.99, voorgesteldeCategorie: "Elektronica" }), 1000)); }, _vraagGebruikerOmVerificatie: function(data) { const bevestiging = confirm(`AI vond: ${data.leverancier}, €${data.totaalBedrag}. Categorie: ${data.voorgesteldeCategorie}. Klopt dit?`); return Promise.resolve(bevestiging ? data : null); }, _verwerkGoedgekeurdeUitgave: function(uitgaveData) { if(window.leefApp && window.leefApp.addExpense) { window.leefApp.addExpense({ desc: uitgaveData.leverancier, amount: uitgaveData.totaalBedrag }); } else { console.error("Kon uitgave niet toevoegen: window.leefApp.addExpense is niet gevonden.")} }, checkBelastingDeadlines: function() { alert("Herinnering: De deadline voor je BTW-aangifte is over 14 dagen!"); } };
-    </script>
-    
-            <script>
+    <script>
     document.addEventListener('DOMContentLoaded', function() {
-    
-        const modules = [
-            { id: 'contacten', name: 'Contacten', icon: 'fa-address-book' },
-            { id: 'momenten', name: 'Momenten', icon: 'fa-images' },
-            { id: 'verjaardagen', name: 'Verjaardagen', icon: 'fa-birthday-cake' },
-            { id: 'dagelijks', name: 'Dagelijks', icon: 'fa-house' },
-            { id: 'maaltijden', name: 'Maaltijden', icon: 'fa-utensils' },
-            { id: 'gezondheid', name: 'Gezondheid', icon: 'fa-heart-pulse' },
-            { id: 'herinneringen', name: 'Herinneringen', icon: 'fa-bell' },
-            { id: 'financien', name: 'Financiën', icon: 'fa-wallet' },
-            { id: 'onderhoud', name: 'Onderhoud', icon: 'fa-car-side' },
-            { id: 'werk', name: 'Werk', icon: 'fa-briefcase' },
-            { id: 'vrijetijd', name: 'Vrije Tijd', icon: 'fa-martini-glass-citrus' },
-            { id: 'ontwikkeling', name: 'Ontwikkeling', icon: 'fa-lightbulb' },
-            { id: 'instellingen', name: 'Instellingen', icon: 'fa-sliders' }
-        ];
 
-        const state = {
-            moduleSettings: {}, tasks: [], shoppingList: [], appointments: [], medications: [], calories: [], 
-            fixedExpenses: [], expenses: [], budget: 2000, 
-            savingsGoal: { desc: '', amount: 0 }, workoutReminder: { day: -1, time: null },
-            isParked: false, parkingLocation: null, parkingStartTime: null, parkingTimerInterval: null,
-            smartParking: { enabled: false, lastSpeed: 0, lastCheck: 0 },
-            smartShopping: { enabled: false, notifiedFor: [] },
-            supermarkets: [ { name: "Albert Heijn", lat: 52.37403, lon: 4.88969 } ]
-        };
-
-        let budgetChartInstance = null;
         const ui = {};
 
-        function populateUiElements() {
-            Object.assign(ui, {
-                contactList: document.getElementById('contact-list'), addContactBtn: document.getElementById('add-contact-btn'), momentGallery: document.getElementById('moment-gallery'), addMomentBtn: document.getElementById('add-moment-btn'), birthdaysList: document.getElementById('birthdays-list'), uploadBonKnop: document.getElementById('upload-bon-knop'), checkDeadlinesKnop: document.getElementById('check-deadlines-knop'),
-                desktopNavList: document.getElementById('desktop-nav-list'), mobileNavList: document.getElementById('mobile-nav-list'), moduleToggleContainer: document.getElementById('module-toggle-container'), modalContainer: document.getElementById('modal-container'), modalBox: document.getElementById('modal-box'), modalTitle: document.getElementById('modal-title'), modalContent: document.getElementById('modal-content'), modalCloseBtn: document.getElementById('modal-close-btn'), taskList: document.getElementById('task-list'), newTaskInput: document.getElementById('new-task-input'), newTaskDatetime: document.getElementById('new-task-datetime'), addTaskBtn: document.getElementById('add-task-btn'), shoppingList: document.getElementById('shopping-list'), newShoppingItemInput: document.getElementById('new-shopping-item-input'), addShoppingItemBtn: document.getElementById('add-shopping-item-btn'), appointmentsList: document.getElementById('appointments-list'), newAppointmentTitle: document.getElementById('new-appointment-title'), newAppointmentDatetime: document.getElementById('new-appointment-datetime'), newAppointmentLocation: document.getElementById('new-appointment-location'), newAppointmentDesc: document.getElementById('new-appointment-desc'), newAppointmentReminder: document.getElementById('new-appointment-reminder'), newAppointmentSound: document.getElementById('new-appointment-sound'), addAppointmentBtn: document.getElementById('add-appointment-btn'), budgetChart: document.getElementById('budgetChart'), spentAmount: document.getElementById('spent-amount'), totalBudget: document.getElementById('total-budget'), budgetInput: document.getElementById('budget-input'), updateBudgetBtn: document.getElementById('update-budget-btn'), expenseList: document.getElementById('expense-list'), expenseDescInput: document.getElementById('expense-desc-input'), expenseAmountInput: document.getElementById('expense-amount-input'), addExpenseBtn: document.getElementById('add-expense-btn'), fixedExpenseList: document.getElementById('fixed-expense-list'), fixedExpenseDescInput: document.getElementById('fixed-expense-desc-input'), fixedExpenseAmountInput: document.getElementById('fixed-expense-amount-input'), addFixedExpenseBtn: document.getElementById('add-fixed-expense-btn'), savingsGoalDesc: document.getElementById('savings-goal-desc'), savingsGoalAmount: document.getElementById('savings-goal-amount'), getSavingsPlanBtn: document.getElementById('get-savings-plan-btn'), parkingAssistToggleBtn: document.getElementById('parking-assist-toggle-btn'), parkingStatusContainer: document.getElementById('parking-status-container'), parkingTimerDisplay: document.getElementById('parking-timer-display'), parkingLocationLink: document.getElementById('parking-location-link'), medicationList: document.getElementById('medication-list'), medicationName: document.getElementById('medication-name'), medicationTime: document.getElementById('medication-time'), medicationDaily: document.getElementById('medication-daily'), addMedicationBtn: document.getElementById('add-medication-btn'), caloriesTotal: document.getElementById('calories-total'), foodItem: document.getElementById('food-item'), foodCalories: document.getElementById('food-calories'), addCaloriesBtn: document.getElementById('add-calories-btn'), workoutDay: document.getElementById('workout-day'), workoutTimeInput: document.getElementById('workout-time-input'), setWorkoutReminderBtn: document.getElementById('set-workout-reminder-btn'), workoutReminderDisplay: document.getElementById('workout-reminder-display'), voiceControlBtn: document.getElementById('voice-control-btn'),
-                smartParkingToggle: document.getElementById('smart-parking-toggle'), smartShoppingToggle: document.getElementById('smart-shopping-toggle'),
-            });
-        }
-        
-        function showModal(title, content) { ui.modalTitle.textContent = title; ui.modalContent.innerHTML = content; ui.modalContainer.classList.remove('hidden'); setTimeout(() => ui.modalBox.classList.remove('scale-95', 'opacity-0'), 10); }
-        function hideModal() { ui.modalBox.classList.add('scale-95', 'opacity-0'); setTimeout(() => ui.modalContainer.classList.add('hidden'), 300); }
-        
         async function callAiFunction(prompt, modalTitle) {
             showModal(modalTitle, '<p class="text-center">AI is aan het denken...</p>');
             try {
@@ -461,195 +61,106 @@ Vervang de volledige inhoud van je `dashboard.html` met deze code.
                 if (!response.ok) {
                     throw new Error(data.error || 'Er is een onbekende fout opgetreden.');
                 }
-                showModal(modalTitle, `<div class="modal-ai-content ai-checklist">${data.response}</div>`);
+                showModal(modalTitle, `<div class="modal-ai-content">${data.response}</div>`);
             } catch (error) {
                 console.error('Fout bij het aanroepen van de AI:', error);
                 showModal('Fout', `<p>Er is iets misgegaan: ${error.message}</p>`);
             }
         }
 
-        window.leefApp = {
-            saveState: () => { localStorage.setItem('leef_app_state_v5', JSON.stringify(state)); },
-            loadState: () => { const savedState = JSON.parse(localStorage.getItem('leef_app_state_v5')); if (savedState) { Object.assign(state, savedState); if (state.parkingStartTime) { state.parkingStartTime = new Date(state.parkingStartTime); } } },
-            renderAll: () => {
-                renderNavigation(); applyModuleSettings(); renderContacten(); renderMomenten(); renderVerjaardagen();
-                renderTasks(); renderShoppingList(); renderAppointments(); renderMedications(); renderCalories(); renderBudgetChart(); renderFixedExpenses(); renderExpenses(); renderParkingStatus(); renderSavingsGoal(); renderWorkoutReminder(); renderModuleToggles();
-                if(ui.smartParkingToggle) ui.smartParkingToggle.checked = state.smartParking.enabled;
-                if(ui.smartShoppingToggle) ui.smartShoppingToggle.checked = state.smartShopping.enabled;
-            },
-            shareContact: (id) => adresboekManager.shareContact(id),
-            viewMoments: (id) => { const c = adresboekManager.getContact(id); const moments = adresboekManager.getMomentsForContact(id); let content = '<p>Geen momenten gevonden.</p>'; if(moments.length > 0) { content = '<div class="grid grid-cols-3 gap-2">'; moments.forEach(m => { content += `<div><img src="${m.photoUrl}" class="rounded-lg"><p class="text-xs text-center">${m.title}</p></div>`; }); content += '</div>'; } showModal(`Momenten van ${c.basicInfo.name}`, content); },
-            addExpense: (expenseData) => { state.expenses.push(expenseData); window.leefApp.saveState(); window.leefApp.renderAll(); },
-            addTask: () => { const text = ui.newTaskInput.value.trim(); if(text) { state.tasks.push({ id: Date.now(), text, completed: false }); window.leefApp.saveState(); window.leefApp.renderAll(); ui.newTaskInput.value = ''; } },
-            toggleTask: (id) => { const task = state.tasks.find(t=>t.id===id); if(task){task.completed = !task.completed;} window.leefApp.saveState(); window.leefApp.renderAll(); },
-            deleteTask: (id) => { state.tasks = state.tasks.filter(t=>t.id!==id); window.leefApp.saveState(); window.leefApp.renderAll(); },
-            addShoppingItem: () => { const text = ui.newShoppingItemInput.value.trim(); if(text) { state.shoppingList.push({ id: Date.now(), text, completed: false }); window.leefApp.saveState(); window.leefApp.renderAll(); ui.newShoppingItemInput.value = ''; } },
-            toggleShoppingItem: (id) => { const item = state.shoppingList.find(i=>i.id===id); if(item){item.completed = !item.completed;} window.leefApp.saveState(); window.leefApp.renderAll(); },
-            deleteShoppingItem: (id) => { state.shoppingList = state.shoppingList.filter(i=>i.id!==id); window.leefApp.saveState(); window.leefApp.renderAll(); },
-            addAppointment: () => { const title = ui.newAppointmentTitle.value.trim(); const datetime = ui.newAppointmentDatetime.value; const location = ui.newAppointmentLocation.value.trim(); if(title && datetime){ state.appointments.push({id: Date.now(), title, datetime, location}); window.leefApp.saveState(); window.leefApp.renderAll(); ui.newAppointmentTitle.value = ''; ui.newAppointmentDatetime.value = ''; ui.newAppointmentLocation.value = '';} },
-            addMedication: () => { const name = ui.medicationName.value.trim(); const time = ui.medicationTime.value; if(name && time){ state.medications.push({id: Date.now(), name, time, isDaily: ui.medicationDaily.checked}); window.leefApp.saveState(); window.leefApp.renderAll(); ui.medicationName.value = ''; ui.medicationTime.value = '';} },
-            deleteMedication: (id) => { state.medications = state.medications.filter(m=>m.id!==id); window.leefApp.saveState(); window.leefApp.renderAll(); },
-            addCalories: () => { const name = ui.foodItem.value.trim(); const calories = parseInt(ui.foodCalories.value); if(name && !isNaN(calories)){ state.calories.push({id: Date.now(), name, calories}); window.leefApp.saveState(); window.leefApp.renderAll(); ui.foodItem.value = ''; ui.foodCalories.value = '';} },
-            setWorkoutReminder: () => { const day = parseInt(ui.workoutDay.value); const time = ui.workoutTimeInput.value; if(time){ state.workoutReminder = {day, time}; window.leefApp.saveState(); window.leefApp.renderAll(); showModal('Succes', 'Workout herinnering ingesteld.'); } },
-            updateBudget: () => { const newBudget = parseFloat(ui.budgetInput.value); if(!isNaN(newBudget)){ state.budget = newBudget; window.leefApp.saveState(); window.leefApp.renderAll(); } },
-            addFixedExpense: () => { const desc = ui.fixedExpenseDescInput.value.trim(); const amount = parseFloat(ui.fixedExpenseAmountInput.value); if(desc && !isNaN(amount)){ state.fixedExpenses.push({id: Date.now(), desc, amount}); window.leefApp.saveState(); window.leefApp.renderAll(); ui.fixedExpenseDescInput.value = ''; ui.fixedExpenseAmountInput.value = ''; } },
-            toggleParkingAssistant: () => { if (state.isParked) { markAsDriving(); } else { markAsParked(); } window.leefApp.saveState(); },
-            showContactForm: () => { const formHTML = `<div class="space-y-4"><input id="contact-name" type="text" placeholder="Volledige naam" class="w-full p-2 border rounded-lg"><input id="contact-birthday" type="date" class="w-full p-2 border rounded-lg"><input id="contact-email" type="email" placeholder="E-mailadres" class="w-full p-2 border rounded-lg"><input id="contact-phone" type="tel" placeholder="Telefoonnummer" class="w-full p-2 border rounded-lg"><input id="contact-address" type="text" placeholder="Adres" class="w-full p-2 border rounded-lg"><input id="contact-job" type="text" placeholder="Functie" class="w-full p-2 border rounded-lg"><input id="contact-company" type="text" placeholder="Bedrijf" class="w-full p-2 border rounded-lg"><button id="save-contact-btn" class="w-full main-accent-bg text-white font-bold p-3 rounded-lg">Opslaan</button></div>`; showModal("Nieuw Contact Toevoegen", formHTML); document.getElementById('save-contact-btn').onclick = () => { const contactData = { basicInfo: { name: document.getElementById('contact-name').value, birthday: document.getElementById('contact-birthday').value, contact: { email: document.getElementById('contact-email').value, phone: document.getElementById('contact-phone').value, address: document.getElementById('contact-address').value, } }, context: { work: { jobTitle: document.getElementById('contact-job').value, company: document.getElementById('contact-company').value, } } }; adresboekManager.addContact(contactData); hideModal(); }; },
-            showMomentForm: () => { const formHTML = `<div class="space-y-4"><input id="moment-title" type="text" placeholder="Titel van het moment" class="w-full p-2 border rounded-lg"><input id="moment-date" type="date" class="w-full p-2 border rounded-lg"><input type="file" id="moment-photo" class="w-full p-2 border rounded-lg"><textarea id="moment-story" placeholder="Jouw verhaal..." class="w-full p-2 border rounded-lg" rows="3"></textarea><input id="moment-tags" type="text" placeholder="Tags (gescheiden door komma's)" class="w-full p-2 border rounded-lg"><button id="save-moment-btn" class="w-full main-accent-bg text-white font-bold p-3 rounded-lg">Opslaan</button></div>`; showModal("Nieuw Moment Toevoegen", formHTML); document.getElementById('save-moment-btn').onclick = () => { const momentData = { title: document.getElementById('moment-title').value, date: document.getElementById('moment-date').value, photoUrl: 'https://via.placeholder.com/150/808080/FFFFFF?text=Nieuw', story: document.getElementById('moment-story').value, tags: document.getElementById('moment-tags').value.split(',').map(t => t.trim()), }; momentenManager.addMoment(momentData); hideModal(); }; }
-        };
-
-        function renderNavigation() { const navTargets = [ui.desktopNavList, ui.mobileNavList]; navTargets.forEach(nav => { if(!nav) return; nav.innerHTML = ''; modules.filter(m => state.moduleSettings[m.id] !== false).forEach(m => { const navItemHTML = `<li><a href="#module-${m.id}" title="${m.name}" class="nav-link flex flex-col items-center justify-center h-16 w-16 rounded-xl hover:secondary-accent-bg text-gray-500 hover:text-gray-800"><i class="fa-solid ${m.icon} fa-lg"></i><span class="text-xs mt-1">${m.name}</span></a></li>`; nav.innerHTML += navItemHTML; }); }); }
-        function applyModuleSettings() { modules.forEach(m => { const section = document.getElementById(`module-${m.id}`); if (section) { section.style.display = state.moduleSettings[m.id] !== false ? '' : 'none'; } }); }
-        function renderModuleToggles() { if (!ui.moduleToggleContainer) return; ui.moduleToggleContainer.innerHTML = ''; modules.forEach(m => { if (m.id === 'instellingen') return; const isChecked = state.moduleSettings[m.id] !== false; const toggleHTML = `<label class="flex items-center space-x-3 cursor-pointer"><input type="checkbox" data-module-id="${m.id}" class="module-toggle h-5 w-5 rounded text-green-600" ${isChecked ? 'checked' : ''}><span>${m.name}</span></label>`; ui.moduleToggleContainer.innerHTML += toggleHTML; }); document.querySelectorAll('.module-toggle').forEach(toggle => { toggle.addEventListener('change', (e) => { state.moduleSettings[e.target.dataset.moduleId] = e.target.checked; window.leefApp.saveState(); window.leefApp.renderAll(); }); }); }
-        
-        function renderContacten() {
-            if (!ui.contactList) return;
-            ui.contactList.innerHTML = '';
-            adresboekManager.getAllContacts().forEach(c => {
-                const div = document.createElement('div');
-                div.className = 'bg-white p-4 rounded-xl shadow-sm';
-                const address = c.basicInfo.contact.address;
-                const addressLink = address ? `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}" target="_blank" class="text-blue-600 hover:underline"><i class="fa-solid fa-map-marker-alt mr-1"></i>${address}</a>` : '';
-                div.innerHTML = `<div><p class="font-bold text-lg">${c.basicInfo.name}</p><p class="text-sm text-gray-600">${c.context.work.jobTitle}</p><p class="text-sm text-gray-500 mt-1">${addressLink}</p></div><div class="mt-2 pt-2 border-t flex justify-end"><button onclick="window.leefApp.viewMoments('${c.id}')" class="secondary-accent-bg font-bold py-1 px-3 rounded-lg text-sm mr-2" title="Bekijk Momenten"><i class="fa-solid fa-images"></i></button><button onclick="window.leefApp.shareContact('${c.id}')" class="secondary-accent-bg font-bold py-1 px-3 rounded-lg text-sm" title="Deel Visitekaartje"><i class="fa-solid fa-share-alt"></i></button></div>`;
-                ui.contactList.appendChild(div);
-            });
+        function showModal(title, content) {
+            if (ui.modalTitle) ui.modalTitle.textContent = title;
+            if (ui.modalContent) ui.modalContent.innerHTML = content;
+            if (ui.modalContainer) ui.modalContainer.classList.remove('hidden');
+            if (ui.modalBox) setTimeout(() => ui.modalBox.classList.remove('scale-95', 'opacity-0'), 10);
         }
 
-        function renderMomenten() {
-            if (!ui.momentGallery) return;
-            ui.momentGallery.innerHTML = '';
-            momentenManager.getAllMoments().forEach(m => {
-                const img = document.createElement('img');
-                img.src = m.photoUrl;
-                img.alt = m.title;
-                img.title = m.title;
-                img.className = 'rounded-lg object-cover h-32 w-full shadow-sm cursor-pointer transition-transform hover:scale-105';
-                img.onclick = () => showModal(m.title, `<img src='${img.src}' class='rounded-lg w-full'><p class='mt-2'>Tags: ${m.tags.join(', ')}</p>`);
-                ui.momentGallery.appendChild(img);
-            });
+        function hideModal() {
+            if (ui.modalBox) ui.modalBox.classList.add('scale-95', 'opacity-0');
+            if (ui.modalContainer) setTimeout(() => ui.modalContainer.classList.add('hidden'), 300);
         }
-
-        function renderVerjaardagen() { if (!ui.birthdaysList) return; const contactsWithBirthday = adresboekManager.getAllContacts().filter(c => c.basicInfo.birthday); ui.birthdaysList.innerHTML = ''; contactsWithBirthday.forEach(c => { const el = document.createElement('div'); el.className = 'flex items-center justify-between p-3 bg-gray-50 rounded-lg'; el.innerHTML = `<div><p class="font-bold">${c.basicInfo.name}</p><p class="text-sm text-gray-600">${new Date(c.basicInfo.birthday).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })}</p></div>`; ui.birthdaysList.appendChild(el); }); }
-        function renderTasks() { if(ui.taskList) ui.taskList.innerHTML = state.tasks.map(task => `<div class="task-item ${task.completed ? 'completed' : ''} flex items-center justify-between p-2 rounded-lg"><label class="flex items-center cursor-pointer"><input type="checkbox" ${task.completed ? 'checked' : ''} onchange="window.leefApp.toggleTask(${task.id})" class="mr-3 h-5 w-5 rounded"><span class="task-text">${task.text}</span></label><button onclick="window.leefApp.deleteTask(${task.id})" class="text-gray-400 hover:text-red-500"><i class="fa-solid fa-trash"></i></button></div>`).join(''); }
-        function renderShoppingList() { if(ui.shoppingList) ui.shoppingList.innerHTML = state.shoppingList.map(item => `<div class="shopping-item ${item.completed ? 'completed' : ''} flex items-center justify-between p-2 rounded-lg"><label class="flex items-center cursor-pointer"><input type="checkbox" ${item.completed ? 'checked' : ''} onchange="window.leefApp.toggleShoppingItem(${item.id})" class="mr-3 h-5 w-5 rounded"><span>${item.text}</span></label><button onclick="window.leefApp.deleteShoppingItem(${item.id})" class="text-gray-400 hover:text-red-500"><i class="fa-solid fa-trash"></i></button></div>`).join(''); }
-        
-        function renderAppointments() {
-            if (ui.appointmentsList) {
-                ui.appointmentsList.innerHTML = state.appointments.map(app => {
-                    const locationLink = app.location ? `<p class="text-sm text-gray-600 mt-1"><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(app.location)}" target="_blank" class="text-blue-600 hover:underline"><i class="fa-solid fa-map-marker-alt mr-1"></i>${app.location}</a></p>` : '';
-                    return `<div class="p-3 bg-gray-50 rounded-lg"><p class="font-bold">${app.title}</p><p class="text-sm text-gray-600">${new Date(app.datetime).toLocaleString('nl-NL')}</p>${locationLink}</div>`
-                }).join('');
-            }
-        }
-        
-        function renderMedications() { if(ui.medicationList) ui.medicationList.innerHTML = state.medications.length ? state.medications.map(med => `<div class="flex justify-between items-center text-sm p-1"><span>${med.name} om ${med.time} ${med.isDaily ? '<span class="text-xs text-gray-500">(Dagelijks)</span>' : ''}</span><button onclick="window.leefApp.deleteMedication(${med.id})" class="text-gray-400 hover:text-red-500"><i class="fa-solid fa-trash"></i></button></div>`).join('') : '<p class="text-gray-500 text-sm">Geen medicatie ingesteld.</p>';}
-        function renderCalories() { if(ui.caloriesTotal) ui.caloriesTotal.textContent = state.calories.reduce((sum, item) => sum + item.calories, 0); }
-        function renderFixedExpenses() { if(ui.fixedExpenseList) ui.fixedExpenseList.innerHTML = state.fixedExpenses.map(exp => `<div class="flex justify-between"><span>${exp.desc}</span><span>€${exp.amount.toFixed(2)}</span></div>`).join(''); }
-        function renderExpenses() { if(ui.expenseList) ui.expenseList.innerHTML = state.expenses.length === 0 ? '<p class="text-gray-500">Nog geen uitgaven toegevoegd.</p>' : state.expenses.slice().reverse().map(exp => `<div class="flex justify-between items-center text-sm"><span>${exp.desc}</span><span class="font-bold">€${exp.amount.toFixed(2)}</span></div>`).join(''); }
-        function renderBudgetChart() { if (!ui.budgetChart) return; const spent = state.fixedExpenses.reduce((s, e) => s + e.amount, 0) + state.expenses.reduce((s, e) => s + e.amount, 0); const remaining = state.budget - spent; if (budgetChartInstance) budgetChartInstance.destroy(); const ctx = ui.budgetChart.getContext('2d'); budgetChartInstance = new Chart(ctx, { type: 'doughnut', data: { datasets: [{ data: [spent, remaining > 0 ? remaining : 0], backgroundColor: ['#ef4444', '#5D8B71'], borderWidth: 0 }] }, options: { cutout: '70%', plugins: { legend: { display: false } } } }); if(ui.spentAmount) ui.spentAmount.textContent = `€${spent.toFixed(2)}`; if(ui.totalBudget) ui.totalBudget.textContent = `€${state.budget.toFixed(2)}`; }
-        function renderWorkoutReminder() { if(ui.workoutReminderDisplay && state.workoutReminder.time){ const dayName = state.workoutReminder.day === -1 ? 'Elke dag' : ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'][state.workoutReminder.day]; ui.workoutReminderDisplay.textContent = `${dayName} om ${state.workoutReminder.time}`; } else if(ui.workoutReminderDisplay) { ui.workoutReminderDisplay.textContent = 'niet ingesteld'; } }
-        function renderSavingsGoal() { if(ui.savingsGoalDesc) ui.savingsGoalDesc.value = state.savingsGoal.desc || ''; if(ui.savingsGoalAmount) ui.savingsGoalAmount.value = state.savingsGoal.amount > 0 ? state.savingsGoal.amount : ''; }
-        
-        function renderParkingStatus() {
-            if (!ui.parkingAssistToggleBtn) return;
-            if (state.isParked) {
-                ui.parkingAssistToggleBtn.textContent = 'Stop Parkeerassistent';
-                ui.parkingAssistToggleBtn.classList.add('active');
-                ui.parkingStatusContainer.classList.remove('hidden');
-                const now = new Date();
-                const elapsed = Math.floor((now - (state.parkingStartTime || now)) / 1000);
-                const hours = String(Math.floor(elapsed / 3600)).padStart(2, '0');
-                const minutes = String(Math.floor((elapsed % 3600) / 60)).padStart(2, '0');
-                const seconds = String(elapsed % 60).padStart(2, '0');
-                ui.parkingTimerDisplay.textContent = `${hours}:${minutes}:${seconds}`;
-                if (state.parkingLocation) {
-                    ui.parkingLocationLink.href = `https://www.google.com/maps/search/?api=1&query=${state.parkingLocation.lat},${state.parkingLocation.lon}`;
-                }
-            } else {
-                ui.parkingAssistToggleBtn.textContent = 'Start Parkeerassistent';
-                ui.parkingAssistToggleBtn.classList.remove('active');
-                ui.parkingStatusContainer.classList.add('hidden');
-            }
-        }
-        
-        function markAsParked() { if (!navigator.geolocation) { return alert("Geolocation wordt niet ondersteund."); } navigator.geolocation.getCurrentPosition(position => { state.isParked = true; state.parkingStartTime = new Date(); state.parkingLocation = { lat: position.coords.latitude, lon: position.coords.longitude }; if (state.parkingTimerInterval) clearInterval(state.parkingTimerInterval); state.parkingTimerInterval = setInterval(renderParkingStatus, 1000); renderParkingStatus(); window.leefApp.saveState(); }, () => { alert("Kon je locatie niet ophalen."); }); }
-        function markAsDriving() { state.isParked = false; clearInterval(state.parkingTimerInterval); state.parkingTimerInterval = null; state.parkingStartTime = null; renderParkingStatus(); window.leefApp.saveState(); }
-        
-        function checkContextualReminders() { if (!navigator.geolocation) return; navigator.geolocation.getCurrentPosition(position => { const { latitude, longitude, speed } = position.coords; const now = Date.now(); if (state.smartParking.enabled && (now - state.smartParking.lastCheck > 30000)) { const currentSpeed = speed || 0; if (state.smartParking.lastSpeed > 5 && currentSpeed < 1) { if (confirm("Het lijkt erop dat je geparkeerd hebt. Wil je de parkeerlocatie opslaan?")) { markAsParked(); } } state.smartParking.lastSpeed = currentSpeed; state.smartParking.lastCheck = now; } if (state.smartShopping.enabled && state.shoppingList.length > 0) { state.supermarkets.forEach(supermarket => { const distance = getDistance(latitude, longitude, supermarket.lat, supermarket.lon); if (distance < 0.1 && !state.smartShopping.notifiedFor.includes(supermarket.name)) { let shoppingListHTML = state.shoppingList.map(item => `<li>${item.text}</li>`).join(''); showModal(`Je bent bij ${supermarket.name}!`, `Hier is je boodschappenlijst:<ul>${shoppingListHTML}</ul>`); state.smartShopping.notifiedFor.push(supermarket.name); } }); } window.leefApp.saveState(); }); }
-        function getDistance(lat1, lon1, lat2, lon2) { const R = 6371; const dLat = (lat2 - lat1) * (Math.PI / 180); const dLon = (lon2 - lon1) * (Math.PI / 180); const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2); const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)); return R * c; }
 
         function initialize() {
-            populateUiElements();
-            window.leefApp.loadState();
-            if(Object.keys(state.moduleSettings).length === 0) { modules.forEach(m => state.moduleSettings[m.id] = true); }
-            window.leefApp.renderAll();
+            const mainContent = document.getElementById('main-content');
+            
+            mainContent.innerHTML = `
+                <header class="mb-6">
+                    <h1 class="text-4xl font-bold text-gray-800">Leef</h1>
+                    <p class="text-lg text-gray-500">Jouw persoonlijke AI levenscoach. Welkom terug!</p>
+                </header>
+                <section id="module-dagelijks" class="mb-16">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-house main-accent-color mr-3"></i>Dagelijks Leven</h2>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm">
+                        <h3 class="font-bold text-xl mb-4">Mijn Taken</h3>
+                        <div id="task-list" class="space-y-3 mb-4"></div>
+                        <h4 class="font-bold text-lg mb-2 mt-4">Nieuwe Taak Toevoegen</h4>
+                        <div class="flex gap-2 items-center">
+                            <input type="text" id="new-task-input" placeholder="Nieuwe taak..." class="flex-grow p-3 border rounded-lg">
+                            <button id="add-task-btn" class="main-accent-bg text-white font-bold p-3 rounded-lg hover:opacity-90">Voeg toe</button>
+                        </div>
+                         <div class="flex gap-2 mt-2">
+                            <button id="ai-subtask-btn" title="AI, help met subtaken" class="w-full secondary-accent-bg font-bold p-3 rounded-lg hover:opacity-90"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Suggesties</button>
+                        </div>
+                    </div>
+                </section>
+                <section id="module-maaltijden" class="mb-16">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-utensils main-accent-color mr-3"></i>Maaltijden</h2>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm">
+                        <h3 class="font-bold text-xl mb-4">AI Maaltijdplanner</h3>
+                        <p class="text-sm text-gray-600 mb-4">Vraag de AI om een recept en voeg de ingrediënten direct toe aan je boodschappenlijst.</p>
+                        <div class="flex gap-2">
+                            <input id="meal-prompt-input" type="text" placeholder="bv. 'snel recept met kip'" class="flex-grow p-3 border rounded-lg">
+                            <button id="get-meal-plan-btn" class="main-accent-bg text-white font-bold p-3 rounded-lg hover:opacity-90">Krijg Recept</button>
+                        </div>
+                    </div>
+                </section>
+            `;
 
+            Object.assign(ui, {
+                modalContainer: document.getElementById('modal-container'),
+                modalBox: document.getElementById('modal-box'),
+                modalTitle: document.getElementById('modal-title'),
+                modalContent: document.getElementById('modal-content'),
+                modalCloseBtn: document.getElementById('modal-close-btn'),
+                aiSubtaskBtn: document.getElementById('ai-subtask-btn'),
+                newTaskInput: document.getElementById('new-task-input'),
+                getMealPlanBtn: document.getElementById('get-meal-plan-btn'),
+                mealPromptInput: document.getElementById('meal-prompt-input'),
+                addTaskBtn: document.getElementById('add-task-btn'),
+                taskList: document.getElementById('task-list')
+            });
+
+            // Event Listeners
             ui.modalCloseBtn.addEventListener('click', hideModal);
-            if(ui.addTaskBtn) ui.addTaskBtn.addEventListener('click', window.leefApp.addTask);
-            if(ui.addShoppingItemBtn) ui.addShoppingItemBtn.addEventListener('click', window.leefApp.addShoppingItem);
-            if(ui.addAppointmentBtn) ui.addAppointmentBtn.addEventListener('click', window.leefApp.addAppointment);
-            if(ui.addExpenseBtn) ui.addExpenseBtn.addEventListener('click', () => { const desc = ui.expenseDescInput.value.trim(); const amount = parseFloat(ui.expenseAmountInput.value); if (desc && !isNaN(amount) && amount > 0) { window.leefApp.addExpense({ desc, amount }); ui.expenseDescInput.value = ''; ui.expenseAmountInput.value = ''; } });
-            if(ui.updateBudgetBtn) ui.updateBudgetBtn.addEventListener('click', window.leefApp.updateBudget);
-            if(ui.addFixedExpenseBtn) ui.addFixedExpenseBtn.addEventListener('click', window.leefApp.addFixedExpense);
-            if(ui.addMedicationBtn) ui.addMedicationBtn.addEventListener('click', window.leefApp.addMedication);
-            if(ui.addCaloriesBtn) ui.addCaloriesBtn.addEventListener('click', window.leefApp.addCalories);
-            if(ui.setWorkoutReminderBtn) ui.setWorkoutReminderBtn.addEventListener('click', window.leefApp.setWorkoutReminder);
-            if(ui.parkingAssistToggleBtn) ui.parkingAssistToggleBtn.addEventListener('click', window.leefApp.toggleParkingAssistant);
-            if(ui.uploadBonKnop) ui.uploadBonKnop.addEventListener('click', () => administratieModule.verwerkBon({ name: "gesimuleerde_bon.pdf" }));
-            if(ui.checkDeadlinesKnop) ui.checkDeadlinesKnop.addEventListener('click', () => administratieModule.checkBelastingDeadlines());
-            if(ui.addContactBtn) ui.addContactBtn.addEventListener('click', () => window.leefApp.showContactForm());
-            
-            // AI Event Listeners
-            const getMealPlanBtn = document.getElementById('get-meal-plan-btn');
-            if(getMealPlanBtn) getMealPlanBtn.addEventListener('click', () => {
-                const prompt = document.getElementById('meal-prompt-input').value.trim();
-                if(prompt) callAiFunction(`Geef een recept voor: "${prompt}" en genereer een boodschappenlijst.`, 'AI Maaltijdplanner');
-                else alert('Voer een prompt in voor de maaltijdplanner.');
+
+            ui.addTaskBtn.addEventListener('click', () => {
+                const taskText = ui.newTaskInput.value.trim();
+                if (taskText) {
+                    const li = document.createElement('li');
+                    li.textContent = taskText;
+                    ui.taskList.appendChild(li);
+                    ui.newTaskInput.value = '';
+                }
             });
 
-            const aiDietCoachBtn = document.getElementById('ai-diet-coach-btn');
-            if (aiDietCoachBtn) aiDietCoachBtn.addEventListener('click', () => {
-                const calories = state.calories.reduce((sum, item) => sum + item.calories, 0);
-                callAiFunction(`Mijn totale calorie-inname vandaag is ${calories} kcal. Geef een kort dieetadvies.`, 'AI Dieetcoach');
-            });
-            
-            const getSportTipsBtn = document.getElementById('get-sport-tips-btn');
-            if(getSportTipsBtn) getSportTipsBtn.addEventListener('click', () => {
-                const prompt = document.getElementById('sport-prompt-input').value.trim();
-                if(prompt) callAiFunction(`Genereer een workout plan voor: "${prompt}"`, 'AI Sportcoach');
-                else alert('Voer een prompt in voor de sportcoach.');
+            ui.aiSubtaskBtn.addEventListener('click', () => {
+                const prompt = ui.newTaskInput.value.trim();
+                if (prompt) {
+                    callAiFunction(`Breek de volgende taak in subtaken: "${prompt}"`, 'AI Taak Suggesties');
+                } else {
+                    alert('Voer eerst een taak in.');
+                }
             });
 
-            const getMaintenanceTipsBtn = document.getElementById('get-maintenance-tips-btn');
-            if(getMaintenanceTipsBtn) getMaintenanceTipsBtn.addEventListener('click', () => {
-                const topic = document.getElementById('maintenance-prompt-input').value.trim();
-                if(topic) callAiFunction(`Maak een onderhouds- of schoonmaakchecklist voor: "${topic}"`, `Checklist voor "${topic}"`);
-                else alert('Voer eerst een onderwerp in.');
+            ui.getMealPlanBtn.addEventListener('click', () => {
+                const prompt = ui.mealPromptInput.value.trim();
+                if (prompt) {
+                    callAiFunction(`Geef een recept voor: "${prompt}"`, 'AI Maaltijdplanner');
+                } else {
+                    alert('Voer een prompt in voor de maaltijdplanner.');
+                }
             });
             
-            const getCareerTipsBtn = document.getElementById('get-career-tips-btn');
-            if(getCareerTipsBtn) getCareerTipsBtn.addEventListener('click', () => {
-                const prompt = document.getElementById('career-prompt-input').value.trim();
-                if(prompt) callAiFunction(`Bereid me voor op een "${prompt}". Geef me tips en mogelijke vragen.`, 'AI Carrièrecoach');
-                else alert('Voer een prompt in voor de carrièrecoach.');
-            });
-
-            const getLeisureTipsBtn = document.getElementById('get-leisure-tips-btn');
-            if(getLeisureTipsBtn) getLeisureTipsBtn.addEventListener('click', () => {
-                const prompt = document.getElementById('leisure-prompt-input').value.trim();
-                if(prompt) callAiFunction(`Geef me ideeën en een plan voor: "${prompt}"`, 'AI Vrijetijdsplanner');
-                else alert('Voer een prompt in voor de vrijetijdsplanner.');
-            });
-
-            const getLearningPlanBtn = document.getElementById('get-learning-plan-btn');
-            if(getLearningPlanBtn) getLearningPlanBtn.addEventListener('click', () => {
-                const prompt = document.getElementById('learning-prompt-input').value.trim();
-                if(prompt) callAiFunction(`Maak een stappenplan om: "${prompt}" te leren`, 'AI Leerassistent');
-                else alert('Voer een prompt in voor de leerassistent.');
-            });
-            
-            if (state.isParked && state.parkingStartTime) { state.parkingTimerInterval = setInterval(renderParkingStatus, 1000); }
-            setInterval(checkContextualReminders, 60000);
             console.log("Compleet dashboard geïnitialiseerd met slimme herinneringen.");
         }
 
@@ -659,5 +170,3 @@ Vervang de volledige inhoud van je `dashboard.html` met deze code.
 
 </body>
 </html>
-``` de laatste keer ok
-````
