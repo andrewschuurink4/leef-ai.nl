@@ -17,72 +17,43 @@
         .main-accent-color { color: #5D8B71; }
         .main-accent-bg { background-color: #5D8B71; }
         .secondary-accent-bg { background-color: #EAE7DC; }
-        .task-item.completed label span.task-text, .shopping-item.completed span { text-decoration: line-through; color: #a0aec0; }
-        #modal-container, #modal-box { transition: opacity 0.3s ease, transform 0.3s ease; }
         .modal-ai-content { white-space: pre-wrap; }
     </style>
 </head>
 <body class="min-h-screen">
 
     <div class="flex">
-        <nav class="hidden md:flex flex-col items-center w-20 bg-white shadow-md min-h-screen fixed top-0 left-0 z-40">
-            <div class="py-5 main-accent-color"><i class="fa-solid fa-leaf fa-2x"></i></div>
-            <ul id="desktop-nav-list" class="flex flex-col space-y-2 mt-8"></ul>
-        </nav>
-
         <main class="w-full md:pl-20 pb-24 md:pb-0">
-            <div class="p-4 md:p-8 max-w-7xl mx-auto">
+            <div class="p-4 md:p-8 max-w-7xl mx-auto" id="main-content">
                 <header class="mb-6">
                     <h1 class="text-4xl font-bold text-gray-800">Leef</h1>
                     <p class="text-lg text-gray-500">Jouw persoonlijke AI levenscoach. Welkom terug!</p>
                 </header>
-                
                 <section id="module-dagelijks" class="mb-16">
                     <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-house main-accent-color mr-3"></i>Dagelijks Leven</h2>
-                    <div class="space-y-6">
-                        <div class="bg-white p-6 rounded-2xl shadow-sm">
-                            <h3 class="font-bold text-xl mb-4">Mijn Taken</h3>
-                            <div id="task-list" class="space-y-3 mb-4"></div>
-                            <h4 class="font-bold text-lg mb-2 mt-4">Nieuwe Taak Toevoegen</h4>
-                            <div class="flex flex-col sm:flex-row gap-2 items-center">
-                                <input type="text" id="new-task-input" placeholder="Nieuwe taak..." class="flex-grow p-3 border rounded-lg">
-                                <input type="datetime-local" id="new-task-datetime" class="p-3 border rounded-lg text-gray-500" title="Optionele deadline">
-                            </div>
-                             <div class="flex gap-2 mt-2">
-                                <button id="ai-subtask-btn" title="AI, help met subtaken" class="w-1/2 secondary-accent-bg font-bold p-3 rounded-lg hover:opacity-90"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Suggesties</button>
-                                <button id="add-task-btn" class="w-1/2 main-accent-bg text-white font-bold p-3 rounded-lg hover:opacity-90">Voeg toe</button>
-                            </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm">
+                        <h3 class="font-bold text-xl mb-4">Mijn Taken</h3>
+                        <div id="task-list" class="space-y-3 mb-4"></div>
+                        <h4 class="font-bold text-lg mb-2 mt-4">Nieuwe Taak</h4>
+                        <div class="flex gap-2 items-center">
+                            <input type="text" id="new-task-input" placeholder="Nieuwe taak..." class="flex-grow p-3 border rounded-lg">
+                            <button id="add-task-btn" class="main-accent-bg text-white font-bold p-3 rounded-lg hover:opacity-90">Voeg toe</button>
                         </div>
-                        <div class="bg-white p-6 rounded-2xl shadow-sm">
-                            <h3 class="font-bold text-xl mb-4">Agenda</h3>
-                            <div id="appointments-list" class="space-y-3 mb-4"></div>
-                            <h4 class="font-bold text-lg mb-2 mt-4">Nieuwe Afspraak Toevoegen</h4>
-                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
-                                <input id="new-appointment-title" type="text" placeholder="Titel van afspraak" class="p-3 border rounded-lg">
-                                <input id="new-appointment-datetime" type="datetime-local" class="p-3 border rounded-lg text-gray-500">
-                            </div>
-                            <div class="flex flex-col sm:flex-row gap-2">
-                                <button id="add-appointment-btn" class="w-full sm:w-auto main-accent-bg text-white font-bold p-3 rounded-lg hover:opacity-90 flex-grow">Voeg toe</button>
-                                <button id="ai-prepare-btn" class="w-full sm:w-auto secondary-accent-bg font-bold p-3 rounded-lg hover:opacity-90">
-                                    <i class="fa-solid fa-wand-magic-sparkles"></i> AI, help voorbereiden!
-                                </button>
-                            </div>
+                         <div class="flex gap-2 mt-2">
+                            <button id="ai-subtask-btn" title="AI, help met subtaken" class="w-full secondary-accent-bg font-bold p-3 rounded-lg hover:opacity-90"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Suggesties</button>
                         </div>
                     </div>
                 </section>
-
                 <section id="module-maaltijden" class="mb-16">
                     <h2 class="text-3xl font-bold text-gray-800 mb-4"><i class="fa-solid fa-utensils main-accent-color mr-3"></i>Maaltijden</h2>
-                       <div class="bg-white p-6 rounded-2xl shadow-sm">
-                            <h3 class="font-bold text-xl mb-4">AI Maaltijdplanner</h3>
-                            <p class="text-sm text-gray-600 mb-4">Vraag de AI om een recept.</p>
-                            <div class="flex flex-col sm:flex-row gap-2">
-                                <input id="meal-prompt-input" type="text" placeholder="bv. 'snel recept met kip'" class="flex-grow p-3 border rounded-lg">
-                                <button id="get-meal-plan-btn" class="main-accent-bg text-white font-bold p-3 rounded-lg hover:opacity-90">Krijg Recept</button>
-                            </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm">
+                        <h3 class="font-bold text-xl mb-4">AI Maaltijdplanner</h3>
+                        <div class="flex gap-2">
+                            <input id="meal-prompt-input" type="text" placeholder="bv. 'snel recept met kip'" class="flex-grow p-3 border rounded-lg">
+                            <button id="get-meal-plan-btn" class="main-accent-bg text-white font-bold p-3 rounded-lg hover:opacity-90">Krijg Recept</button>
+                        </div>
                     </div>
                 </section>
-                
             </div>
         </main>
 
@@ -100,7 +71,6 @@
     
         const ui = {};
 
-        // Functie om de AI aan te roepen
         async function callAiFunction(prompt, modalTitle) {
             showModal(modalTitle, '<p class="text-center">AI is aan het denken...</p>');
             try {
@@ -120,7 +90,6 @@
             }
         }
 
-        // Functies om de modal te tonen en te verbergen
         function showModal(title, content) {
             ui.modalTitle.textContent = title;
             ui.modalContent.innerHTML = content;
@@ -131,71 +100,39 @@
             ui.modalContainer.classList.add('hidden');
         }
         
-        // Functie om alle knoppen en velden te vinden
-        function populateUiElements() {
+        function initialize() {
             Object.assign(ui, {
                 modalContainer: document.getElementById('modal-container'),
                 modalBox: document.getElementById('modal-box'),
                 modalTitle: document.getElementById('modal-title'),
                 modalContent: document.getElementById('modal-content'),
                 modalCloseBtn: document.getElementById('modal-close-btn'),
-                
-                // Taken AI
                 aiSubtaskBtn: document.getElementById('ai-subtask-btn'),
                 newTaskInput: document.getElementById('new-task-input'),
-
-                // Afspraak AI
-                aiPrepareBtn: document.getElementById('ai-prepare-btn'),
-                newAppointmentTitle: document.getElementById('new-appointment-title'),
-
-                // Maaltijd AI
                 getMealPlanBtn: document.getElementById('get-meal-plan-btn'),
-                mealPromptInput: document.getElementById('meal-prompt-input')
+                mealPromptInput: document.getElementById('meal-prompt-input'),
             });
-        }
 
-        // Functie om alle event listeners te koppelen
-        function bindEventListeners() {
             ui.modalCloseBtn.addEventListener('click', hideModal);
 
-            if (ui.aiSubtaskBtn) {
-                ui.aiSubtaskBtn.addEventListener('click', () => {
-                    const prompt = ui.newTaskInput.value.trim();
-                    if (prompt) {
-                        callAiFunction(`Breek de volgende taak in subtaken: "${prompt}"`, 'AI Taak Suggesties');
-                    } else {
-                        alert('Voer eerst een taak in.');
-                    }
-                });
-            }
+            ui.aiSubtaskBtn.addEventListener('click', () => {
+                const prompt = ui.newTaskInput.value.trim();
+                if (prompt) {
+                    callAiFunction(`Breek de volgende taak in subtaken: "${prompt}"`, 'AI Taak Suggesties');
+                } else {
+                    alert('Voer eerst een taak in.');
+                }
+            });
 
-            if (ui.aiPrepareBtn) {
-                ui.aiPrepareBtn.addEventListener('click', () => {
-                    const prompt = ui.newAppointmentTitle.value.trim();
-                    if (prompt) {
-                        callAiFunction(`Help me met de voorbereiding voor deze afspraak: "${prompt}"`, 'AI Voorbereiding');
-                    } else {
-                        alert('Voer eerst een titel voor de afspraak in.');
-                    }
-                });
-            }
-
-            if (ui.getMealPlanBtn) {
-                ui.getMealPlanBtn.addEventListener('click', () => {
-                    const prompt = ui.mealPromptInput.value.trim();
-                    if (prompt) {
-                        callAiFunction(`Geef een recept voor: "${prompt}"`, 'AI Maaltijdplanner');
-                    } else {
-                        alert('Voer een prompt in voor de maaltijdplanner.');
-                    }
-                });
-            }
-        }
-
-        // Initialisatie
-        function initialize() {
-            populateUiElements();
-            bindEventListeners();
+            ui.getMealPlanBtn.addEventListener('click', () => {
+                const prompt = ui.mealPromptInput.value.trim();
+                if (prompt) {
+                    callAiFunction(`Geef een recept voor: "${prompt}"`, 'AI Maaltijdplanner');
+                } else {
+                    alert('Voer een prompt in voor de maaltijdplanner.');
+                }
+            });
+            
             console.log("Compleet dashboard geïnitialiseerd.");
         }
 
