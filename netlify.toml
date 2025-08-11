@@ -1,2 +1,6 @@
 [build]
-  functions = ".netlify/functions"
+  functions = "netlify/functions"
+
+[dev]
+  # Dit vertelt de lokale server om de functies correct te laden
+  functions = "netlify/functions"
